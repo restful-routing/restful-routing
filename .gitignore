@@ -1,0 +1,10 @@
+*.sln.cache
+_ReSharper.*
+bin
+obj
+build
+dist
+*.suo
+*resharper*
+*.user
+TestResult.xml

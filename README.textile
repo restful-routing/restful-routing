@@ -1,0 +1,3 @@
+h1. Restful Routing
+
+Restful routing allows you to map restful resources in ASP .NET MVC. Inspired by rails.
