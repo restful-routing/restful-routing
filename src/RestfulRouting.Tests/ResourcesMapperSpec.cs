@@ -215,4 +215,71 @@ namespace ResourcesMapperSpec
 			"~/blogs/1/posts/2/comments".WithMethod(HttpVerbs.Post).ShouldMapTo<CommentsController>(x => x.Create(1, 2));
 		}
 	}
+
+	[TestFixture]
+	public class when_using_a_different_resource_name_to_the_controller_name : Spec
+	{
+		private RouteCollection _routes;
+		private RestfulRouteMapper _map;
+
+		protected override void given()
+		{
+			RouteTable.Routes.Clear();
+			_routes = RouteTable.Routes;
+			_map = new RestfulRouteMapper(_routes);
+		}
+
+		protected override void when()
+		{
+			_map.WithConfiguration(x => x.Controller = "weblogs").Resources<Blog>();
+		}
+
+		[Test]
+		public void should_map_index()
+		{
+			"~/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<WeblogsController>(x => x.Index());
+		}
+
+		[Test]
+		public void should_map_show()
+		{
+			"~/blogs/1".WithMethod(HttpVerbs.Get).ShouldMapTo<WeblogsController>(x => x.Show(1));
+		}
+
+		[Test]
+		public void should_map_new()
+		{
+			"~/blogs/new".WithMethod(HttpVerbs.Get).ShouldMapTo<WeblogsController>(x => x.New());
+		}
+
+		[Test]
+		public void should_map_edit()
+		{
+			"~/blogs/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<WeblogsController>(x => x.Edit(1));
+		}
+
+		[Test]
+		public void should_map_delete()
+		{
+			"~/blogs/1/delete".WithMethod(HttpVerbs.Get).ShouldMapTo<WeblogsController>(x => x.Delete(1));
+		}
+
+		[Test]
+		public void should_map_update()
+		{
+			"~/blogs/1".WithMethod(HttpVerbs.Put).ShouldMapTo<WeblogsController>(x => x.Update(1));
+		}
+
+		[Test]
+		public void should_map_destroy()
+		{
+			"~/blogs/1".WithMethod(HttpVerbs.Delete).ShouldMapTo<WeblogsController>(x => x.Destroy(1));
+		}
+
+		[Test]
+		public void should_map_create()
+		{
+			"~/blogs".WithMethod(HttpVerbs.Post).ShouldMapTo<WeblogsController>(x => x.Create());
+		}
+	}
 }
