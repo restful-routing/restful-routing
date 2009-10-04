@@ -4,8 +4,7 @@
 
     <h2>Edit</h2>
 	
-	<form action="<%= Url.Action("Update", new { id = Model.Id }) %>" method="post">
-		<input type="hidden" name="_method" value="put" />
+	<%= Html.RestfulFormFor(Model) %>
 		
 		<% Html.RenderPartial("Form"); %>
 		

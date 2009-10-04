@@ -9,8 +9,8 @@
 	</p>
 
 	
-	<form action="<%= Url.Action("Destroy", new { id = Model.Id }) %>" method="post">
-		<input type="hidden" name="_method" value="delete" />
+	<%= Html.RestfulDeleteFormFor(Model) %>
+	
 		
 		<div class="group">
 			<input type="submit" value="Delete" />

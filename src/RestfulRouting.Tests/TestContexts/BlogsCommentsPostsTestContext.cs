@@ -2,17 +2,22 @@
 
 namespace RestfulRouting.Tests
 {
-	public class Blog
+	public class Entity
+	{
+		public int Id { get; set; }
+	}
+
+	public class Blog : Entity
 	{
 
 	}
 
-	public class Post
+	public class Post : Entity
 	{
 
 	}
 
-	public class Comment
+	public class Comment : Entity
 	{
 
 	}

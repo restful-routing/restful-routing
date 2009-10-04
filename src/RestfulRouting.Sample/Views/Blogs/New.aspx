@@ -4,7 +4,7 @@
 
     <h2>New</h2>
 	
-	<form action="<%= Url.Action("Create") %>" method="post">
+	<%= Html.RestfulFormFor(Model) %>
 		
 		<% Html.RenderPartial("Form"); %>
 		

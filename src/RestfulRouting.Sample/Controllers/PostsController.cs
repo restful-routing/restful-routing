@@ -11,9 +11,9 @@ namespace RestfulRouting.Sample.Controllers
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			// accessing parent resource id
-			if (!filterContext.ActionParameters.ContainsKey("blogId")) return;
+			if (!filterContext.RouteData.Values.ContainsKey("blogId")) return;
 
-			var blogId = (int)filterContext.ActionParameters["blogId"];
+			var blogId = int.Parse(filterContext.RouteData.Values["blogId"].ToString());
 			_blog = new Blog{ Id = blogId };
 		}
 
@@ -24,7 +24,7 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult New()
 		{
-			return View(new Post());
+			return View(new Post{ Blog = _blog });
 		}
 
 		public ActionResult Create(Post blog)
@@ -36,7 +36,9 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult Edit(int id)
 		{
-			return View(SampleData.Post(id));
+			var post = SampleData.Post(id);
+			post.Blog = _blog;
+			return View(post);
 		}
 
 		public ActionResult Update(int id)
@@ -48,7 +50,9 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult Delete(int id)
 		{
-			return View(SampleData.Post(id));
+			var post = SampleData.Post(id);
+			post.Blog = _blog;
+			return View(post);
 		}
 
 		public ActionResult Destroy(int id)

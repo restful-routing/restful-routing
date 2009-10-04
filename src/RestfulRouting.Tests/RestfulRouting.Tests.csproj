@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionTranslatorSpecs.cs" />
+    <Compile Include="FormHelperSpecs.cs" />
     <Compile Include="ResourceMapperSpecs\CustomActions.cs" />
     <Compile Include="ResourceMapperSpecs\ConfiguringResourceName.cs" />
     <Compile Include="ResourceMapperSpecs\MappingAResource.cs" />

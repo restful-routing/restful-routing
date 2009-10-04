@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormHelper.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="MapperBase.cs" />
     <Compile Include="PostOverrideActionTranslator.cs" />
     <Compile Include="PostOverrideRouteHandler.cs" />
