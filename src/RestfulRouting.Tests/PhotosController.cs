@@ -64,4 +64,42 @@ namespace RestfulRouting.Tests
 			return Content("");
 		}
 	}
+
+	public class PhotoController : Controller
+	{
+		public ActionResult Make()
+		{
+			return Content("");
+		}
+
+		public ActionResult Build()
+		{
+			return Content("");
+		}
+
+		public ActionResult Change()
+		{
+			return Content("");
+		}
+
+		public ActionResult Amend()
+		{
+			return Content("");
+		}
+
+		public ActionResult Bin()
+		{
+			return Content("");
+		}
+
+		public ActionResult Abolish()
+		{
+			return Content("");
+		}
+
+		public ActionResult View()
+		{
+			return Content("");
+		}
+	}
 }
