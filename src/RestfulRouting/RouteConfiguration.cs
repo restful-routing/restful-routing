@@ -19,8 +19,6 @@ namespace RestfulRouting
 			ActionNames = new ActionNames();
 		}
 
-		public string Controller { get; set; }
-
 		public string IdValidationRegEx { get; set; }
 
 		public string As { get; set; }

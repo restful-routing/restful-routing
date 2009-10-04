@@ -76,13 +76,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionTranslatorSpecs.cs" />
-    <Compile Include="BlogsCommentsPostsTestContext.cs" />
-    <Compile Include="PhotosController.cs" />
+    <Compile Include="ResourceMapperSpecs\CustomActions.cs" />
+    <Compile Include="ResourceMapperSpecs\ConfiguringResourceName.cs" />
+    <Compile Include="ResourceMapperSpecs\MappingAResource.cs" />
+    <Compile Include="TestContexts\BlogsCommentsPostsTestContext.cs" />
+    <Compile Include="TestContexts\PhotosController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceMapperSpecs.cs" />
-    <Compile Include="ResourcesMapperSpecs.cs" />
+    <Compile Include="ResourceMapperSpecs\ConfiguringResourceActionNames.cs" />
+    <Compile Include="RouteTestContext.cs" />
+    <Compile Include="ResourcesMapperSpecs\ConfiguringIdRegex.cs" />
+    <Compile Include="ResourcesMapperSpecs\ConfiguringResourceActionNames.cs" />
+    <Compile Include="ResourcesMapperSpecs\CustomActions.cs" />
+    <Compile Include="ResourcesMapperSpecs\MappingResources.cs" />
+    <Compile Include="ResourcesMapperSpecs\ConfiguringResourceName.cs" />
+    <Compile Include="ResourcesMapperSpecs\ShallowRouting.cs" />
     <Compile Include="RouteConfigurationSpecs.cs" />
     <Compile Include="Spec.cs" />
+    <Compile Include="TestContexts\SessionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestfulRouting\RestfulRouting.csproj">

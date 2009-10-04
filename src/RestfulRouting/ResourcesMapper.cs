@@ -23,7 +23,7 @@ namespace RestfulRouting
 
 		public void Map(string resource)
 		{
-			var controller = string.IsNullOrEmpty(_configuration.Controller) ? resource : _configuration.Controller;
+			var controller = resource;
 
 			if (!string.IsNullOrEmpty(_configuration.As))
 				resource = _configuration.As;

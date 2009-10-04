@@ -2,8 +2,10 @@
 using NUnit.Framework;
 using NUnit.Should;
 using System.Linq;
+using RestfulRouting;
+using RestfulRouting.Tests;
 
-namespace RestfulRouting.Tests
+namespace RouteConfigurationSpecs
 {
 	public abstract class base_context : Spec
 	{

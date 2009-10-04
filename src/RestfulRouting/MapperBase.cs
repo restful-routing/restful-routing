@@ -24,7 +24,7 @@ namespace RestfulRouting
 		{
 			var controllerType = typeof(TController);
 
-			var resource = controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length);
+			var resource = controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length).ToLowerInvariant();
 
 			return resource;
 		}
