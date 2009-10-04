@@ -19,6 +19,8 @@ blogs/1/delete</pre></code>
 
 The action changes depending on the HttpVerb used. Post to blogs and you hit the create action. Put to blogs/1 and you hit the update action. A form override _method is used to simulate put and delete requests in HTML forms.
 
+Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html
+
 h2. Features
 
 * Nested Resources
@@ -30,6 +32,7 @@ h2. Features
 h2. Nested Resources
 
 <pre><code>var map = new RestfulRouteMapper(RouteTable.Routes);
+
 map.Resources<BlogsController>(x =>
 {
 	x.Resources<PostsController>(m =>
@@ -111,4 +114,4 @@ h2. Singular Resources
 
 h2. More Information
 
-The "tests":http://github.com/stevehodgkiss/restful-routing/blob/master/src/RestfulRouting.Tests/ResourcesMapperSpecs/MappingResources.cs describe the different ways you can use this.
+The "tests":http://github.com/stevehodgkiss/restful-routing/blob/master/src/RestfulRouting.Tests/ResourcesMapperSpecs/MappingResources.cs describe the different ways you can use this. See the included sample project to see it in action.
