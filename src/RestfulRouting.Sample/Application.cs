@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using RestfulRouting.Sample.Controllers;
 using RestfulRouting.Sample.Models;
 
 namespace RestfulRouting.Sample
@@ -17,7 +18,7 @@ namespace RestfulRouting.Sample
 
 			var map = new RestfulRouteMapper(RouteTable.Routes);
 
-			map.Resources<Blog>();
+			map.Resources<BlogsController>();
 		}
 	}
 }

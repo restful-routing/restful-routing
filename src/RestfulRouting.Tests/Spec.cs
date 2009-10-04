@@ -1,11 +1,10 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace RestfulRouting.Tests
 {
 	public abstract class Spec
 	{
-		[SetUp]
+		[TestFixtureSetUp]
 		public void SetUp()
 		{
 			given();

@@ -1,65 +1,71 @@
-using System;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public class ResourceMapper
+	public class ResourceMapper<TController> : MapperBase<TController> where TController : Controller
 	{
-		private RouteCollection _routeCollection;
-		private string _basePath;
-
-		public ResourceMapper(RouteCollection routeCollection) : this(routeCollection, "")
+		public ResourceMapper(RouteCollection routeCollection, RouteConfiguration configuration) : base(routeCollection, configuration)
 		{
 		}
 
-		public ResourceMapper(RouteCollection routeCollection, string basePath)
+		public void Map()
 		{
-			_basePath = VirtualPathUtility.RemoveTrailingSlash(basePath);
-			if (!string.IsNullOrEmpty(_basePath))
-			{
-				_basePath = _basePath + "/";
-			}
-			_routeCollection = routeCollection;
+			Map(ResourceName());
 		}
-
 
 		public void Map(string resource)
 		{
+			var controller = string.IsNullOrEmpty(_configuration.Controller) ? resource : _configuration.Controller;
+
+			if (!string.IsNullOrEmpty(_configuration.As))
+				resource = _configuration.As;
+			
+			var basePath = _configuration.BasePath();
 
 			// POST /session => Create
 			_routeCollection.Add(new Route(
-									_basePath + resource,
-									new RouteValueDictionary(new { action = "create", controller = resource }),
+									basePath + resource,
+									new RouteValueDictionary(new { action = "create", controller = controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
 									new MvcRouteHandler()));
 
 			// GET /session/new => New
 			_routeCollection.Add(new Route(
-									_basePath + resource + "/new",
-									new RouteValueDictionary(new { action = "new", controller = resource }),
+									basePath + resource + "/new",
+									new RouteValueDictionary(new { action = "new", controller = controller }),
 									new MvcRouteHandler()));
+
+			foreach (var member in _configuration.ActionNames.MemberRoutes.Keys)
+			{
+				var verbArray = _configuration.ActionNames.GetMemberVerbArray(member);
+				// VERB /session/member => Member
+				_routeCollection.Add(new Route(
+										basePath + resource + "/" + member,
+										new RouteValueDictionary(new { action = member, controller }),
+										new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint(verbArray) }),
+										new MvcRouteHandler()));
+			}
 
 			// GET /session/edit => Edit
 			// GET /session/delete => Delete
 			_routeCollection.Add(new Route(
-									_basePath + resource + "/{action}",
-									new RouteValueDictionary(new { action = "show", controller = resource }),
+									basePath + resource + "/{action}",
+									new RouteValueDictionary(new { action = "show", controller = controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET"), action = "show|edit|delete" }),
 									new MvcRouteHandler()));
 
 			// PUT /session/1 => Update
 			_routeCollection.Add(new Route(
-									_basePath + resource,
-									new RouteValueDictionary(new { action = "update", controller = resource }),
+									basePath + resource,
+									new RouteValueDictionary(new { action = "update", controller = controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("PUT") }),
 									new MvcRouteHandler()));
 
 			// DELETE /session/1 => Delete
 			_routeCollection.Add(new Route(
-									_basePath + resource,
-									new RouteValueDictionary(new { action = "destroy", controller = resource }),
+									basePath + resource,
+									new RouteValueDictionary(new { action = "destroy", controller = controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("DELETE") }),
 									new MvcRouteHandler()));
 
@@ -67,8 +73,8 @@ namespace RestfulRouting
 			// The route handler then translates the overrides to the appropriate action
 			// POST /session/1 => Update or Delete
 			_routeCollection.Add(new Route(
-									_basePath + resource,
-									new RouteValueDictionary(new { controller = resource }),
+									basePath + resource,
+									new RouteValueDictionary(new { controller = controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
 									new PostOverrideRouteHandler()));
 		}

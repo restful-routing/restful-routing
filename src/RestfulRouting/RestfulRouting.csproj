@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapperBase.cs" />
     <Compile Include="PostOverrideActionTranslator.cs" />
     <Compile Include="PostOverrideRouteHandler.cs" />
     <Compile Include="ResourceMapper.cs" />

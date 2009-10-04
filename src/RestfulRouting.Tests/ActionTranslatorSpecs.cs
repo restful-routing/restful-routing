@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Web;
 using System.Web.Routing;
 using NUnit.Framework;
@@ -84,7 +83,7 @@ namespace ActionTranslatorSpecs
 		protected override void given()
 		{
 			base.given();
-			_httpRequestBase.Stub(x => x.Form).Return(new NameValueCollection {  });			
+			_httpRequestBase.Stub(x => x.Form).Return(new NameValueCollection());			
 		}
 
 		protected override void when()

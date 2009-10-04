@@ -77,9 +77,11 @@
   <ItemGroup>
     <Compile Include="ActionTranslatorSpecs.cs" />
     <Compile Include="BlogsCommentsPostsTestContext.cs" />
+    <Compile Include="PhotosController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceMapperSpec.cs" />
-    <Compile Include="ResourcesMapperSpec.cs" />
+    <Compile Include="ResourceMapperSpecs.cs" />
+    <Compile Include="ResourcesMapperSpecs.cs" />
+    <Compile Include="RouteConfigurationSpecs.cs" />
     <Compile Include="Spec.cs" />
   </ItemGroup>
   <ItemGroup>
