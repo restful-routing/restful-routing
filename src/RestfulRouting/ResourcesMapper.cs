@@ -37,6 +37,22 @@ namespace RestfulRouting
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 
+			if (_configuration.Shallow)
+			{
+				if (!string.IsNullOrEmpty(basePath))
+				{
+					basePath = "";
+
+					// map the root index as well as the nested one
+					_routeCollection.Add(new Route(
+											basePath + resource,
+											new RouteValueDictionary(new { action = _configuration.ActionNames.Index, controller }),
+											new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
+											new MvcRouteHandler()));
+				}
+				basePath = "";
+			}
+
 			// POST /blogs => Create
 			_routeCollection.Add(new Route(
 									basePath + resource,
@@ -116,9 +132,15 @@ namespace RestfulRouting
 
 			var singular = Inflector.Net.Inflector.Singularize(resource).ToLowerInvariant();
 
-			var configuration = RouteConfiguration.Default();
+			if (_configuration == null)
+				_configuration = RouteConfiguration.Default();
 
-			configuration.PathPrefix = _configuration.BasePath() + resource + "/{" + singular + "Id}";
+			var configuration = _configuration.Clone();
+
+			if (configuration.Shallow)
+				configuration.PathPrefix = resource + "/{" + singular + "Id}";
+			else
+				configuration.PathPrefix = _configuration.BasePath() + resource + "/{" + singular + "Id}";
 
 			var mapper = new RestfulRouteMapper(_routeCollection, configuration);
 

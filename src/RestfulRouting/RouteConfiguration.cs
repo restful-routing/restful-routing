@@ -29,6 +29,10 @@ namespace RestfulRouting
 
 		public string PathPrefix { get; set; }
 
+		public bool Shallow { get; set; }
+
+
+
 		public static Func<RouteConfiguration> Default { get; set; }
 
 		object ICloneable.Clone()

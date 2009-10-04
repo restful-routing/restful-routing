@@ -62,42 +62,42 @@ namespace RestfulRouting.Tests
 
 	public class PostsController : Controller
 	{
-		public ActionResult Index(int blogId)
+		public ActionResult Index(int? blogId)
 		{
 			return Content("");
 		}
 
-		public ActionResult New(int blogId)
+		public ActionResult New(int? blogId)
 		{
 			return Content("");
 		}
 
-		public ActionResult Create(int blogId)
+		public ActionResult Create(int? blogId)
 		{
 			return Content("");
 		}
 
-		public ActionResult Edit(int blogId, int id)
+		public ActionResult Edit(int? blogId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Update(int blogId, int id)
+		public ActionResult Update(int? blogId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Delete(int blogId, int id)
+		public ActionResult Delete(int? blogId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Destroy(int blogId, int id)
+		public ActionResult Destroy(int? blogId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Show(int blogId, int id)
+		public ActionResult Show(int? blogId, int id)
 		{
 			return Content("");
 		}
@@ -105,42 +105,42 @@ namespace RestfulRouting.Tests
 
 	public class CommentsController : Controller
 	{
-		public ActionResult Index(int blogId, int postId)
+		public ActionResult Index(int? blogId, int? postId)
 		{
 			return Content("");
 		}
 
-		public ActionResult New(int blogId, int postId)
+		public ActionResult New(int? blogId, int? postId)
 		{
 			return Content("");
 		}
 
-		public ActionResult Create(int blogId, int postId)
+		public ActionResult Create(int? blogId, int? postId)
 		{
 			return Content("");
 		}
 
-		public ActionResult Edit(int blogId, int postId, int id)
+		public ActionResult Edit(int? blogId, int? postId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Update(int blogId, int postId, int id)
+		public ActionResult Update(int? blogId, int? postId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Delete(int blogId, int postId, int id)
+		public ActionResult Delete(int? blogId, int? postId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Destroy(int blogId, int postId, int id)
+		public ActionResult Destroy(int? blogId, int? postId, int id)
 		{
 			return Content("");
 		}
 
-		public ActionResult Show(int blogId, int postId, int id)
+		public ActionResult Show(int? blogId, int? postId, int id)
 		{
 			return Content("");
 		}
