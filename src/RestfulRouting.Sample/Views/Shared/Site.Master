@@ -29,7 +29,16 @@
         </div>
 
         <div id="main">
+			
+			<% if (TempData["notice"] != null) { %>
+			<p class="notice">
+				<%= TempData["notice"] %>
+			</p>
+			<% } %>
+        
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+
+			<% Html.RenderPartial("Routes"); %>
 
             <div id="footer">
             </div>

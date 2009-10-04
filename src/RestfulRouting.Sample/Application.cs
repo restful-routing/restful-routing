@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using RestfulRouting.Sample.Controllers;
-using RestfulRouting.Sample.Models;
 
 namespace RestfulRouting.Sample
 {
@@ -18,7 +17,10 @@ namespace RestfulRouting.Sample
 
 			var map = new RestfulRouteMapper(RouteTable.Routes);
 
-			map.Resources<BlogsController>();
+			map.Resources<BlogsController>(m => m.Resources<PostsController>());
+
+			// shallow
+			//map.Resources<BlogsController>(config => config.Shallow = true, m => m.Resources<PostsController>());
 		}
 	}
 }

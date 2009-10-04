@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Blog>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Post>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -8,11 +8,18 @@
 		Id: <%= Model.Id %>
 	</p>
 	<p>
-		Author: <%= Model.Author %>
+		Title: <%= Model.Title %>
 	</p>
+	<p>
+		Slug: <%= Model.Slug %>
+	</p>
+	<p>
+		Body: <%= Model.Body %>
+	</p>
+	
 	<p>
 		<%= Html.ActionLink("edit", "edit", new { id = Model.Id }) %>
 		<%= Html.ActionLink("delete", "delete", new { id = Model.Id }) %>
 	</p>
-	
+
 </asp:Content>

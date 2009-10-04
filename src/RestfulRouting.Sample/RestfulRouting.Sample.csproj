@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RootController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -65,7 +66,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\BlogRepository.cs" />
+    <Compile Include="Infrastructure\SampleData.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Post.cs" />
@@ -80,6 +81,12 @@
     <Content Include="Views\Blogs\Index.aspx" />
     <Content Include="Views\Blogs\New.aspx" />
     <Content Include="Views\Blogs\Show.aspx" />
+    <Content Include="Views\Posts\Delete.aspx" />
+    <Content Include="Views\Posts\Edit.aspx" />
+    <Content Include="Views\Posts\Form.ascx" />
+    <Content Include="Views\Posts\Index.aspx" />
+    <Content Include="Views\Posts\New.aspx" />
+    <Content Include="Views\Posts\Show.aspx" />
     <Content Include="Views\Shared\Routes.ascx" />
     <Content Include="Web.config" />
     <Content Include="content\stylesheets\screen.css" />
@@ -111,7 +118,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49209</DevelopmentServerPort>
+          <DevelopmentServerPort>59012</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
