@@ -64,6 +64,7 @@ namespace RestfulRouting
 			_routeCollection.Add(new Route(
 									basePath + resource + "/" + _configuration.ActionNames.New,
 									new RouteValueDictionary(new { action = _configuration.ActionNames.New, controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 
 			foreach (var member in _configuration.ActionNames.MemberRoutes.Keys)

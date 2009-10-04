@@ -1,3 +1,109 @@
-h1. Restful Routing
+h1. Restful Routing for ASP .NET MVC
 
-Restful routing allows you to map restful resources in ASP .NET MVC. Inspired by rails.
+The standard {controller}/{action}/{id} mapping produces urls like this
+
+Blogs
+Blogs/Show/1
+Blogs/Create/1
+Blogs/Edit/1
+Blogs/Update/1
+Blogs/Delete/1
+Blogs/Destroy/1
+
+With RestfulRouting you get urls like this
+
+blogs
+blogs/1
+blogs/1/edit
+blogs/1/delete
+
+The action changes depending on the HttpVerb used. Post to blogs and you hit the create action. Put to blogs/1 and you hit the update action. A form override _method is used to simulate put and delete requests in HTML forms.
+
+h2. Features
+
+* Nested Resources
+* Shallow Nesting
+* Singular Resources
+* Adding Custom Actions
+* Form Helper
+
+h2. Nested Resources
+
+<pre><code>var map = new RestfulRouteMapper(RouteTable.Routes);
+map.Resources<BlogsController>(x =>
+{
+	x.Resources<PostsController>(m =>
+	{
+		m.Resources<CommentsController>();
+	});
+});</code></pre>
+
+This will give you these routes
+
+|Url|Defaults|Constraints|
+|blogs|action = index, controller = blogs|GET|
+|blogs|action = create, controller = blogs|POST|
+|blogs/new|action = new, controller = blogs|GET|
+|blogs/{id}/{action}|action = show, controller = blogs|GET, action = show|edit|delete|
+|blogs/{id}|action = update, controller = blogs|PUT|
+|blogs/{id}|action = destroy, controller = blogs|DELETE|
+|blogs/{blogId}/posts|action = index, controller = posts|GET|
+|blogs/{blogId}/posts|action = create, controller = posts|POST|
+|blogs/{blogId}/posts/new|action = new, controller = posts|GET|
+|blogs/{blogId}/posts/{id}/{action}|action = show, controller = posts|GET, action = show|edit|delete|
+|blogs/{blogId}/posts/{id}|action = update, controller = posts|PUT|
+|blogs/{blogId}/posts/{id}|action = destroy, controller = posts|DELETE|
+|blogs/{blogId}/posts/{postId}/comments|action = index, controller = comments|GET|
+|blogs/{blogId}/posts/{postId}/comments|action = create, controller = comments|POST|
+|blogs/{blogId}/posts/{postId}/comments/new|action = new, controller = comments|GET|
+|blogs/{blogId}/posts/{postId}/comments/{id}/{action}|action = show, controller = comments|GET, action = show|edit|delete|
+|blogs/{blogId}/posts/{postId}/comments/{id}|action = update, controller = comments|PUT|
+|blogs/{blogId}/posts/{postId}/comments/{id}|action = destroy, controller = comments|DELETE|
+
+h2. Shallow Nesting
+
+Shallow nesting allows you to define nested resources but not have deeply nested urls.
+
+<pre><code>var map = new RestfulRouteMapper(RouteTable.Routes);
+map.Resources<BlogsController>(config => config.Shallow = true, x =>
+{
+	x.Resources<PostsController>(m =>
+	{
+		m.Resources<CommentsController>();
+	});
+});</code></pre>
+
+This will give you routes like these
+
+|Url|Defaults|Constraints|
+|blogs|action = index, controller = blogs|GET|
+|blogs|action = create, controller = blogs|POST|
+|blogs/new|action = new, controller = blogs|GET|
+|blogs/{id}/{action}|action = show, controller = blogs|GET, action = show|edit|delete|
+|blogs/{id}|action = update, controller = blogs|PUT|
+|blogs/{id}|action = destroy, controller = blogs|DELETE|
+|blogs/{blogId}/posts|action = index, controller = posts|GET|
+|posts|action = index, controller = posts|GET|
+|posts|action = index, controller = posts|GET|
+|posts|action = create, controller = posts|POST|
+|posts/new|action = new, controller = posts|GET|
+|posts/{id}/{action}|action = show, controller = posts|GET, action = show|edit|delete|
+|posts/{id}|action = update, controller = posts|PUT|
+|posts/{id}|action = destroy, controller = posts|DELETE|
+|posts/{postId}/comments|action = index, controller = comments|GET|
+|comments|action = index, controller = comments|GET|
+|comments|action = create, controller = comments|POST|
+|comments/new|action = new, controller = comments|GET|
+|comments/{id}/{action}|action = show, controller = comments|GET, action = show|edit|delete|
+|comments/{id}|action = update, controller = comments|PUT|
+|comments/{id}|action = destroy, controller = comments|DELETE|
+
+h2. Singular Resources
+
+|Url|Defaults|Constraints|
+|session|action = create, controller = session|POST|
+|session/new|action = new, controller = session|GET|
+|session/{action}|action = show, controller = session|GET, action = show|edit|delete|
+|session|action = update, controller = session|PUT|
+|session|action = destroy, controller = session|DELETE|
+|session|action = show, controller = session|GET|
