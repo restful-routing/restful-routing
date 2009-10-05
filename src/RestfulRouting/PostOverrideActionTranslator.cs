@@ -19,8 +19,6 @@ namespace RestfulRouting
 				case "DELETE":
 					requestContext.RouteData.Values["action"] = "destroy";
 					break;
-				default:
-					break;
 			}
 		}
 	}

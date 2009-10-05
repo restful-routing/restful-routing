@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using NUnit.Framework;
 using NUnit.Should;
 using System.Linq;
@@ -16,6 +17,49 @@ namespace RouteConfigurationSpecs
 			_configuration = new RouteConfiguration();
 		}
 	}
+
+    [TestFixture]
+    public class when_cloning : base_context
+    {
+        private RouteConfiguration _clone;
+
+        protected override void given()
+        {
+            base.given();
+            _configuration.As = "1";
+            _configuration.IdValidationRegEx = @"\d+";
+            _configuration.PathPrefix = "test";
+            _configuration.Shallow = true;
+            _configuration.ActionNames.Show = "view";
+            _configuration.ActionNames.New = "make";
+            _configuration.ActionNames.Create = "build";
+            _configuration.ActionNames.Edit = "change";
+            _configuration.ActionNames.Update = "amend";
+            _configuration.ActionNames.Delete = "bin";
+            _configuration.ActionNames.Destroy = "abolish";
+        }
+
+        protected override void when()
+        {
+            _clone = (RouteConfiguration)((ICloneable)_configuration).Clone();
+        }
+
+        [Test]
+        public void should_do_a_shallow_copy()
+        {
+            _clone.As.ShouldBe("1");
+            _clone.IdValidationRegEx.ShouldBe(@"\d+");
+            _clone.PathPrefix.ShouldBe("test");
+            _clone.Shallow.ShouldBeTrue();
+            _clone.ActionNames.Show.ShouldBe("view");
+            _clone.ActionNames.New.ShouldBe("make");
+            _clone.ActionNames.Create.ShouldBe("build");
+            _clone.ActionNames.Edit.ShouldBe("change");
+            _clone.ActionNames.Update.ShouldBe("amend");
+            _clone.ActionNames.Delete.ShouldBe("bin");
+            _clone.ActionNames.Destroy.ShouldBe("abolish");
+        }
+    }
 
 	[TestFixture]
 	public class when_adding_custom_collection_routes : base_context

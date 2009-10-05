@@ -9,11 +9,6 @@ namespace RestfulRouting
 
 		protected RouteConfiguration _configuration;
 
-		public MapperBase(RouteCollection routeCollection)
-			: this(routeCollection, RouteConfiguration.Default())
-		{
-		}
-
 		public MapperBase(RouteCollection routeCollection, RouteConfiguration configuration)
 		{
 			_configuration = configuration;

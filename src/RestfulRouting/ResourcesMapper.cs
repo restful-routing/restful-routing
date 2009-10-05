@@ -7,11 +7,6 @@ namespace RestfulRouting
 {
 	public class ResourcesMapper<TController> : MapperBase<TController> where TController : Controller
 	{
-		public ResourcesMapper(RouteCollection routeCollection)
-			: base(routeCollection)
-		{
-		}
-
 		public ResourcesMapper(RouteCollection routeCollection, RouteConfiguration configuration) : base(routeCollection, configuration)
 		{
 		}
@@ -132,9 +127,6 @@ namespace RestfulRouting
 			Map(resource);
 
 			var singular = Inflector.Net.Inflector.Singularize(resource).ToLowerInvariant();
-
-			if (_configuration == null)
-				_configuration = RouteConfiguration.Default();
 
 			var configuration = _configuration.Clone();
 
