@@ -1,24 +1,5 @@
 h1. Restful Routing for ASP .NET MVC
 
-The standard {controller}/{action}/{id} mapping produces urls like this
-
-<pre><code>Blogs
-Blogs/Show/1
-Blogs/Create/1
-Blogs/Edit/1
-Blogs/Update/1
-Blogs/Delete/1
-Blogs/Destroy/1</pre></code>
-
-With RestfulRouting you get urls like this
-
-<pre><code>blogs
-blogs/1
-blogs/1/edit
-blogs/1/delete</pre></code>
-
-The action changes depending on the HttpVerb used. Post to blogs and you hit the create action. Put to blogs/1 and you hit the update action. A form override _method is used to simulate put and delete requests in HTML forms.
-
 Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html
 
 h2. Features
@@ -43,25 +24,25 @@ map.Resources<BlogsController>(x =>
 
 This will give you these routes
 
-|Url|Defaults|Constraints|
-|blogs|action = index, controller = blogs|GET|
-|blogs|action = create, controller = blogs|POST|
-|blogs/new|action = new, controller = blogs|GET|
-|blogs/{id}/{action}|action = show, controller = blogs|GET, action = show,edit,delete|
-|blogs/{id}|action = update, controller = blogs|PUT|
-|blogs/{id}|action = destroy, controller = blogs|DELETE|
-|blogs/{blogId}/posts|action = index, controller = posts|GET|
-|blogs/{blogId}/posts|action = create, controller = posts|POST|
-|blogs/{blogId}/posts/new|action = new, controller = posts|GET|
-|blogs/{blogId}/posts/{id}/{action}|action = show, controller = posts|GET, action = show,edit,delete|
-|blogs/{blogId}/posts/{id}|action = update, controller = posts|PUT|
-|blogs/{blogId}/posts/{id}|action = destroy, controller = posts|DELETE|
-|blogs/{blogId}/posts/{postId}/comments|action = index, controller = comments|GET|
-|blogs/{blogId}/posts/{postId}/comments|action = create, controller = comments|POST|
-|blogs/{blogId}/posts/{postId}/comments/new|action = new, controller = comments|GET|
-|blogs/{blogId}/posts/{postId}/comments/{id}/{action}|action = show, controller = comments|GET, action = show,edit,delete|
-|blogs/{blogId}/posts/{postId}/comments/{id}|action = update, controller = comments|PUT|
-|blogs/{blogId}/posts/{postId}/comments/{id}|action = destroy, controller = comments|DELETE|
+|Url|Default Controller|Default Action|Constraints|
+|blogs|blogs|index|GET|
+|blogs|blogs|create|POST|
+|blogs/new|blogs|new|GET|
+|blogs/{id}/{action}|blogs|show|GET, action = show,edit,delete|
+|blogs/{id}|blogs|update|PUT|
+|blogs/{id}|blogs|destroy|DELETE|
+|blogs/{blogId}/posts|posts|index|GET|
+|blogs/{blogId}/posts|posts|create|POST|
+|blogs/{blogId}/posts/new|posts|new|GET|
+|blogs/{blogId}/posts/{id}/{action}|posts|show|GET, action = show,edit,delete|
+|blogs/{blogId}/posts/{id}|posts|update|PUT|
+|blogs/{blogId}/posts/{id}|posts|destroy|DELETE|
+|blogs/{blogId}/posts/{postId}/comments|comments|index|GET|
+|blogs/{blogId}/posts/{postId}/comments|comments|create|POST|
+|blogs/{blogId}/posts/{postId}/comments/new|comments|new|GET|
+|blogs/{blogId}/posts/{postId}/comments/{id}/{action}|comments|show|GET, action = show,edit,delete|
+|blogs/{blogId}/posts/{postId}/comments/{id}|comments|update|PUT|
+|blogs/{blogId}/posts/{postId}/comments/{id}|comments|destroy|DELETE|
 
 h2. Shallow Nesting
 
@@ -79,38 +60,38 @@ map.Resources<BlogsController>(config => config.Shallow = true, blogs =>
 
 This will give you routes like these
 
-|Url|Defaults|Constraints|
-|blogs|action = index, controller = blogs|GET|
-|blogs|action = create, controller = blogs|POST|
-|blogs/new|action = new, controller = blogs|GET|
-|blogs/{id}/{action}|action = show, controller = blogs|GET, action = show,edit,delete|
-|blogs/{id}|action = update, controller = blogs|PUT|
-|blogs/{id}|action = destroy, controller = blogs|DELETE|
-|blogs/{blogId}/posts|action = index, controller = posts|GET|
-|posts|action = index, controller = posts|GET|
-|posts|action = index, controller = posts|GET|
-|posts|action = create, controller = posts|POST|
-|posts/new|action = new, controller = posts|GET|
-|posts/{id}/{action}|action = show, controller = posts|GET, action = show,edit,delete|
-|posts/{id}|action = update, controller = posts|PUT|
-|posts/{id}|action = destroy, controller = posts|DELETE|
-|posts/{postId}/comments|action = index, controller = comments|GET|
-|comments|action = index, controller = comments|GET|
-|comments|action = create, controller = comments|POST|
-|comments/new|action = new, controller = comments|GET|
-|comments/{id}/{action}|action = show, controller = comments|GET, action = show,edit,delete|
-|comments/{id}|action = update, controller = comments|PUT|
-|comments/{id}|action = destroy, controller = comments|DELETE|
+|Url|Default Controller|Default Action|Constraints|
+|blogs|blogs|index|GET|
+|blogs|blogs|create|POST|
+|blogs/new|blogs|new|GET|
+|blogs/{id}/{action}|blogs|show|GET, action = show,edit,delete|
+|blogs/{id}|blogs|update|PUT|
+|blogs/{id}|blogs|destroy|DELETE|
+|blogs/{blogId}/posts|posts|index|GET|
+|posts|posts|index|GET|
+|posts|posts|index|GET|
+|posts|posts|create|POST|
+|posts/new|posts|new|GET|
+|posts/{id}/{action}|posts|show|GET, action = show,edit,delete|
+|posts/{id}|posts|update|PUT|
+|posts/{id}|posts|destroy|DELETE|
+|posts/{postId}/comments|comments|index|GET|
+|comments|comments|index|GET|
+|comments|comments|create|POST|
+|comments/new|comments|new|GET|
+|comments/{id}/{action}|comments|show|GET, action = show,edit,delete|
+|comments/{id}|comments|update|PUT|
+|comments/{id}|comments|destroy|DELETE|
 
 h2. Singular Resources
 
-|Url|Defaults|Constraints|
-|session|action = create, controller = session|POST|
-|session/new|action = new, controller = session|GET|
-|session/{action}|action = show, controller = session|GET, action = show,edit,delete|
-|session|action = update, controller = session|PUT|
-|session|action = destroy, controller = session|DELETE|
-|session|action = show, controller = session|GET|
+|Url|Default Controller|Default Action|Constraints|
+|session|session|create|POST|
+|session/new|session|new|GET|
+|session/{action}|session|show|GET, action = show,edit,delete|
+|session|session|update|PUT|
+|session|session|destroy|DELETE|
+|session|session|show|GET|
 
 h2. More Information
 
