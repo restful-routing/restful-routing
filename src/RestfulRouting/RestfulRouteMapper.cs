@@ -7,7 +7,7 @@ namespace RestfulRouting
 	public class RestfulRouteMapper
 	{
 		protected RouteCollection _routeCollection;
-		private RouteConfiguration _routeConfiguration;
+		public RouteConfiguration RouteConfiguration { get; private set; }
 
 		public RestfulRouteMapper(RouteCollection routeCollection) : this(routeCollection, RouteConfiguration.Default())
 		{
@@ -16,48 +16,53 @@ namespace RestfulRouting
 		public RestfulRouteMapper(RouteCollection routeCollection, RouteConfiguration routeConfiguration)
 		{
 			_routeCollection = routeCollection;
-			_routeConfiguration = routeConfiguration;
+			RouteConfiguration = routeConfiguration;
+		}
+
+		public RestfulRouteMapper WithConfiguration(Action<RouteConfiguration> config)
+		{
+			return new RestfulRouteMapper(_routeCollection, CloneAndAlterConfig(config));
 		}
 
 		public void Resources<TController>() where TController : Controller
 		{
-			new ResourcesMapper<TController>(_routeCollection, _routeConfiguration).Map();
+			new ResourcesMapper<TController>(_routeCollection, RouteConfiguration).Map();
 		}
 
 		public void Resources<TController>(Action<RouteConfiguration> config)
 			where TController : Controller
 		{
-			config(_routeConfiguration);
-
-			new ResourcesMapper<TController>(_routeCollection, _routeConfiguration).Map();
+			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config));
 		}
 
 		public void Resources<TController>(Action<RestfulRouteMapper> map)
 			where TController : Controller
 		{
-			new ResourcesMapper<TController>(_routeCollection, _routeConfiguration).Map(map);
+			new ResourcesMapper<TController>(_routeCollection, RouteConfiguration).Map(map);
 		}
 
 		public void Resources<TController>(Action<RouteConfiguration> config, Action<RestfulRouteMapper> map)
 			where TController : Controller
 		{
-			config(_routeConfiguration);
-
-			new ResourcesMapper<TController>(_routeCollection, _routeConfiguration).Map(map);
+			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map(map);
 		}
-
 
 		public void Resource<TController>() where TController : Controller
 		{
-			new ResourceMapper<TController>(_routeCollection, _routeConfiguration).Map();
+			new ResourceMapper<TController>(_routeCollection, RouteConfiguration).Map();
 		}
 
 		public void Resource<TController>(Action<RouteConfiguration> config)
 			where TController : Controller
 		{
-			config(_routeConfiguration);
+			new ResourceMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map();
+		}
 
-			new ResourceMapper<TController>(_routeCollection, _routeConfiguration).Map();
+		private RouteConfiguration CloneAndAlterConfig(Action<RouteConfiguration> action)
+		{
+			var configuration = RouteConfiguration.Clone();
+			action(configuration);
+			return configuration;
 		}
 	}
 }
