@@ -85,6 +85,10 @@ This will give you routes like these
 
 h2. Singular Resources
 
+<pre><code>var map = new RestfulRouteMapper(RouteTable.Routes);
+
+map.Resource<SessionController>();</code></pre>
+
 |Url|Default Controller|Default Action|Constraints|
 |session|session|create|POST|
 |session/new|session|new|GET|
