@@ -32,7 +32,7 @@ namespace RestfulRouting
 		public void Resources<TController>(Action<RouteConfiguration> config)
 			where TController : Controller
 		{
-			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config));
+			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map();
 		}
 
 		public void Resources<TController>(Action<RestfulRouteMapper> map)

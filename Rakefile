@@ -23,5 +23,5 @@ end
 
 desc 'runs tests'
 task :test do
-	sh "tools\\nunit\\nunit-console.exe src\\#{PROJECT}.Tests\\bin\\Debug\\#{PROJECT}.Tests.dll"
+	sh "tools\\nunit\\nunit-console.exe src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
 end
