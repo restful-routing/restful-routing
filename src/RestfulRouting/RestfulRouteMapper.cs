@@ -4,9 +4,31 @@ using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public class RestfulRouteMapper
+	public interface IRestfulRouteMapper
+	{
+		void Resources<TController>() 
+			where TController : Controller;
+
+		void Resources<TController>(Action<RouteConfiguration> config)
+			where TController : Controller;
+
+		void Resources<TController>(Action<IRestfulRouteMapper> map)
+			where TController : Controller;
+
+		void Resources<TController>(Action<RouteConfiguration> config, Action<IRestfulRouteMapper> map)
+			where TController : Controller;
+
+		void Resource<TController>() 
+			where TController : Controller;
+
+		void Resource<TController>(Action<RouteConfiguration> config)
+			where TController : Controller;
+	}
+
+	public class RestfulRouteMapper : IRestfulRouteMapper
 	{
 		protected RouteCollection _routeCollection;
+
 		public RouteConfiguration RouteConfiguration { get; private set; }
 
 		public RestfulRouteMapper(RouteCollection routeCollection) : this(routeCollection, RouteConfiguration.Default())
@@ -17,11 +39,6 @@ namespace RestfulRouting
 		{
 			_routeCollection = routeCollection;
 			RouteConfiguration = routeConfiguration;
-		}
-
-		public RestfulRouteMapper WithConfiguration(Action<RouteConfiguration> config)
-		{
-			return new RestfulRouteMapper(_routeCollection, CloneAndAlterConfig(config));
 		}
 
 		public void Resources<TController>() where TController : Controller
@@ -35,13 +52,13 @@ namespace RestfulRouting
 			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map();
 		}
 
-		public void Resources<TController>(Action<RestfulRouteMapper> map)
+		public void Resources<TController>(Action<IRestfulRouteMapper> map)
 			where TController : Controller
 		{
 			new ResourcesMapper<TController>(_routeCollection, RouteConfiguration).Map(map);
 		}
 
-		public void Resources<TController>(Action<RouteConfiguration> config, Action<RestfulRouteMapper> map)
+		public void Resources<TController>(Action<RouteConfiguration> config, Action<IRestfulRouteMapper> map)
 			where TController : Controller
 		{
 			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map(map);

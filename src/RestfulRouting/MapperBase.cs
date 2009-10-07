@@ -163,12 +163,12 @@ namespace RestfulRouting
 		}
 
 
-		public void Map(Action<RestfulRouteMapper> map)
+		public void Map(Action<IRestfulRouteMapper> map)
 		{
 			Map(ResourceName(), map);
 		}
 
-		public void Map(string resource, Action<RestfulRouteMapper> map)
+		public void Map(string resource, Action<IRestfulRouteMapper> map)
 		{
 			Map(resource);
 
