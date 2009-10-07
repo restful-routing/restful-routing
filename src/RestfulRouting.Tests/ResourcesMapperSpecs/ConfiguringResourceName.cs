@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using MvcContrib.TestHelper;
 using NUnit.Framework;
+using RestfulRouting;
 using RestfulRouting.Tests;
 
 namespace ResourcesMapperSpecs
@@ -10,6 +11,14 @@ namespace ResourcesMapperSpecs
 	{
 		protected override void when()
 		{
+			RouteConfiguration.Default = () => new RouteConfiguration
+			                                   	{
+			                                   		
+			                                   	};
+
+			_map.WithConfiguration(config => config.As = "weblogs")
+				.Resources<BlogsController>();
+
 			_map.Resources<BlogsController>(x => x.As = "weblogs");
 		}
 

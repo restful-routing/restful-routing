@@ -43,17 +43,7 @@ namespace RestfulRouting
 			return (RouteConfiguration)MemberwiseClone();
 		}
 
-		public string BasePath()
-		{
-			var basePath = VirtualPathUtility.RemoveTrailingSlash(PathPrefix);
-
-			if (!string.IsNullOrEmpty(basePath))
-			{
-				basePath = basePath + "/";
-			}
-
-			return basePath ?? string.Empty;
-		}
+		
 	}
 
 	public class ActionNames

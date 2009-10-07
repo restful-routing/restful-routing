@@ -97,7 +97,7 @@ namespace RestfulRouting.Tests
 			return Content("");
 		}
 
-		public ActionResult View()
+		public new ActionResult View()
 		{
 			return Content("");
 		}

@@ -1,15 +1,25 @@
+using System;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public class MapperBase<TController> where TController : Controller
+	public abstract class MapperBase<TController> where TController : Controller
 	{
 		protected RouteCollection _routeCollection;
 
 		protected RouteConfiguration _configuration;
 
-		public MapperBase(RouteCollection routeCollection, RouteConfiguration configuration)
+		protected string _resourcePath;
+
+		protected string _idSegment;
+
+
+		protected string _controller;
+
+		protected MapperBase(RouteCollection routeCollection, RouteConfiguration configuration)
 		{
 			_configuration = configuration;
 			_routeCollection = routeCollection;
@@ -22,6 +32,158 @@ namespace RestfulRouting
 			var resource = controllerType.Name.Substring(0, controllerType.Name.Length - "Controller".Length).ToLowerInvariant();
 
 			return resource;
+		}
+
+		protected string BasePath()
+		{
+			var basePath = VirtualPathUtility.RemoveTrailingSlash(_configuration.PathPrefix);
+
+			if (!string.IsNullOrEmpty(basePath))
+			{
+				basePath = basePath + "/";
+			}
+
+			return basePath ?? string.Empty;
+		}
+
+		protected void MapIndex()
+		{
+			// GET /blogs => Index
+			_routeCollection.Add(new Route(
+									_resourcePath,
+									new RouteValueDictionary(new { action = _configuration.ActionNames.Index, controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapCreate()
+		{
+			// POST /blogs => Create
+			_routeCollection.Add(new Route(
+									_resourcePath,
+									new RouteValueDictionary(new { action = _configuration.ActionNames.Create, controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapNew()
+		{
+			// GET /blogs/new => New
+			_routeCollection.Add(new Route(
+									_resourcePath + "/" + _configuration.ActionNames.New,
+									new RouteValueDictionary(new { action = _configuration.ActionNames.New, controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapMembers()
+		{
+			// GET /blogs/1 => Show
+			// GET /blogs/1/edit => Edit
+			// GET /blogs/1/delete => Delete
+			_routeCollection.Add(new Route(
+									_resourcePath + _idSegment + "/{action}",
+									new RouteValueDictionary(new { action = _configuration.ActionNames.Show, controller = _controller }),
+									new RouteValueDictionary(new
+									                         	{
+									                         		httpMethod = new HttpMethodConstraint("GET"), 
+																	action = _configuration.ActionNames.Show + "|" +
+																		_configuration.ActionNames.New + "|" +
+																		_configuration.ActionNames.Edit + "|" + 
+																		_configuration.ActionNames.Delete
+									                         	}),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapUpdate()
+		{
+			// PUT /blogs/1 => Update
+			_routeCollection.Add(new Route(
+									_resourcePath + _idSegment,
+									new RouteValueDictionary(new { action = _configuration.ActionNames.Update, controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("PUT") }),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapDestroy()
+		{
+			// DELETE /blogs/1 => Delete
+			_routeCollection.Add(new Route(
+									_resourcePath + _idSegment,
+									new RouteValueDictionary(new { action = _configuration.ActionNames.Destroy, controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("DELETE") }),
+									new MvcRouteHandler()));
+		}
+
+		protected void MapPostOverrideForPutAndDelete()
+		{
+			// HTML forms can only GET or POST... this allows us to place an override value in the form to simulate a PUT or DELETE
+			// The route handler then translates the overrides to the appropriate action
+			// POST /blogs/1 => Update or Delete
+			_routeCollection.Add(new Route(
+									_resourcePath + _idSegment,
+									new RouteValueDictionary(new { controller = _controller }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
+									new PostOverrideRouteHandler()));
+		}
+
+		protected void MapMemberRoutes()
+		{
+			foreach (var member in _configuration.ActionNames.MemberRoutes.Keys)
+			{
+				var verbArray = _configuration.ActionNames.GetMemberVerbArray(member);
+				// VERB /blogs/1/member => Member
+				_routeCollection.Add(new Route(
+										_resourcePath + _idSegment + "/" + member,
+										new RouteValueDictionary(new { action = member, controller = _controller }),
+										new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint(verbArray) }),
+										new MvcRouteHandler()));
+			}
+		}
+
+		protected void MapCollectionRoutes()
+		{
+			foreach (var member in _configuration.ActionNames.CollectionRoutes.Keys)
+			{
+				var verbArray = _configuration.ActionNames.CollectionRoutes[member].Select(x => x.ToString().ToUpperInvariant()).ToList().ToArray();
+				// VERB /blogs/member => Member
+				_routeCollection.Add(new Route(
+										_resourcePath + "/" + member,
+										new RouteValueDictionary(new { action = member, controller = _controller }),
+										new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint(verbArray) }),
+										new MvcRouteHandler()));
+			}
+		}
+
+		public abstract void Map(string resource);
+
+		public void Map()
+		{
+			Map(ResourceName());
+		}
+
+
+		public void Map(Action<RestfulRouteMapper> map)
+		{
+			Map(ResourceName(), map);
+		}
+
+		public void Map(string resource, Action<RestfulRouteMapper> map)
+		{
+			Map(resource);
+
+			var singular = Inflector.Net.Inflector.Singularize(resource).ToLowerInvariant();
+
+			var configuration = _configuration.Clone();
+
+			if (configuration.Shallow)
+				configuration.PathPrefix = resource + "/{" + singular + "Id}";
+			else
+				configuration.PathPrefix = BasePath() + resource + "/{" + singular + "Id}";
+
+			var mapper = new RestfulRouteMapper(_routeCollection, configuration);
+
+			map(mapper);
 		}
 	}
 }
