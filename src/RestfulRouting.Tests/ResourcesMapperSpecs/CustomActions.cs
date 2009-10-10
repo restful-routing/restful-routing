@@ -12,9 +12,16 @@ namespace ResourcesMapperSpecs
 		{
 			_map.Resources<PhotosController>(x =>
 			{
-				x.ActionNames.AddMemberRoute<PhotosController>(a => a.MoveUp(1), HttpVerbs.Post);
-				x.ActionNames.AddMemberRoute<PhotosController>(a => a.MoveDown(1), HttpVerbs.Get, HttpVerbs.Post);
+				x.AddMemberRoute<PhotosController>(a => a.DoSomething(1));
+				x.AddMemberRoute<PhotosController>(a => a.MoveUp(1), HttpVerbs.Post);
+				x.AddMemberRoute<PhotosController>(a => a.MoveDown(1), HttpVerbs.Get, HttpVerbs.Post);
 			});
+		}
+
+		[Test]
+		public void should_default_to_GET()
+		{
+			"~/photos/1/dosomething".WithMethod(HttpVerbs.Get).ShouldMapTo<PhotosController>(x => x.DoSomething(1));
 		}
 
 		[Test]
@@ -43,8 +50,8 @@ namespace ResourcesMapperSpecs
 		{
 			_map.Resources<PhotosController>(x =>
 			{
-				x.ActionNames.AddCollectionRoute<PhotosController>(c => c.Online(), HttpVerbs.Post);
-				x.ActionNames.AddCollectionRoute<PhotosController>(c => c.Offline(), HttpVerbs.Get, HttpVerbs.Post);
+				x.AddCollectionRoute<PhotosController>(c => c.Online(), HttpVerbs.Post);
+				x.AddCollectionRoute<PhotosController>(c => c.Offline(), HttpVerbs.Get, HttpVerbs.Post);
 			});
 		}
 

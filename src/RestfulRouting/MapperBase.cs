@@ -22,6 +22,7 @@ namespace RestfulRouting
 		protected MapperBase(RouteCollection routeCollection, RouteConfiguration configuration)
 		{
 			_configuration = configuration;
+
 			_routeCollection = routeCollection;
 		}
 
@@ -51,7 +52,7 @@ namespace RestfulRouting
 			// GET /blogs => Index
 			_routeCollection.Add(new Route(
 									_resourcePath,
-									new RouteValueDictionary(new { action = _configuration.ActionNames.Index, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.Index, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 		}
@@ -61,7 +62,7 @@ namespace RestfulRouting
 			// POST /blogs => Create
 			_routeCollection.Add(new Route(
 									_resourcePath,
-									new RouteValueDictionary(new { action = _configuration.ActionNames.Create, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.Create, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
 									new MvcRouteHandler()));
 		}
@@ -70,8 +71,8 @@ namespace RestfulRouting
 		{
 			// GET /blogs/new => New
 			_routeCollection.Add(new Route(
-									_resourcePath + "/" + _configuration.ActionNames.New,
-									new RouteValueDictionary(new { action = _configuration.ActionNames.New, controller = _controller }),
+									_resourcePath + "/" + _configuration.New,
+									new RouteValueDictionary(new { action = _configuration.New, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 		}
@@ -83,14 +84,14 @@ namespace RestfulRouting
 			// GET /blogs/1/delete => Delete
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment + "/{action}",
-									new RouteValueDictionary(new { action = _configuration.ActionNames.Show, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.Show, controller = _controller }),
 									new RouteValueDictionary(new
 									                         	{
 									                         		httpMethod = new HttpMethodConstraint("GET"), 
-																	action = _configuration.ActionNames.Show + "|" +
-																		_configuration.ActionNames.New + "|" +
-																		_configuration.ActionNames.Edit + "|" + 
-																		_configuration.ActionNames.Delete
+																	action = _configuration.Show + "|" +
+																		_configuration.New + "|" +
+																		_configuration.Edit + "|" + 
+																		_configuration.Delete
 									                         	}),
 									new MvcRouteHandler()));
 		}
@@ -100,7 +101,7 @@ namespace RestfulRouting
 			// PUT /blogs/1 => Update
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,
-									new RouteValueDictionary(new { action = _configuration.ActionNames.Update, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.Update, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("PUT") }),
 									new MvcRouteHandler()));
 		}
@@ -110,7 +111,7 @@ namespace RestfulRouting
 			// DELETE /blogs/1 => Delete
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,
-									new RouteValueDictionary(new { action = _configuration.ActionNames.Destroy, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.Destroy, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("DELETE") }),
 									new MvcRouteHandler()));
 		}
@@ -129,9 +130,9 @@ namespace RestfulRouting
 
 		protected void MapMemberRoutes()
 		{
-			foreach (var member in _configuration.ActionNames.MemberRoutes.Keys)
+			foreach (var member in _configuration.MemberRoutes.Keys)
 			{
-				var verbArray = _configuration.ActionNames.GetMemberVerbArray(member);
+				var verbArray = _configuration.GetMemberVerbArray(member);
 				// VERB /blogs/1/member => Member
 				_routeCollection.Add(new Route(
 										_resourcePath + _idSegment + "/" + member,
@@ -143,9 +144,9 @@ namespace RestfulRouting
 
 		protected void MapCollectionRoutes()
 		{
-			foreach (var member in _configuration.ActionNames.CollectionRoutes.Keys)
+			foreach (var member in _configuration.CollectionRoutes.Keys)
 			{
-				var verbArray = _configuration.ActionNames.CollectionRoutes[member].Select(x => x.ToString().ToUpperInvariant()).ToList().ToArray();
+				var verbArray = _configuration.CollectionRoutes[member].Select(x => x.ToString().ToUpperInvariant()).ToList().ToArray();
 				// VERB /blogs/member => Member
 				_routeCollection.Add(new Route(
 										_resourcePath + "/" + member,

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RestfulRouting
@@ -15,40 +14,6 @@ namespace RestfulRouting
 		}
 
 		public RouteConfiguration()
-		{
-			ActionNames = new ActionNames();
-		}
-
-		public string IdValidationRegEx { get; set; }
-
-		public string As { get; set; }
-
-		public ActionNames ActionNames { get; set; }
-
-		public string PathPrefix { get; set; }
-
-		public bool Shallow { get; set; }
-
-
-
-		public static Func<RouteConfiguration> Default { get; set; }
-
-		object ICloneable.Clone()
-		{
-			return Clone();
-		}
-
-		public RouteConfiguration Clone()
-		{
-			return (RouteConfiguration)MemberwiseClone();
-		}
-
-		
-	}
-
-	public class ActionNames
-	{
-		public ActionNames()
 		{
 			InitializeDefaults();
 		}
@@ -66,6 +31,26 @@ namespace RestfulRouting
 
 			MemberRoutes = new Dictionary<string, HttpVerbs[]>();
 			CollectionRoutes = new Dictionary<string, HttpVerbs[]>();
+		}
+
+		public string IdValidationRegEx { get; set; }
+
+		public string As { get; set; }
+
+		public string PathPrefix { get; set; }
+
+		public bool Shallow { get; set; }
+
+		public static Func<RouteConfiguration> Default { get; set; }
+
+		object ICloneable.Clone()
+		{
+			return Clone();
+		}
+
+		public RouteConfiguration Clone()
+		{
+			return (RouteConfiguration)MemberwiseClone();
 		}
 
 		public string Index { get; set; }
@@ -93,11 +78,15 @@ namespace RestfulRouting
 
 		public void AddMemberRoute<TController>(Expression<Func<TController, object>> actionExpression, params HttpVerbs[] verbs)
 		{
+			if (verbs.Count() == 0)
+				verbs = new[] { HttpVerbs.Get };
 			AddMemberRoute(GetActionName(actionExpression), verbs);
 		}
 
 		public void AddCollectionRoute<TController>(Expression<Func<TController, object>> actionExpression, params HttpVerbs[] verbs)
 		{
+			if (verbs.Count() == 0)
+				verbs = new[] { HttpVerbs.Get };
 			AddCollectionRoute(GetActionName(actionExpression), verbs);
 		}
 

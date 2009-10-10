@@ -12,8 +12,8 @@ namespace ResourceMapperSpecs
 		{
 			_map.Resource<SessionController>(x =>
 			{
-				x.ActionNames.AddMemberRoute<SessionController>(a => a.MoveUp(), HttpVerbs.Post);
-				x.ActionNames.AddMemberRoute<SessionController>(a => a.MoveDown(), HttpVerbs.Get, HttpVerbs.Post);
+				x.AddMemberRoute<SessionController>(a => a.MoveUp(), HttpVerbs.Post);
+				x.AddMemberRoute<SessionController>(a => a.MoveDown(), HttpVerbs.Get, HttpVerbs.Post);
 			});
 		}
 

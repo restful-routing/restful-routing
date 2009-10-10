@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace RestfulRouting.Tests
 {
@@ -6,62 +7,67 @@ namespace RestfulRouting.Tests
 	{
 		public ActionResult List()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Make()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Build()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Change(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Amend(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Bin(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Abolish(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult View(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult MoveUp(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult MoveDown(int id)
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Online()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Offline()
 		{
-			return Content("");
+			return null;
+		}
+
+		public ActionResult DoSomething(int id)
+		{
+			return null;
 		}
 	}
 
@@ -69,37 +75,42 @@ namespace RestfulRouting.Tests
 	{
 		public ActionResult Make()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Build()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Change()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Amend()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Bin()
 		{
-			return Content("");
+			return null;
 		}
 
 		public ActionResult Abolish()
 		{
-			return Content("");
+			return null;
 		}
 
 		public new ActionResult View()
 		{
-			return Content("");
+			return null;
+		}
+
+		public ActionResult DoSomething()
+		{
+			return null;
 		}
 	}
 }

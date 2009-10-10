@@ -30,13 +30,13 @@ namespace RouteConfigurationSpecs
             _configuration.IdValidationRegEx = @"\d+";
             _configuration.PathPrefix = "test";
             _configuration.Shallow = true;
-            _configuration.ActionNames.Show = "view";
-            _configuration.ActionNames.New = "make";
-            _configuration.ActionNames.Create = "build";
-            _configuration.ActionNames.Edit = "change";
-            _configuration.ActionNames.Update = "amend";
-            _configuration.ActionNames.Delete = "bin";
-            _configuration.ActionNames.Destroy = "abolish";
+            _configuration.Show = "view";
+            _configuration.New = "make";
+            _configuration.Create = "build";
+            _configuration.Edit = "change";
+            _configuration.Update = "amend";
+            _configuration.Delete = "bin";
+            _configuration.Destroy = "abolish";
         }
 
         protected override void when()
@@ -51,13 +51,13 @@ namespace RouteConfigurationSpecs
             _clone.IdValidationRegEx.ShouldBe(@"\d+");
             _clone.PathPrefix.ShouldBe("test");
             _clone.Shallow.ShouldBeTrue();
-            _clone.ActionNames.Show.ShouldBe("view");
-            _clone.ActionNames.New.ShouldBe("make");
-            _clone.ActionNames.Create.ShouldBe("build");
-            _clone.ActionNames.Edit.ShouldBe("change");
-            _clone.ActionNames.Update.ShouldBe("amend");
-            _clone.ActionNames.Delete.ShouldBe("bin");
-            _clone.ActionNames.Destroy.ShouldBe("abolish");
+            _clone.Show.ShouldBe("view");
+            _clone.New.ShouldBe("make");
+            _clone.Create.ShouldBe("build");
+            _clone.Edit.ShouldBe("change");
+            _clone.Update.ShouldBe("amend");
+            _clone.Delete.ShouldBe("bin");
+            _clone.Destroy.ShouldBe("abolish");
         }
     }
 
@@ -66,13 +66,22 @@ namespace RouteConfigurationSpecs
 	{
 		protected override void when()
 		{
-			_configuration.ActionNames.AddCollectionRoute<PhotosController>(x => x.Make(), HttpVerbs.Get, HttpVerbs.Post, HttpVerbs.Put, HttpVerbs.Delete, HttpVerbs.Head);
+			_configuration.AddCollectionRoute<PhotosController>(x => x.DoSomething(1));
+			_configuration.AddCollectionRoute<PhotosController>(x => x.Make(), HttpVerbs.Get, HttpVerbs.Post, HttpVerbs.Put, HttpVerbs.Delete, HttpVerbs.Head);
+		}
+
+		[Test]
+		public void should_default_to_GET()
+		{
+			var verbArray = _configuration.GetCollectionVerbArray("dosomething");
+			verbArray.Count().ShouldBe(1);
+			verbArray.First().ShouldBe("GET");
 		}
 
 		[Test]
 		public void should_return_verbs_as_upper_case_string_array()
 		{
-			var verbArray = _configuration.ActionNames.GetCollectionVerbArray("make");
+			var verbArray = _configuration.GetCollectionVerbArray("make");
 			verbArray.Count().ShouldBe(5);
 			verbArray.ShouldContain("GET");
 			verbArray.ShouldContain("POST");
@@ -87,13 +96,23 @@ namespace RouteConfigurationSpecs
 	{
 		protected override void when()
 		{
-			_configuration.ActionNames.AddMemberRoute<PhotosController>(x => x.Make(), HttpVerbs.Get, HttpVerbs.Post, HttpVerbs.Put, HttpVerbs.Delete, HttpVerbs.Head);
+			_configuration.AddMemberRoute<PhotosController>(x => x.DoSomething(1));
+			_configuration.AddMemberRoute<PhotosController>(x => x.Make(), HttpVerbs.Get, HttpVerbs.Post, HttpVerbs.Put, HttpVerbs.Delete, HttpVerbs.Head);
+		}
+
+
+		[Test]
+		public void should_default_to_GET()
+		{
+			var verbArray = _configuration.GetMemberVerbArray("dosomething");
+			verbArray.Count().ShouldBe(1);
+			verbArray.First().ShouldBe("GET");
 		}
 
 		[Test]
 		public void should_return_verbs_as_upper_case_string_array()
 		{
-			var verbArray = _configuration.ActionNames.GetMemberVerbArray("make");
+			var verbArray = _configuration.GetMemberVerbArray("make");
 			verbArray.Count().ShouldBe(5);
 			verbArray.ShouldContain("GET");
 			verbArray.ShouldContain("POST");
