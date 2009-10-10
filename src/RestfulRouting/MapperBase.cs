@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,6 @@ namespace RestfulRouting
 		protected string _resourcePath;
 
 		protected string _idSegment;
-
 
 		protected string _controller;
 
@@ -49,6 +49,8 @@ namespace RestfulRouting
 
 		protected void MapIndex()
 		{
+			if (!_configuration.Includes(_configuration.IndexName))
+				return;
 			// GET /blogs => Index
 			_routeCollection.Add(new Route(
 									_resourcePath,
@@ -59,6 +61,8 @@ namespace RestfulRouting
 
 		protected void MapCreate()
 		{
+			if (!_configuration.Includes(_configuration.CreateName))
+				return;
 			// POST /blogs => Create
 			_routeCollection.Add(new Route(
 									_resourcePath,
@@ -69,6 +73,8 @@ namespace RestfulRouting
 
 		protected void MapNew()
 		{
+			if (!_configuration.Includes(_configuration.IndexName))
+				return;
 			// GET /blogs/new => New
 			_routeCollection.Add(new Route(
 									_resourcePath + "/" + _configuration.NewName,
@@ -79,6 +85,11 @@ namespace RestfulRouting
 
 		protected void MapMembers()
 		{
+			var actions = new[]{_configuration.ShowName, _configuration.NewName, _configuration.EditName, _configuration.DeleteName}
+				.Where(action => _configuration.Includes(action));
+
+			var actionsRegEx = string.Join("|", actions.ToArray());
+
 			// GET /blogs/1 => Show
 			// GET /blogs/1/edit => Edit
 			// GET /blogs/1/delete => Delete
@@ -88,16 +99,15 @@ namespace RestfulRouting
 									new RouteValueDictionary(new
 									                         	{
 									                         		httpMethod = new HttpMethodConstraint("GET"), 
-																	action = _configuration.ShowName + "|" +
-																		_configuration.NewName + "|" +
-																		_configuration.EditName + "|" + 
-																		_configuration.DeleteName
+																	action = actionsRegEx
 									                         	}),
 									new MvcRouteHandler()));
 		}
 
 		protected void MapUpdate()
 		{
+			if (!_configuration.Includes(_configuration.UpdateName))
+				return;
 			// PUT /blogs/1 => Update
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,
@@ -108,6 +118,8 @@ namespace RestfulRouting
 
 		protected void MapDestroy()
 		{
+			if (!_configuration.Includes(_configuration.DestroyName))
+				return;
 			// DELETE /blogs/1 => Delete
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,

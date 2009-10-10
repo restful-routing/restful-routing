@@ -121,4 +121,31 @@ namespace RouteConfigurationSpecs
 			verbArray.ShouldContain("HEAD");
 		}
 	}
+
+	[TestFixture]
+	public class when_excluding_actions : base_context
+	{
+		protected override void when()
+		{
+			_configuration.Except("delete");
+		}
+
+		[Test]
+		public void should_not_include_delete()
+		{
+			_configuration.Includes("delete").ShouldBeFalse();
+		}
+
+		[Test]
+		public void should_include_other_defaults()
+		{
+			_configuration.Includes("index").ShouldBeTrue();
+			_configuration.Includes("show").ShouldBeTrue();
+			_configuration.Includes("new").ShouldBeTrue();
+			_configuration.Includes("create").ShouldBeTrue();
+			_configuration.Includes("edit").ShouldBeTrue();
+			_configuration.Includes("update").ShouldBeTrue();
+			_configuration.Includes("destroy").ShouldBeTrue();
+		}
+	}
 }

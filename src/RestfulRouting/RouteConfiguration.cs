@@ -113,5 +113,27 @@ namespace RestfulRouting
 		{
 			return MemberRoutes[member].Select(x => x.ToString().ToUpperInvariant()).ToArray();
 		}
+
+		private IList<string> IncludedActions { get; set; }
+
+		public bool Includes(string action)
+		{
+			EnsureIncludedActionsIsInitialized();
+
+			return IncludedActions.Contains(action);
+		}
+
+		public void Except(string action)
+		{
+			EnsureIncludedActionsIsInitialized();
+
+			IncludedActions.Remove(action);
+		}
+
+		private void EnsureIncludedActionsIsInitialized()
+		{
+			if (IncludedActions == null)
+				IncludedActions = new List<string> { IndexName, ShowName, NewName, CreateName, EditName, UpdateName, DeleteName, DestroyName };
+		}
 	}
 }

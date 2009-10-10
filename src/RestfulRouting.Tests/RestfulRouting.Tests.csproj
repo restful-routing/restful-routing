@@ -80,6 +80,7 @@
     <Compile Include="ResourceMapperSpecs\CustomActions.cs" />
     <Compile Include="ResourceMapperSpecs\ConfiguringResourceName.cs" />
     <Compile Include="ResourceMapperSpecs\MappingAResource.cs" />
+    <Compile Include="ResourcesMapperSpecs\ExcludingActions.cs" />
     <Compile Include="RestfulRouteMapperSpecs.cs" />
     <Compile Include="TestContexts\BlogsCommentsPostsTestContext.cs" />
     <Compile Include="TestContexts\PhotosController.cs" />
