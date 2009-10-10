@@ -12,14 +12,14 @@ namespace ResourcesMapperSpecs
 		{
 			_map.Resources<PhotosController>(x =>
 			{
-				x.Index = "list";
-				x.Show = "view";
-				x.New = "make";
-				x.Create = "build";
-				x.Edit = "change";
-				x.Update = "amend";
-				x.Delete = "bin";
-				x.Destroy = "abolish";
+				x.IndexName = "list";
+				x.ShowName = "view";
+				x.NewName = "make";
+				x.CreateName = "build";
+				x.EditName = "change";
+				x.UpdateName = "amend";
+				x.DeleteName = "bin";
+				x.DestroyName = "abolish";
 			});
 		}
 

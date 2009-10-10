@@ -20,14 +20,14 @@ namespace RestfulRouting
 
 		private void InitializeDefaults()
 		{
-			Index = "index";
-			Show = "show";
-			New = "new";
-			Create = "create";
-			Edit = "edit";
-			Update = "update";
-			Delete = "delete";
-			Destroy = "destroy";
+			IndexName = "index";
+			ShowName = "show";
+			NewName = "new";
+			CreateName = "create";
+			EditName = "edit";
+			UpdateName = "update";
+			DeleteName = "delete";
+			DestroyName = "destroy";
 
 			MemberRoutes = new Dictionary<string, HttpVerbs[]>();
 			CollectionRoutes = new Dictionary<string, HttpVerbs[]>();
@@ -53,21 +53,21 @@ namespace RestfulRouting
 			return (RouteConfiguration)MemberwiseClone();
 		}
 
-		public string Index { get; set; }
+		public string IndexName { get; set; }
 
-		public string Show { get; set; }
+		public string ShowName { get; set; }
 
-		public string Create { get; set; }
+		public string CreateName { get; set; }
 
-		public string Update { get; set; }
+		public string UpdateName { get; set; }
 
-		public string Destroy { get; set; }
+		public string DestroyName { get; set; }
 
-		public string New { get; set; }
+		public string NewName { get; set; }
 
-		public string Edit { get; set; }
+		public string EditName { get; set; }
 
-		public string Delete { get; set; }
+		public string DeleteName { get; set; }
 
 		private static string GetActionName<TController>(Expression<Func<TController, object>> actionExpression)
 		{

@@ -30,13 +30,13 @@ namespace RouteConfigurationSpecs
             _configuration.IdValidationRegEx = @"\d+";
             _configuration.PathPrefix = "test";
             _configuration.Shallow = true;
-            _configuration.Show = "view";
-            _configuration.New = "make";
-            _configuration.Create = "build";
-            _configuration.Edit = "change";
-            _configuration.Update = "amend";
-            _configuration.Delete = "bin";
-            _configuration.Destroy = "abolish";
+            _configuration.ShowName = "view";
+            _configuration.NewName = "make";
+            _configuration.CreateName = "build";
+            _configuration.EditName = "change";
+            _configuration.UpdateName = "amend";
+            _configuration.DeleteName = "bin";
+            _configuration.DestroyName = "abolish";
         }
 
         protected override void when()
@@ -51,13 +51,13 @@ namespace RouteConfigurationSpecs
             _clone.IdValidationRegEx.ShouldBe(@"\d+");
             _clone.PathPrefix.ShouldBe("test");
             _clone.Shallow.ShouldBeTrue();
-            _clone.Show.ShouldBe("view");
-            _clone.New.ShouldBe("make");
-            _clone.Create.ShouldBe("build");
-            _clone.Edit.ShouldBe("change");
-            _clone.Update.ShouldBe("amend");
-            _clone.Delete.ShouldBe("bin");
-            _clone.Destroy.ShouldBe("abolish");
+            _clone.ShowName.ShouldBe("view");
+            _clone.NewName.ShouldBe("make");
+            _clone.CreateName.ShouldBe("build");
+            _clone.EditName.ShouldBe("change");
+            _clone.UpdateName.ShouldBe("amend");
+            _clone.DeleteName.ShouldBe("bin");
+            _clone.DestroyName.ShouldBe("abolish");
         }
     }
 

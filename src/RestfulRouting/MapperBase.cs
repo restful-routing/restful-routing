@@ -52,7 +52,7 @@ namespace RestfulRouting
 			// GET /blogs => Index
 			_routeCollection.Add(new Route(
 									_resourcePath,
-									new RouteValueDictionary(new { action = _configuration.Index, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.IndexName, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 		}
@@ -62,7 +62,7 @@ namespace RestfulRouting
 			// POST /blogs => Create
 			_routeCollection.Add(new Route(
 									_resourcePath,
-									new RouteValueDictionary(new { action = _configuration.Create, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.CreateName, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
 									new MvcRouteHandler()));
 		}
@@ -71,8 +71,8 @@ namespace RestfulRouting
 		{
 			// GET /blogs/new => New
 			_routeCollection.Add(new Route(
-									_resourcePath + "/" + _configuration.New,
-									new RouteValueDictionary(new { action = _configuration.New, controller = _controller }),
+									_resourcePath + "/" + _configuration.NewName,
+									new RouteValueDictionary(new { action = _configuration.NewName, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler()));
 		}
@@ -84,14 +84,14 @@ namespace RestfulRouting
 			// GET /blogs/1/delete => Delete
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment + "/{action}",
-									new RouteValueDictionary(new { action = _configuration.Show, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.ShowName, controller = _controller }),
 									new RouteValueDictionary(new
 									                         	{
 									                         		httpMethod = new HttpMethodConstraint("GET"), 
-																	action = _configuration.Show + "|" +
-																		_configuration.New + "|" +
-																		_configuration.Edit + "|" + 
-																		_configuration.Delete
+																	action = _configuration.ShowName + "|" +
+																		_configuration.NewName + "|" +
+																		_configuration.EditName + "|" + 
+																		_configuration.DeleteName
 									                         	}),
 									new MvcRouteHandler()));
 		}
@@ -101,7 +101,7 @@ namespace RestfulRouting
 			// PUT /blogs/1 => Update
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,
-									new RouteValueDictionary(new { action = _configuration.Update, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.UpdateName, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("PUT") }),
 									new MvcRouteHandler()));
 		}
@@ -111,7 +111,7 @@ namespace RestfulRouting
 			// DELETE /blogs/1 => Delete
 			_routeCollection.Add(new Route(
 									_resourcePath + _idSegment,
-									new RouteValueDictionary(new { action = _configuration.Destroy, controller = _controller }),
+									new RouteValueDictionary(new { action = _configuration.DestroyName, controller = _controller }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("DELETE") }),
 									new MvcRouteHandler()));
 		}
