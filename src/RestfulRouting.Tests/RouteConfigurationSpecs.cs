@@ -148,4 +148,31 @@ namespace RouteConfigurationSpecs
 			_configuration.Includes("destroy").ShouldBeTrue();
 		}
 	}
+
+	[TestFixture]
+	public class when_including_actions : base_context
+	{
+		protected override void when()
+		{
+			_configuration.Only("index");
+		}
+
+		[Test]
+		public void should_not_include_delete()
+		{
+			_configuration.Includes("index").ShouldBeTrue();
+		}
+
+		[Test]
+		public void should_include_other_defaults()
+		{
+			_configuration.Includes("delete").ShouldBeFalse();
+			_configuration.Includes("show").ShouldBeFalse();
+			_configuration.Includes("new").ShouldBeFalse();
+			_configuration.Includes("create").ShouldBeFalse();
+			_configuration.Includes("edit").ShouldBeFalse();
+			_configuration.Includes("update").ShouldBeFalse();
+			_configuration.Includes("destroy").ShouldBeFalse();
+		}
+	}
 }

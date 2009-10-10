@@ -123,17 +123,25 @@ namespace RestfulRouting
 			return IncludedActions.Contains(action);
 		}
 
-		public void Except(string action)
+		public void Except(params string[] actions)
 		{
 			EnsureIncludedActionsIsInitialized();
 
-			IncludedActions.Remove(action);
+			foreach (var action in actions)
+			{
+				IncludedActions.Remove(action);				
+			}
 		}
 
 		private void EnsureIncludedActionsIsInitialized()
 		{
 			if (IncludedActions == null)
 				IncludedActions = new List<string> { IndexName, ShowName, NewName, CreateName, EditName, UpdateName, DeleteName, DestroyName };
+		}
+
+		public void Only(params string[] actions)
+		{
+			IncludedActions = new List<string>(actions);
 		}
 	}
 }

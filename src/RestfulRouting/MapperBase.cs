@@ -73,7 +73,7 @@ namespace RestfulRouting
 
 		protected void MapNew()
 		{
-			if (!_configuration.Includes(_configuration.IndexName))
+			if (!_configuration.Includes(_configuration.NewName))
 				return;
 			// GET /blogs/new => New
 			_routeCollection.Add(new Route(
@@ -87,6 +87,9 @@ namespace RestfulRouting
 		{
 			var actions = new[]{_configuration.ShowName, _configuration.NewName, _configuration.EditName, _configuration.DeleteName}
 				.Where(action => _configuration.Includes(action));
+
+			if (actions.Count() == 0)
+				return;
 
 			var actionsRegEx = string.Join("|", actions.ToArray());
 
