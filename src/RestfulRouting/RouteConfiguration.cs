@@ -43,16 +43,6 @@ namespace RestfulRouting
 
 		public static Func<RouteConfiguration> Default { get; set; }
 
-		object ICloneable.Clone()
-		{
-			return Clone();
-		}
-
-		public RouteConfiguration Clone()
-		{
-			return (RouteConfiguration)MemberwiseClone();
-		}
-
 		public string IndexName { get; set; }
 
 		public string ShowName { get; set; }

@@ -18,49 +18,6 @@ namespace RouteConfigurationSpecs
 		}
 	}
 
-    [TestFixture]
-    public class when_cloning : base_context
-    {
-        private RouteConfiguration _clone;
-
-        protected override void given()
-        {
-            base.given();
-            _configuration.As = "1";
-            _configuration.IdValidationRegEx = @"\d+";
-            _configuration.PathPrefix = "test";
-            _configuration.Shallow = true;
-            _configuration.ShowName = "view";
-            _configuration.NewName = "make";
-            _configuration.CreateName = "build";
-            _configuration.EditName = "change";
-            _configuration.UpdateName = "amend";
-            _configuration.DeleteName = "bin";
-            _configuration.DestroyName = "abolish";
-        }
-
-        protected override void when()
-        {
-            _clone = (RouteConfiguration)((ICloneable)_configuration).Clone();
-        }
-
-        [Test]
-        public void should_do_a_shallow_copy()
-        {
-            _clone.As.ShouldBe("1");
-            _clone.IdValidationRegEx.ShouldBe(@"\d+");
-            _clone.PathPrefix.ShouldBe("test");
-            _clone.Shallow.ShouldBeTrue();
-            _clone.ShowName.ShouldBe("view");
-            _clone.NewName.ShouldBe("make");
-            _clone.CreateName.ShouldBe("build");
-            _clone.EditName.ShouldBe("change");
-            _clone.UpdateName.ShouldBe("amend");
-            _clone.DeleteName.ShouldBe("bin");
-            _clone.DestroyName.ShouldBe("abolish");
-        }
-    }
-
 	[TestFixture]
 	public class when_adding_custom_collection_routes : base_context
 	{

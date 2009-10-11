@@ -190,7 +190,9 @@ namespace RestfulRouting
 
 			var singular = Inflector.Net.Inflector.Singularize(resource).ToLowerInvariant();
 
-			var configuration = _configuration.Clone();
+			var configuration = RouteConfiguration.Default();
+
+			configuration.Shallow = _configuration.Shallow;
 
 			if (configuration.Shallow)
 				configuration.PathPrefix = resource + "/{" + singular + "Id}";
