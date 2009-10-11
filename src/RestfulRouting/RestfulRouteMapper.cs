@@ -49,7 +49,7 @@ namespace RestfulRouting
 		public void Resources<TController>(Action<RouteConfiguration> config)
 			where TController : Controller
 		{
-			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map();
+			new ResourcesMapper<TController>(_routeCollection, CreateConfig(config)).Map();
 		}
 
 		public void Resources<TController>(Action<IRestfulRouteMapper> map)
@@ -61,7 +61,7 @@ namespace RestfulRouting
 		public void Resources<TController>(Action<RouteConfiguration> config, Action<IRestfulRouteMapper> map)
 			where TController : Controller
 		{
-			new ResourcesMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map(map);
+			new ResourcesMapper<TController>(_routeCollection, CreateConfig(config)).Map(map);
 		}
 
 		public void Resource<TController>() where TController : Controller
@@ -72,12 +72,12 @@ namespace RestfulRouting
 		public void Resource<TController>(Action<RouteConfiguration> config)
 			where TController : Controller
 		{
-			new ResourceMapper<TController>(_routeCollection, CloneAndAlterConfig(config)).Map();
+			new ResourceMapper<TController>(_routeCollection, CreateConfig(config)).Map();
 		}
 
-		private RouteConfiguration CloneAndAlterConfig(Action<RouteConfiguration> action)
+		private RouteConfiguration CreateConfig(Action<RouteConfiguration> action)
 		{
-			var configuration = RouteConfiguration.Clone();
+			var configuration = RouteConfiguration.Default();
 			action(configuration);
 			return configuration;
 		}

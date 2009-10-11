@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace RestfulRouting
 {
-	public class RouteConfiguration : ICloneable
+	public class RouteConfiguration
 	{
 		static RouteConfiguration()
 		{
