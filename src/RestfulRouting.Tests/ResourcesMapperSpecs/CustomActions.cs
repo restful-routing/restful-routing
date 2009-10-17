@@ -73,4 +73,25 @@ namespace ResourcesMapperSpecs
 			"~/photos/offline".WithMethod(HttpVerbs.Post).ShouldMapTo<PhotosController>(x => x.Offline());
 		}
 	}
+
+	[TestFixture]
+	public class when_specifying_custom_resource_actions_on_a_nested_resource : route_test_context
+	{
+		protected override void when()
+		{
+			_map.Resources<BlogsController>(blogs =>
+			{
+				blogs.Resources<PhotosController>(photos =>
+				                                 	{
+														photos.AddMemberRoute<PhotosController>(a => a.DoSomething(1));
+				                                 	});
+			});
+		}
+
+		[Test]
+		public void should_map_custom_action()
+		{
+			"~/blogs/2/photos/1/dosomething".WithMethod(HttpVerbs.Get).ShouldMapTo<PhotosController>(x => x.DoSomething(1));
+		}
+	}
 }

@@ -78,6 +78,7 @@ namespace RestfulRouting
 		private RouteConfiguration CreateConfig(Action<RouteConfiguration> action)
 		{
 			var configuration = RouteConfiguration.Default();
+			configuration.PathPrefix = RouteConfiguration.PathPrefix;
 			action(configuration);
 			return configuration;
 		}
