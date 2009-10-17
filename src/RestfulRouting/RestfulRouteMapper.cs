@@ -23,6 +23,8 @@ namespace RestfulRouting
 
 		void Resource<TController>(Action<RouteConfiguration> config)
 			where TController : Controller;
+
+		void Namespace(string path, Action<IRestfulRouteMapper> map);
 	}
 
 	public class RestfulRouteMapper : IRestfulRouteMapper
@@ -38,6 +40,7 @@ namespace RestfulRouting
 		public RestfulRouteMapper(RouteCollection routeCollection, RouteConfiguration routeConfiguration)
 		{
 			_routeCollection = routeCollection;
+
 			RouteConfiguration = routeConfiguration;
 		}
 
@@ -78,9 +81,21 @@ namespace RestfulRouting
 		private RouteConfiguration CreateConfig(Action<RouteConfiguration> action)
 		{
 			var configuration = RouteConfiguration.Default();
+
 			configuration.PathPrefix = RouteConfiguration.PathPrefix;
+
 			action(configuration);
+
 			return configuration;
+		}
+
+		public void Namespace(string path, Action<IRestfulRouteMapper> map)
+		{
+			var mapper = new RestfulRouteMapper(_routeCollection);
+
+			mapper.RouteConfiguration.PathPrefix = path;
+
+			map(mapper);
 		}
 	}
 }

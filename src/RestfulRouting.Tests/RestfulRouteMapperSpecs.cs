@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 using NUnit.Framework;
 using RestfulRouting;
 using RestfulRouting.Tests;
