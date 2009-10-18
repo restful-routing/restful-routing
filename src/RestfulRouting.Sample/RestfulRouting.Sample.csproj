@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Controllers\Admin\BlogsController.cs" />
+    <Compile Include="Controllers\Admin\PostsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RootController.cs" />
@@ -75,6 +77,18 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Admin\Blogs\Delete.aspx" />
+    <Content Include="Views\Admin\Blogs\Edit.aspx" />
+    <Content Include="Views\Admin\Blogs\Form.ascx" />
+    <Content Include="Views\Admin\Blogs\Index.aspx" />
+    <Content Include="Views\Admin\Blogs\New.aspx" />
+    <Content Include="Views\Admin\Blogs\Show.aspx" />
+    <Content Include="Views\Admin\Posts\Delete.aspx" />
+    <Content Include="Views\Admin\Posts\Edit.aspx" />
+    <Content Include="Views\Admin\Posts\Form.ascx" />
+    <Content Include="Views\Admin\Posts\Index.aspx" />
+    <Content Include="Views\Admin\Posts\New.aspx" />
+    <Content Include="Views\Admin\Posts\Show.aspx" />
     <Content Include="Views\Blogs\Delete.aspx" />
     <Content Include="Views\Blogs\Edit.aspx" />
     <Content Include="Views\Blogs\Form.ascx" />

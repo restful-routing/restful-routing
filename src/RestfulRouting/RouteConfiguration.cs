@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace RestfulRouting
 {
@@ -33,7 +34,11 @@ namespace RestfulRouting
 			CollectionRoutes = new Dictionary<string, HttpVerbs[]>();
 		}
 
+		public string[] Namespaces { get; set; }
+
 		public string IdValidationRegEx { get; set; }
+
+		public RouteValueDictionary Constraints { get; set; }
 
 		public string As { get; set; }
 

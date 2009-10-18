@@ -17,15 +17,40 @@ namespace ResourcesMapperSpecs
 			}
 
 			[Test]
-			public void should_map_integers()
+			public void should_map_integers_show()
 			{
 				"~/blogs/1234".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Show(1234));
 			}
 
 			[Test]
-			public void should_not_map_strings()
+			public void should_not_map_strings_show()
 			{
-				"~/blogs/janedoe".Route().ShouldBeNull();
+				"~/blogs/janedoe".WithMethod(HttpVerbs.Get).ShouldBeNull();
+			}
+
+			[Test]
+			public void should_map_integers_update()
+			{
+				"~/blogs/1234".WithMethod(HttpVerbs.Put).ShouldMapTo<BlogsController>(x => x.Update(1234));
+			}
+
+			[Test]
+			public void should_not_map_strings_update()
+			{
+				"~/blogs/janedoe".WithMethod(HttpVerbs.Put).ShouldBeNull();
+			}
+
+
+			[Test]
+			public void should_map_integers_delete()
+			{
+				"~/blogs/1234".WithMethod(HttpVerbs.Delete).ShouldMapTo<BlogsController>(x => x.Destroy(1234));
+			}
+
+			[Test]
+			public void should_not_map_strings_delete()
+			{
+				"~/blogs/janedoe".WithMethod(HttpVerbs.Delete).ShouldBeNull();
 			}
 		}
 
@@ -46,7 +71,7 @@ namespace ResourcesMapperSpecs
 			[Test]
 			public void should_not_map_strings()
 			{
-				"~/blogs/janedoe/posts/lorem".Route().ShouldBeNull();
+				"~/blogs/janedoe/posts/123".WithMethod(HttpVerbs.Get).ShouldBeNull();
 			}
 		}
 	}

@@ -5,6 +5,7 @@ using System.Web.Routing;
 using MvcContrib.TestHelper;
 using NUnit.Framework;
 using RestfulRouting;
+using RestfulRouting.Html;
 using RestfulRouting.Tests;
 using Rhino.Mocks;
 using NUnit.Should;
@@ -16,20 +17,21 @@ namespace FormHelperSpecs
 		protected HttpRequestBase _httpRequestBase;
 		protected RequestContext _requestContext;
 		protected RouteData _routeData;
-		protected FormHelper _formHelper;
 		protected string _form;
+		protected HtmlHelper _htmlHelper;
 
 		protected override void given()
 		{
 			base.given();
 
 			var builder = new TestControllerBuilder();
-			var context = new RequestContext(builder.HttpContext, new RouteData());
-			context.HttpContext.Response.Stub(x => x.ApplyAppPathModifier(null)).IgnoreArguments().Do(new Func<string, string>(s => s)).Repeat.Any();
+			var requestContext = new RequestContext(builder.HttpContext, new RouteData());
+			requestContext.HttpContext.Response.Stub(x => x.ApplyAppPathModifier(null)).IgnoreArguments().Do(new Func<string, string>(s => s)).Repeat.Any();
 
-			var helper = new UrlHelper(context);
+			var viewContext = MockRepository.GenerateStub<ViewContext>();
+			viewContext.RequestContext = requestContext;
 
-			_formHelper = new FormHelper(helper);
+			_htmlHelper = new HtmlHelper(viewContext, MockRepository.GenerateStub<IViewDataContainer>());
 		}
 	}
 
@@ -50,7 +52,7 @@ namespace FormHelperSpecs
 		{
 			protected override void when()
 			{
-				_form = _formHelper.FormFor(new Blog());
+				_form = _htmlHelper.RestfulFormFor(new Blog());
 			}
 
 			[Test]
@@ -65,7 +67,7 @@ namespace FormHelperSpecs
 		{
 			protected override void when()
 			{
-				_form = _formHelper.FormFor(new Blog{ Id = 2 });
+				_form = _htmlHelper.RestfulFormFor(new Blog{ Id = 2 });
 			}
 
 			[Test]
@@ -86,7 +88,7 @@ namespace FormHelperSpecs
 		{
 			protected override void when()
 			{
-				_form = _formHelper.DeleteFormFor(new Blog { Id = 2 });
+				_form = _htmlHelper.RestfulDeleteFormFor(new Blog { Id = 2 });
 			}
 
 			[Test]
@@ -119,7 +121,7 @@ namespace FormHelperSpecs
 			{
 				protected override void when()
 				{
-					_form = _formHelper.FormFor(new Post(), new Blog { Id = 2 });
+					_form = _htmlHelper.RestfulFormFor(new Post(), new Blog { Id = 2 });
 				}
 
 				[Test]
@@ -134,7 +136,7 @@ namespace FormHelperSpecs
 			{
 				protected override void when()
 				{
-					_form = _formHelper.FormFor(new Post { Id = 3 }, new Blog { Id = 2 });
+					_form = _htmlHelper.RestfulFormFor(new Post { Id = 3 }, new Blog { Id = 2 });
 				}
 
 				[Test]
@@ -155,7 +157,7 @@ namespace FormHelperSpecs
 			{
 				protected override void when()
 				{
-					_form = _formHelper.DeleteFormFor(new Post { Id = 3 }, new Blog { Id = 2 });
+					_form = _htmlHelper.RestfulDeleteFormFor(new Post { Id = 3 }, new Blog { Id = 2 });
 				}
 
 				[Test]
@@ -188,7 +190,7 @@ namespace FormHelperSpecs
 				{
 					protected override void when()
 					{
-						_form = _formHelper.FormFor(new Comment(), new Post{ Id = 3 }, new Blog { Id = 2 });
+						_form = _htmlHelper.RestfulFormFor(new Comment(), new Post { Id = 3 }, new Blog { Id = 2 });
 					}
 
 					[Test]
@@ -203,7 +205,7 @@ namespace FormHelperSpecs
 				{
 					protected override void when()
 					{
-						_form = _formHelper.FormFor(new Comment{ Id = 4 }, new Post { Id = 3 }, new Blog { Id = 2 });
+						_form = _htmlHelper.RestfulFormFor(new Comment { Id = 4 }, new Post { Id = 3 }, new Blog { Id = 2 });
 					}
 
 					[Test]
@@ -224,7 +226,7 @@ namespace FormHelperSpecs
 				{
 					protected override void when()
 					{
-						_form = _formHelper.DeleteFormFor(new Comment { Id = 4 }, new Post { Id = 3 }, new Blog { Id = 2 });
+						_form = _htmlHelper.RestfulDeleteFormFor(new Comment { Id = 4 }, new Post { Id = 3 }, new Blog { Id = 2 });
 					}
 
 					[Test]

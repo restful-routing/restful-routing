@@ -15,10 +15,19 @@ namespace RestfulRouting.Sample
 				new { httpMethod = new HttpMethodConstraint("GET") }
 				);
 
-			var map = new RestfulRouteMapper(RouteTable.Routes);
+
+			// need to use namespaces when using controllers with the same name
+			var configuration = new RouteConfiguration {Namespaces = new[] {typeof (BlogsController).Namespace}};
+
+			var map = new RestfulRouteMapper(RouteTable.Routes, configuration);
 
 			map.Resources<BlogsController>(m => m.Resources<PostsController>());
 
+			map.Namespace("admin", new[]{ typeof(Controllers.Admin.BlogsController).Namespace }, m =>
+			                       	{
+										m.Resources<Controllers.Admin.BlogsController>();
+										m.Resources<Controllers.Admin.PostsController>();
+			                       	});
 			// shallow
 			//map.Resources<BlogsController>(config => config.Shallow = true, m => m.Resources<PostsController>());
 		}

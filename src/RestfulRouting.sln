@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting", "RestfulRo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Tests", "RestfulRouting.Tests\RestfulRouting.Tests.csproj", "{EDE01E55-7E7D-4239-971A-E4BEC43E40A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Sample", "RestfulRouting.Sample\RestfulRouting.Sample.csproj", "{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +19,6 @@ Global
 		{EDE01E55-7E7D-4239-971A-E4BEC43E40A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDE01E55-7E7D-4239-971A-E4BEC43E40A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDE01E55-7E7D-4239-971A-E4BEC43E40A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
