@@ -34,7 +34,7 @@ namespace RestfulRouting.Tests
 			ViewEngines.Engines.Add(new AreaViewEngine());
 
 			var map = new RestfulRouteMapper(RouteTable.Routes);
-			map.Namespace("admin", new[] { typeof(BlogsController).Namespace }, m =>
+			map.Namespace("admin", typeof(BlogsController).Namespace, m =>
 			                                                                    	{
 																						m.Resources<BlogsController>();
 			                                                                    	});

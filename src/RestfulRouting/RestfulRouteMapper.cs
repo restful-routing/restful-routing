@@ -98,13 +98,13 @@ namespace RestfulRouting
 			map(mapper);
 		}
 
-		public void Namespace(string path, string[] namespaces, Action<IRestfulRouteMapper> map)
+		public void Namespace(string path, string @namespace, Action<IRestfulRouteMapper> map)
 		{
 			var mapper = new RestfulRouteMapper(_routeCollection);
 			
 			mapper.RouteConfiguration.PathPrefix = path;
 
-			mapper.RouteConfiguration.Namespaces = namespaces;
+			mapper.RouteConfiguration.Namespaces = new [] {@namespace};
 
 			map(mapper);
 		}

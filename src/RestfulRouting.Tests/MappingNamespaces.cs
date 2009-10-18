@@ -79,7 +79,7 @@ namespace MappingNamespaces
 	{
 		protected override void when()
 		{
-			_map.Namespace("admin", new[] { typeof(RestfulRouting.Tests.TestContexts.Admin.BlogsController).Namespace }, map =>
+			_map.Namespace("admin", typeof(RestfulRouting.Tests.TestContexts.Admin.BlogsController).Namespace, map =>
 			{
 				map.Resources<BlogsController>();
 			});

@@ -23,7 +23,7 @@ namespace RestfulRouting.Sample
 
 			map.Resources<BlogsController>(m => m.Resources<PostsController>());
 
-			map.Namespace("admin", new[]{ typeof(Controllers.Admin.BlogsController).Namespace }, m =>
+			map.Namespace("admin", typeof(Controllers.Admin.BlogsController).Namespace, m =>
 			                       	{
 										m.Resources<Controllers.Admin.BlogsController>();
 										m.Resources<Controllers.Admin.PostsController>();
