@@ -32,7 +32,7 @@ namespace RestfulRouting
 		{
             ViewEngineResult areaResult;
 
-            if (controllerContext.RouteData.Values.ContainsKey("_area"))
+			if (controllerContext.RouteData.Values.ContainsKey("_area") && controllerContext.RouteData.Values["_area"] != null)
 			{
                 var areaPartialName = FormatViewName(controllerContext, partialViewName);
                 areaResult = base.FindPartialView(controllerContext, areaPartialName, useCache);
@@ -58,7 +58,7 @@ namespace RestfulRouting
 		{
             ViewEngineResult areaResult;
 
-            if (controllerContext.RouteData.Values.ContainsKey("_area"))
+			if (controllerContext.RouteData.Values.ContainsKey("_area") && controllerContext.RouteData.Values["_area"] != null)
 			{
                 var areaViewName = FormatViewName(controllerContext, viewName);
                 areaResult = base.FindView(controllerContext, areaViewName, masterName, useCache);
