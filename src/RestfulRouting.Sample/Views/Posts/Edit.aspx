@@ -4,7 +4,8 @@
 
     <h2>Edit</h2>
 	
-	<%= Html.RestfulFormFor(Model) %>
+	<form action="<%= Url.Action("Update", new { id = Model.Id }) %>" method="post">
+		<%= Html.PutOverrideTag() %>
 		
 		<% Html.RenderPartial("Form"); %>
 		

@@ -80,8 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionTranslatorSpecs.cs" />
-    <Compile Include="AreaViewEngineSpecs.cs" />
-    <Compile Include="FormHelperSpecs.cs" />
+    <Compile Include="HtmlExtensionsSpecs.cs" />
     <Compile Include="MappingNamespaces.cs" />
     <Compile Include="ResourceMapperSpecs\CustomActions.cs" />
     <Compile Include="ResourceMapperSpecs\ConfiguringResourceName.cs" />
@@ -110,17 +109,6 @@
       <Project>{E4CA4B27-BBC1-4998-932F-72DD4E5ED4CC}</Project>
       <Name>RestfulRouting</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\Blogs\Index.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\Site.Master">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

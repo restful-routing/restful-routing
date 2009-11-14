@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AreaViewEngine.cs" />
-    <Compile Include="FormHelper.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="MapperBase.cs" />
     <Compile Include="PostOverrideActionTranslator.cs" />

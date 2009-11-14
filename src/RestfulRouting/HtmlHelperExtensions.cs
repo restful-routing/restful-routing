@@ -4,14 +4,14 @@ namespace RestfulRouting.Html
 {
 	public static class HtmlHelperExtensions
 	{
-		public static string RestfulFormFor(this HtmlHelper html, object entity, params object[] associatedEntities)
+		public static string PutOverrideTag(this HtmlHelper html)
 		{
-			return new FormHelper(new UrlHelper(html.ViewContext.RequestContext)).FormFor(entity, associatedEntities);
+			return "<input type=\"hidden\" name=\"_method\" value=\"put\" />";
 		}
 
-		public static string RestfulDeleteFormFor(this HtmlHelper html, object entity, params object[] associatedEntities)
+		public static string DeleteOverrideTag(this HtmlHelper html)
 		{
-			return new FormHelper(new UrlHelper(html.ViewContext.RequestContext)).DeleteFormFor(entity, associatedEntities);
+			return "<input type=\"hidden\" name=\"_method\" value=\"delete\" />";
 		}
 	}
 }

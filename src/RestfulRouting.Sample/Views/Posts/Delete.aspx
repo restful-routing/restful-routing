@@ -8,9 +8,8 @@
 		Are you sure?
 	</p>
 
-	
-	
-	<%= Html.RestfulDeleteFormFor(Model, Model.Blog) %>
+	<form action="<%= Url.Action("Destroy", new { id = Model.Id }) %>" method="post">
+		<%= Html.DeleteOverrideTag() %>
 		
 		<div class="group">
 			<input type="submit" value="Delete" />
