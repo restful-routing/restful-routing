@@ -36,11 +36,6 @@
 				<td><%= HttpUtility.HtmlEncode(Url.Action("update", new { id = 1 }))%></td>
 			</tr>
 			<tr>
-				<td>Delete</td>
-				<td><%= HttpUtility.HtmlEncode("Url.Action(\"delete\"), new { id = 1 }")%></td>
-				<td><%= HttpUtility.HtmlEncode(Url.Action("delete", new { id = 1 }))%></td>
-			</tr>
-			<tr>
 				<td>Destroy</td>
 				<td><%= HttpUtility.HtmlEncode("Url.Action(\"destroy\"), new { id = 1 }")%></td>
 				<td><%= HttpUtility.HtmlEncode(Url.Action("destroy", new { id = 1 }))%></td>

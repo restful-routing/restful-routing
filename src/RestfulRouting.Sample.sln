@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Sample", "RestfulRouting.Sample\RestfulRouting.Sample.csproj", "{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Sample", "RestfulRouting.Sample\RestfulRouting.Sample.csproj", "{F5F69285-CB5F-4657-A0E5-23D1753498E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting", "RestfulRouting\RestfulRouting.csproj", "{E4CA4B27-BBC1-4998-932F-72DD4E5ED4CC}"
 EndProject
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{153CC8A0-7737-4E8D-BE18-6A028AAC6FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F69285-CB5F-4657-A0E5-23D1753498E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5F69285-CB5F-4657-A0E5-23D1753498E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5F69285-CB5F-4657-A0E5-23D1753498E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F69285-CB5F-4657-A0E5-23D1753498E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4CA4B27-BBC1-4998-932F-72DD4E5ED4CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4CA4B27-BBC1-4998-932F-72DD4E5ED4CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4CA4B27-BBC1-4998-932F-72DD4E5ED4CC}.Release|Any CPU.ActiveCfg = Release|Any CPU

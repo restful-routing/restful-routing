@@ -1,10 +1,10 @@
-<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Restful Routing</title>
-    <link href="<%= ResolveUrl("~/content/stylesheets/screen.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/stylesheets/screen.css") %>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -22,10 +22,9 @@
             <div id="menucontainer">
             
                 <ul id="menu">              
-                    <li><%= Html.ActionLink("Blogs", "Index", "Blogs")%></li>
-                    <li><%= Html.ActionLink("Posts Admin", "Index", "Posts")%></li>
-                    <%--<li><%= Html.ActionLink("Blogs Admin", "Index", "Blogs", new RouteValueDictionary{ {"_area", "admin"} })%></li>--%>
-                    <li><a href="<%= Url.Action("Index", "Blogs", new { _area = "admin" }) %>">Blogs Admin</a></li>
+                    <li><%= Html.ActionLink("Blogs", "Index", "Blogs", new { area = "" }, new {})%></li>
+                    <li><%= Html.ActionLink("Posts Admin", "Index", "Posts", new { area = "admin" }, new { })%></li>
+                    <li><%= Html.ActionLink("Blogs Admin", "Index", "Blogs", new { area = "admin" }, new { })%></li>
                 </ul>
             
             </div>

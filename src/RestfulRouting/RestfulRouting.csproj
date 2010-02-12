@@ -42,20 +42,17 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\aspnetmvc\System.Web.Abstractions.dll</HintPath>
+      <HintPath>..\..\lib\aspnetmvc2\System.Web.Abstractions.dll</HintPath>
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\lib\aspnetmvc2\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\aspnetmvc\System.Web.Routing.dll</HintPath>
+      <HintPath>..\..\lib\aspnetmvc2\System.Web.Routing.dll</HintPath>
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -67,16 +64,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AreaViewEngine.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
-    <Compile Include="MapperBase.cs" />
-    <Compile Include="PostOverrideActionTranslator.cs" />
-    <Compile Include="PostOverrideRouteHandler.cs" />
-    <Compile Include="ResourceMapper.cs" />
-    <Compile Include="ResourcesMapper.cs" />
-    <Compile Include="RestfulRouteMapper.cs" />
+    <Compile Include="Mappings\AppMapping.cs" />
+    <Compile Include="Mappings\Mapping.cs" />
+    <Compile Include="Mappings\AreaMapping.cs" />
+    <Compile Include="MapRoutesExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteConfiguration.cs" />
+    <Compile Include="Mappings\ResourcesMapping.cs" />
+    <Compile Include="ResourcesMapper.cs" />
+    <Compile Include="RestfulRouteHandler.cs" />
+    <Compile Include="RestfulRoutingArea.cs" />
+    <Compile Include="RestfulRoutingViewEngine.cs" />
+    <Compile Include="RouteNames.cs" />
+    <Compile Include="RouteContext.cs" />
+    <Compile Include="Mappings\StandardMapping.cs" />
+    <Compile Include="RouteDebugController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

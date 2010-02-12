@@ -7,7 +7,7 @@
 	<form action="<%= Url.Action("Update", new { id = Model.Id }) %>" method="post">
 		<%= Html.PutOverrideTag() %>
 		
-		<% Html.RenderPartial("Form"); %>
+		<% Html.RenderPartial("Form"); %> 
 		
 		<div class="group">
 			<input type="submit" value="Update" />
