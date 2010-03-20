@@ -79,6 +79,7 @@
     <Compile Include="Integration\Behaviours\AdminBlogsResources.cs" />
     <Compile Include="Integration\Behaviours\ImagesResources.cs" />
     <Compile Include="Integration\Resources\AsSpec.cs" />
+    <Compile Include="Integration\Resources\CollectionSpec.cs" />
     <Compile Include="Unit\AreaSpec.cs" />
     <Compile Include="Integration\Behaviours\BlogsResources.cs" />
     <Compile Include="Integration\Behaviours\CommentsNestedUnderPostsAndBlogs.cs" />

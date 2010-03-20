@@ -45,5 +45,10 @@ namespace RestfulRouting.Tests.Integration.Contexts
 		{
 			return Content("");
 		}
+
+		public ActionResult Latest()
+		{
+			return Content("");
+		}
 	}
 }

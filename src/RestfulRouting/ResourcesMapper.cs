@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -113,15 +114,26 @@ namespace RestfulRouting
 									new MvcRouteHandler());
 		}
 
-		public Route MemberRoute(string action, params HttpVerbs[] verbs)
+		public Route MemberRoute(string action, params HttpVerbs[] methods)
 		{
-			// GET /blogs/1 => Show
 			return new Route(
 									_resourcePath + "/{id}/" + action,
 									new RouteValueDictionary(new { action = action, controller = _resourceName }),
 									new RouteValueDictionary(new
 									{
-                                        httpMethod = new RestfulHttpMethodConstraint(verbs.Select(x => x.ToString().ToUpperInvariant()).ToArray())
+                                        httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
+									}),
+									new MvcRouteHandler());
+		}
+
+		public Route CollectionRoute(string action, params HttpVerbs[] methods)
+		{
+			return new Route(
+									_resourcePath + "/" + action,
+									new RouteValueDictionary(new { action = action, controller = _resourceName }),
+									new RouteValueDictionary(new
+									{
+										httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
 									}),
 									new MvcRouteHandler());
 		}

@@ -36,6 +36,13 @@ namespace RestfulRouting.Mappings
             private set { _members = value; }
         }
 
+		private IDictionary<string, HttpVerbs[]> _collections = new Dictionary<string, HttpVerbs[]>();
+		public IDictionary<string, HttpVerbs[]> Collections
+		{
+			get { return _collections; }
+			private set { _collections = value; }
+		}
+
         public string ResourceName;
 
         private IList<string> IncludedActions { get; set; }

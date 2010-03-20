@@ -41,6 +41,11 @@ namespace RestfulRouting
 			_currentMapping.Members[actionName.ToLowerInvariant()] = verbs;
 		}
 
+		public void Collection(string actionName, params HttpVerbs[] verbs)
+		{
+			_currentMapping.Collections[actionName.ToLowerInvariant()] = verbs;
+		}
+
 		public void Constrain(string key, object value)
 		{
 			_currentMapping.Context.Constraints[key] = value;

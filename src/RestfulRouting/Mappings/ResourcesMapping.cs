@@ -34,6 +34,14 @@ namespace RestfulRouting.Mappings
         {
         	_resourcesMapper.SetResourceAs(ResourceName);
 
+			if (Collections != null && Collections.Any())
+			{
+				foreach (var member in Collections)
+				{
+					routeCollection.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
+				}
+			}
+
             if (IncludesAction(names.IndexName))
                 routeCollection.Add(_resourcesMapper.IndexRoute());
 
@@ -72,10 +80,6 @@ namespace RestfulRouting.Mappings
             {
                 mapping.AddRoutesTo(routeCollection);
             }
-			
-            //MapCollectionRoutes();
-
-            //MapPostOverrideForPutAndDelete();
         }
 
 
