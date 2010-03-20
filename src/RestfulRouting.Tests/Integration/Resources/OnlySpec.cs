@@ -26,7 +26,7 @@ namespace RestfulRouting.Tests.Integration.Resources
 
 	public class OnlyTest : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -41,7 +41,7 @@ namespace RestfulRouting.Tests.Integration.Resources
 
 	public class OnlyWithNestedResource : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

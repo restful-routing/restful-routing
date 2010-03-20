@@ -22,7 +22,7 @@ namespace RestfulRouting.Sample
 		}
 	}
 
-	public class WebsiteRoutes : RestfulRoutingArea
+	public class WebsiteRoutes : RouteSet
 	{
 		public WebsiteRoutes()
 		{

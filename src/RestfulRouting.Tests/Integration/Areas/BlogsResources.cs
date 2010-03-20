@@ -6,7 +6,7 @@ namespace RestfulRouting.Tests.Integration.Areas
 {
 	public class when_mapping_an_unnamed_area : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -31,7 +31,7 @@ namespace RestfulRouting.Tests.Integration.Areas
 
 	public class when_mapping_two_area : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -56,7 +56,7 @@ namespace RestfulRouting.Tests.Integration.Areas
 
 	public class when_mapping_an_area : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

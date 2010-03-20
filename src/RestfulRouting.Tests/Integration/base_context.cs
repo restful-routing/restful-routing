@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RestfulRouting.Tests.Integration
 {
-	[Subject(typeof(RestfulRoutingArea))]
+	[Subject(typeof(RouteSet))]
 	public class base_context
 	{
 		protected static RouteCollection routes = RouteTable.Routes;

@@ -73,7 +73,7 @@
     <Compile Include="Mappings\ResourcesMapping.cs" />
     <Compile Include="ResourcesMapper.cs" />
     <Compile Include="RestfulRouteHandler.cs" />
-    <Compile Include="RestfulRoutingArea.cs" />
+    <Compile Include="RouteSet.cs" />
     <Compile Include="RestfulRoutingViewEngine.cs" />
     <Compile Include="RouteNames.cs" />
     <Compile Include="RouteContext.cs" />

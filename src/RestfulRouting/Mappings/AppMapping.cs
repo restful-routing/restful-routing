@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RestfulRouting.Mappings
 {
-    public class AppMapping<TArea> : Mapping where TArea : RestfulRoutingArea, new()
+    public class AppMapping<TArea> : Mapping where TArea : RouteSet, new()
     {
         private string pathPrefix;
 

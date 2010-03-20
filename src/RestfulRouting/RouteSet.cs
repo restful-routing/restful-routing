@@ -7,7 +7,7 @@ using RestfulRouting.Mappings;
 
 namespace RestfulRouting
 {
-	public abstract class RestfulRoutingArea
+	public abstract class RouteSet
 	{
 		private Mapping _currentMapping;
 		private RouteNames names;
@@ -16,7 +16,7 @@ namespace RestfulRouting
 		public static Func<string, string> Singularize = Inflector.Net.Inflector.Singularize;
 		private string _areaName;
 
-		protected RestfulRoutingArea()
+		protected RouteSet()
 		{
 			names = new RouteNames();
 		}
@@ -148,7 +148,7 @@ namespace RestfulRouting
 			MapNested(mapping, action);
 		}
 
-        public void App<T>(string pathPrefix) where T : RestfulRoutingArea, new()
+        public void App<T>(string pathPrefix) where T : RouteSet, new()
         {
             AddMapping(new AppMapping<T>(pathPrefix));
         }

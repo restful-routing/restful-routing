@@ -4,7 +4,7 @@ using RestfulRouting.Tests.Integration.Contexts;
 
 namespace RestfulRouting.Tests.Integration
 {
-    public class BlogArea : RestfulRoutingArea
+    public class BlogArea : RouteSet
     {
         public BlogArea()
         {
@@ -18,7 +18,7 @@ namespace RestfulRouting.Tests.Integration
 
     public class when_mapping_an_unnamed_app : base_context
     {
-        public class WebsiteApp : RestfulRoutingArea
+        public class WebsiteApp : RouteSet
         {
             public WebsiteApp()
             {
@@ -35,7 +35,7 @@ namespace RestfulRouting.Tests.Integration
 
     public class when_mapping_a_named_app : base_context
     {
-        public class WebsiteApp : RestfulRoutingArea
+        public class WebsiteApp : RouteSet
         {
             public WebsiteApp()
             {

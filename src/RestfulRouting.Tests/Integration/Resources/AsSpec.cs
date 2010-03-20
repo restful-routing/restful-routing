@@ -7,7 +7,7 @@ namespace RestfulRouting.Tests.Integration.Resources
 {
 	public class AsTest : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

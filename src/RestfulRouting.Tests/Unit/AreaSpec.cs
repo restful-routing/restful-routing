@@ -9,7 +9,7 @@ namespace RestfulRouting.Tests.Unit
 	{
 		static RouteCollection routes;
 
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -55,7 +55,7 @@ namespace RestfulRouting.Tests.Unit
 	{
 		static RouteCollection routes;
 
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -80,7 +80,7 @@ namespace RestfulRouting.Tests.Unit
 	{
 		static RouteCollection routes;
 
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

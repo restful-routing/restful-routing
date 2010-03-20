@@ -8,7 +8,7 @@ namespace RestfulRouting.Tests.Integration
 {
 	public class when_mapping_a_blogs_resource : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -23,7 +23,7 @@ namespace RestfulRouting.Tests.Integration
 
 	public class when_mapping_a_blogs_resource_with_a_nested_posts_resource : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -41,7 +41,7 @@ namespace RestfulRouting.Tests.Integration
 	public class when_mapping_a_comments_resource_under_posts_and_blogs : base_context
 	{
 
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -66,7 +66,7 @@ namespace RestfulRouting.Tests.Integration
 
 	public class when_mapping_a_posts_resource_and_a_blogs_resource : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -84,7 +84,7 @@ namespace RestfulRouting.Tests.Integration
 
 	public class when_mapping_and_configuring : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

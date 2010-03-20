@@ -10,7 +10,7 @@ namespace RestfulRouting.Tests.Integration
 	[Subject(typeof(StandardMapping))]
 	public class when_mapping_a_standard_route : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{
@@ -27,7 +27,7 @@ namespace RestfulRouting.Tests.Integration
 
 	public class when_mapping_a_standard_route_under_a_resource : base_context
 	{
-		public class BlogArea : RestfulRoutingArea
+		public class BlogArea : RouteSet
 		{
 			public BlogArea()
 			{

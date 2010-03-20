@@ -12,7 +12,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
     {
         static AppMapping<ForumsApp> mapping;
 
-        public class ForumsApp : RestfulRoutingArea
+        public class ForumsApp : RouteSet
         {
             public ForumsApp()
             {
@@ -42,7 +42,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
     {
         static AppMapping<ForumsApp> mapping;
 
-        public class ForumsApp : RestfulRoutingArea
+        public class ForumsApp : RouteSet
         {
             public ForumsApp()
             {
