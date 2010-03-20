@@ -72,6 +72,7 @@
     <Compile Include="Controllers\Admin\BlogsController.cs" />
     <Compile Include="Controllers\Admin\PostsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RootController.cs" />
     <Compile Include="Controllers\RouteDebugController.cs" />
