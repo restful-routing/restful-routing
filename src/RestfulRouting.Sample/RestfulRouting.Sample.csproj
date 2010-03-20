@@ -74,6 +74,7 @@
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RootController.cs" />
+    <Compile Include="Controllers\RouteDebugController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -11,9 +11,10 @@ namespace RestfulRouting.Mappings
 
         private RouteNames names;
 
-        public ResourcesMapping(RouteNames routeNames, ResourcesMapper resourcesMapper) : base()
+        public ResourcesMapping(RouteNames routeNames, ResourcesMapper resourcesMapper)
         {
             names = routeNames;
+
             ResourceName = ControllerName<TController>();
 
             _resourcesMapper = resourcesMapper;

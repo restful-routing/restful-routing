@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Linq;
 
-namespace RestfulRouting
+namespace RestfulRouting.Sample.Controllers
 {
 	public class RouteDebugController : Controller
 	{
@@ -21,21 +21,21 @@ namespace RestfulRouting
 				}
 
 				var namespaces = new string[]{};
-                if (route.DataTokens != null && route.DataTokens["namespaces"] != null)
-			        namespaces = route.DataTokens["namespaces"] as string[];
-			    var defaults = new RouteValueDictionary();
-                if (route.Defaults != null)
+				if (route.DataTokens != null && route.DataTokens["namespaces"] != null)
+					namespaces = route.DataTokens["namespaces"] as string[];
+				var defaults = new RouteValueDictionary();
+				if (route.Defaults != null)
 					defaults = route.Defaults;
 				if (route.DataTokens == null)
 					route.DataTokens = new RouteValueDictionary();
 
 				model.RouteInfos.Add(new RouteInfo
 				                     	{
-											HttpMethod = string.Join(" ", allowedMethods.ToArray()),
-											Path = route.Url,
-                                            Endpoint = defaults["controller"] + "#" + defaults["action"],
-											Area = route.DataTokens["area"] as string,
-											Namespaces = string.Join(" ", namespaces.ToArray()),
+				                     		HttpMethod = string.Join(" ", allowedMethods.ToArray()),
+				                     		Path = route.Url,
+				                     		Endpoint = defaults["controller"] + "#" + defaults["action"],
+				                     		Area = route.DataTokens["area"] as string,
+				                     		Namespaces = string.Join(" ", namespaces.ToArray()),
 				                     	});
 			}
 

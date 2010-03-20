@@ -1,4 +1,5 @@
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="System.Web.Mvc.ViewPage<RouteDebugViewModel>" %>
+<%@ Import Namespace="RestfulRouting.Sample.Controllers"%>
 <%@ Import Namespace="RestfulRouting"%>
 
 <!DOCTYPE HTML>

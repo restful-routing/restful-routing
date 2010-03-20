@@ -78,7 +78,6 @@
     <Compile Include="RouteNames.cs" />
     <Compile Include="RouteContext.cs" />
     <Compile Include="Mappings\StandardMapping.cs" />
-    <Compile Include="RouteDebugController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
