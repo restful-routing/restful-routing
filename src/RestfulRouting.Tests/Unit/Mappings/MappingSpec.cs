@@ -24,7 +24,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
     {
         Because of = () => mapping.As("test");
 
-        It should_set_the_resource_name = () => mapping.ResourceName.ShouldEqual("test");
+        It should_set_the_mapped_name = () => mapping.MappedName.ShouldEqual("test");
 
         It should_set_the_base_path = () => mapping.BasePath().ShouldEqual("test");
     }

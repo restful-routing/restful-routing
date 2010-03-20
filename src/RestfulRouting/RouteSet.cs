@@ -14,7 +14,6 @@ namespace RestfulRouting
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
 		public static Func<string, string> Singularize = Inflector.Net.Inflector.Singularize;
-		private string _areaName;
 
 		protected RouteSet()
 		{
@@ -64,11 +63,27 @@ namespace RestfulRouting
 
 			var resourceName = controllerName.Substring(0, controllerName.Length - "Controller".Length).ToLowerInvariant();
 
+			
+			var basePath = VirtualPathUtility.RemoveTrailingSlash(_pathPrefix);
+
+			if (!string.IsNullOrEmpty(basePath))
+			{
+				basePath = basePath + "/";
+			}
+
+			if (_currentMapping != null && _currentMapping.ResourceName != null)
+			{
+				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+
+				_pathPrefix = basePath + (_currentMapping.MappedName ?? _currentMapping.ResourceName) + "/{" + singular + "Id}";
+			}
+
+
 			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix, resourceName));
 
 			AddMapping(resourcesMapping);
 
-			MapNested(resourcesMapping, () => MapWithNestedPathPrefix(nestedAction));
+			MapNested(resourcesMapping, nestedAction);
 		}
 
 		private void MapNested(Mapping mapping, Action action)
@@ -80,25 +95,6 @@ namespace RestfulRouting
 			action();
 
 			_currentMapping = parentMapping;
-		}
-
-		private void MapWithNestedPathPrefix(Action action)
-		{
-			var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
-			var beforeNestedPathPrefix = _pathPrefix;
-
-			var basePath = VirtualPathUtility.RemoveTrailingSlash(_pathPrefix);
-
-			if (!string.IsNullOrEmpty(basePath))
-			{
-				basePath = basePath + "/";
-			}
-
-			_pathPrefix = basePath + _currentMapping.ResourceName + "/{" + singular + "Id}";
-
-			action();
-
-			_pathPrefix = beforeNestedPathPrefix;
 		}
 
 		public StandardMapping Map(string url)

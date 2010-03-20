@@ -43,7 +43,9 @@ namespace RestfulRouting.Mappings
 			private set { _collections = value; }
 		}
 
-        public string ResourceName;
+		public string ResourceName;
+
+		public string MappedName;
 
         private IList<string> IncludedActions { get; set; }
 
@@ -51,12 +53,14 @@ namespace RestfulRouting.Mappings
         {
             var basePath = VirtualPathUtility.RemoveTrailingSlash(Context.PathPrefix);
 
+        	var nameToMap = MappedName ?? ResourceName;
+
             if (!string.IsNullOrEmpty(basePath))
             {
-                basePath = basePath + "/" + ResourceName;
+                basePath = basePath + "/" + nameToMap;
             }
 
-            return basePath ?? ResourceName;
+            return basePath ?? nameToMap;
         }
 
         public bool IncludesAction(string action)
@@ -68,7 +72,7 @@ namespace RestfulRouting.Mappings
 
         public void As(string resourceName)
         {
-            ResourceName = resourceName;
+            MappedName = resourceName;
         }
 
         public void Except(params string[] actions)

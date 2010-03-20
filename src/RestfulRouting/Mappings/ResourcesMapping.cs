@@ -33,7 +33,7 @@ namespace RestfulRouting.Mappings
 
         public override void AddRoutesTo(RouteCollection routeCollection)
         {
-        	_resourcesMapper.SetResourceAs(ResourceName);
+        	_resourcesMapper.SetResourceAs(MappedName ?? ResourceName);
 
 			if (Collections != null && Collections.Any())
 			{
