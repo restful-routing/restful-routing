@@ -25,14 +25,16 @@ namespace RestfulRouting
 			        namespaces = route.DataTokens["namespaces"] as string[];
 			    var defaults = new RouteValueDictionary();
                 if (route.Defaults != null)
-                    defaults = route.Defaults;
+					defaults = route.Defaults;
+				if (route.DataTokens == null)
+					route.DataTokens = new RouteValueDictionary();
 
 				model.RouteInfos.Add(new RouteInfo
 				                     	{
 											HttpMethod = string.Join(" ", allowedMethods.ToArray()),
 											Path = route.Url,
                                             Endpoint = defaults["controller"] + "#" + defaults["action"],
-											Area = route.Constraints["area"] as string,
+											Area = route.DataTokens["area"] as string,
 											Namespaces = string.Join(" ", namespaces.ToArray()),
 				                     	});
 			}
