@@ -8,7 +8,7 @@ namespace RestfulRouting.Sample
 	{
 		public static void RegisterRoutes(RouteCollection routes)
 		{
-			routes.MapRoutes<WebsiteRoutes>();
+			routes.MapRoutes<Routes>();
 		}
 
 		protected void Application_Start()
@@ -22,9 +22,9 @@ namespace RestfulRouting.Sample
 		}
 	}
 
-	public class WebsiteRoutes : RouteSet
+	public class Routes : RouteSet
 	{
-		public WebsiteRoutes()
+		public Routes()
 		{
 			Map("").To<RootController>(x => x.Index());
 
