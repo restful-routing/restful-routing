@@ -1,27 +1,14 @@
-using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public interface IResourcesMapper
-	{
-		Route IndexRoute();
-		Route ShowRoute();
-		Route CreateRoute();
-		Route UpdateRoute();
-		Route DestroyRoute();
-		Route NewRoute();
-		Route EditRoute();
-		Route MemberRoute(string action, params HttpVerbs[] verbs);
-	}
-
-	public class ResourcesMapper : IResourcesMapper
+	public class ResourcesMapper
 	{
 		private RouteNames _names;
 		private string _pathPrefix;
-		private string _resourceName;
+		public string _resourceName;
 		private string _resourcePath;
 
 		public ResourcesMapper(RouteNames names, string pathPrefix, string resourceName)
@@ -33,6 +20,14 @@ namespace RestfulRouting
 				_resourcePath = _pathPrefix + "/" + _resourceName;
 			else
 				_resourcePath = _resourceName;
+		}
+
+		public void SetResourceAs(string name)
+		{
+			if (!string.IsNullOrEmpty(_pathPrefix))
+				_resourcePath = _pathPrefix + "/" + name;
+			else
+				_resourcePath = name;
 		}
 
 		public Route IndexRoute()

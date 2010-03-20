@@ -5,13 +5,13 @@ namespace RestfulRouting.Mappings
 {
     public class ResourcesMapping<TController> : Mapping
     {
-        private IResourcesMapper _resourcesMapper;
+        private ResourcesMapper _resourcesMapper;
 
         protected string _resourcePath;
 
         private RouteNames names;
 
-        public ResourcesMapping(RouteNames routeNames, IResourcesMapper resourcesMapper) : base()
+        public ResourcesMapping(RouteNames routeNames, ResourcesMapper resourcesMapper) : base()
         {
             names = routeNames;
             ResourceName = ControllerName<TController>();
@@ -32,6 +32,8 @@ namespace RestfulRouting.Mappings
 
         public override void AddRoutesTo(RouteCollection routeCollection)
         {
+        	_resourcesMapper.SetResourceAs(ResourceName);
+
             if (IncludesAction(names.IndexName))
                 routeCollection.Add(_resourcesMapper.IndexRoute());
 
