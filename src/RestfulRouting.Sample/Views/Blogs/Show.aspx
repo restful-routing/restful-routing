@@ -4,12 +4,8 @@
 
     <h2>Show</h2>
 
-	<p>
-		Id: <%= Model.Id %>
-	</p>
-	<p>
-		Author: <%= Model.Author %>
-	</p>
+	<%= Html.DisplayForModel() %>
+	
 	<p>
 		<%= Html.ActionLink("edit", "edit", new { id = Model.Id }) %>
 		<%= Html.ActionLink("delete", "delete", new { id = Model.Id }) %>

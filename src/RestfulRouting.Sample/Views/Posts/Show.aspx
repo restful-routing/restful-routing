@@ -4,18 +4,7 @@
 
     <h2>Show</h2>
 
-	<p>
-		Id: <%= Model.Id %>
-	</p>
-	<p>
-		Title: <%= Model.Title %>
-	</p>
-	<p>
-		Slug: <%= Model.Slug %>
-	</p>
-	<p>
-		Body: <%= Model.Body %>
-	</p>
+	<%= Html.DisplayForModel() %>
 	
 	<p>
 		<%= Html.ActionLink("edit", "edit", new { id = Model.Id }) %>
