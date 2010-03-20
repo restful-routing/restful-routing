@@ -14,6 +14,7 @@ namespace RestfulRouting
 		private RouteNames names;
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
+		public static Func<string, string> Singularize = Inflector.Net.Inflector.Singularize;
 
 		protected RestfulRoutingArea()
 		{
@@ -78,7 +79,7 @@ namespace RestfulRouting
 
 		private void MapWithNestedPathPrefix(Action action)
 		{
-			var singular = Inflector.Net.Inflector.Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+			var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
 			var beforeNestedPathPrefix = _pathPrefix;
 
 			var basePath = VirtualPathUtility.RemoveTrailingSlash(_pathPrefix);
