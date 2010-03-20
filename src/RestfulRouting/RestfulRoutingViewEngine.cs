@@ -18,7 +18,7 @@ namespace RestfulRouting
                 "~/Views/{2}/Shared/{0}.ascx",
             };
 
-			AreaPartialViewLocationFormats = AreaPartialViewLocationFormats;
+			AreaPartialViewLocationFormats = AreaViewLocationFormats;
 		}
 	}
 }
