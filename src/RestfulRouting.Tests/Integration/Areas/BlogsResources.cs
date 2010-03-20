@@ -53,4 +53,21 @@ namespace RestfulRouting.Tests.Integration.Areas
 
 		Behaves_like<AdminBlogsResources> admin_blogs_resource;
 	}
+
+	public class when_mapping_an_area : base_context
+	{
+		public class BlogArea : RestfulRoutingArea
+		{
+			public BlogArea()
+			{
+				Area<Integration.Contexts.Admin.BlogsController>("admin");
+
+				Resources<Integration.Contexts.Admin.BlogsController>();
+			}
+		}
+
+		Because of = () => new BlogArea().RegisterRoutes(routes);
+
+		Behaves_like<AdminBlogsResources> admin_blogs_resource;
+	}
 }

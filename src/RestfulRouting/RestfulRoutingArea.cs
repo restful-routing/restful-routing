@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,6 +14,7 @@ namespace RestfulRouting
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
 		public static Func<string, string> Singularize = Inflector.Net.Inflector.Singularize;
+		private string _areaName;
 
 		protected RestfulRoutingArea()
 		{
@@ -116,6 +116,18 @@ namespace RestfulRouting
 				_currentMapping.AddSubMapping(mapping);
 			else
 				mappings.Add(mapping);
+		}
+
+		public void Area<T>(string area)
+		{
+			var areaMapping = new AreaMapping<T>(area);
+
+			foreach (var mapping in mappings)
+			{
+				areaMapping.AddSubMapping(mapping);
+			}
+			mappings = new List<Mapping>{areaMapping};
+			_currentMapping = areaMapping;
 		}
 
 		public void Area<T>(string area, Action action)
