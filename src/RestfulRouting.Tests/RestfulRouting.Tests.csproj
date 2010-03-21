@@ -98,6 +98,7 @@
     <Compile Include="Unit\HtmlHelperExtensionsSpec.cs" />
     <Compile Include="Unit\Mappings\MappingSpec.cs" />
     <Compile Include="Unit\Mappings\AppMappingSpec.cs" />
+    <Compile Include="Unit\Mappings\RouteSpec.cs" />
     <Compile Include="Unit\ResourcesMapperSpec.cs" />
     <Compile Include="Unit\Mappings\StandardMappingSpec.cs" />
   </ItemGroup>
