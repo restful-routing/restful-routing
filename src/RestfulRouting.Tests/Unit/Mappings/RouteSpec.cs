@@ -17,7 +17,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
 		private Establish context = () =>
 		                            	{
 											collection = new RouteCollection();
-		                            		route = new Route("test", new MvcRouteHandler());
+		                            		route = new Route("test/{action}", new RouteValueDictionary(new { controller = "test" }), new MvcRouteHandler());
 		                            		mapping = new RouteMapping(route);
 		                            	};
 

@@ -149,6 +149,11 @@ namespace RestfulRouting
             AddMapping(new AppMapping<T>(pathPrefix));
         }
 
+		public void Route(RouteBase routeBase)
+		{
+			AddMapping(new RouteMapping(routeBase));
+		}
+
 		public void RegisterRoutes(RouteCollection routeCollection)
 		{
 			foreach (var mapping in mappings)
