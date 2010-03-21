@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Integration\AppMappingSpec.cs" />
+    <Compile Include="Integration\ConnectMappingSpec.cs" />
     <Compile Include="Integration\Areas\BlogsResources.cs" />
     <Compile Include="Integration\Contexts\Admin\BlogsController.cs" />
     <Compile Include="Integration\Contexts\AvatarsController.cs" />

@@ -22,7 +22,7 @@ namespace RestfulRouting.Tests.Integration
         {
             public WebsiteApp()
             {
-                App<BlogArea>("");
+                Connect<BlogArea>("");
             }
         }
 
@@ -39,7 +39,7 @@ namespace RestfulRouting.Tests.Integration
         {
             public WebsiteApp()
             {
-                App<BlogArea>("admin/");
+                Connect<BlogArea>("admin/");
             }
         }
 
