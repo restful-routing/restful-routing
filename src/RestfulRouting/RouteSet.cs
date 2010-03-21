@@ -50,14 +50,7 @@ namespace RestfulRouting
 			_currentMapping.Context.Constraints[key] = value;
 		}
 
-		public void Resources<TController>()
-			where TController : Controller
-		{
-			Resources<TController>(() => { });
-		}
-
-		public void Resources<TController>(Action nestedAction)
-			where TController : Controller
+		private void GenerateNestedPathPrefix()
 		{
 			var basePath = VirtualPathUtility.RemoveTrailingSlash(_pathPrefix);
 
@@ -68,11 +61,24 @@ namespace RestfulRouting
 
 			if (_currentMapping != null && _currentMapping.ResourceName != null)
 			{
-				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
-
-				_pathPrefix = basePath + (_currentMapping.MappedName ?? _currentMapping.ResourceName) + "/{" + singular + "Id}";
+				_pathPrefix = basePath + (_currentMapping.MappedName ?? _currentMapping.ResourceName);
 			}
+		}
 
+		public void Resources<TController>()
+			where TController : Controller
+		{
+			Resources<TController>(() => { });
+		}
+
+		public void Resources<TController>(Action nestedAction)
+			where TController : Controller
+		{
+			GenerateNestedPathPrefix();
+
+			var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+
+			_pathPrefix += "/{" + singular + "Id}";
 
 			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
 
@@ -81,12 +87,24 @@ namespace RestfulRouting
 			MapNested(resourcesMapping, nestedAction);
 		}
 
+
 		public void Resource<TController>()
 			where TController : Controller
 		{
+			Resource<TController>(() => { });
+		}
+
+
+		public void Resource<TController>(Action nestedAction)
+			where TController : Controller
+		{
+			GenerateNestedPathPrefix();
+
 			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
 
 			AddMapping(resourcesMapping);
+
+			MapNested(resourcesMapping, nestedAction);
 		}
 
 		private void MapNested(Mapping mapping, Action action)
