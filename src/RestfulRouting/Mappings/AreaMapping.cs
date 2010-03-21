@@ -7,12 +7,19 @@ namespace RestfulRouting.Mappings
     {
         private string _namespace;
         private string _area;
+    	private string _pathPrefix;
 
-        public AreaMapping(string area)
+    	public AreaMapping(string area) : this(area, area)
         {
-            _area = area;
-            _namespace = typeof(TController).Namespace;
+            
         }
+
+		public AreaMapping(string areaName, string pathPrefix)
+		{
+			_pathPrefix = pathPrefix;
+			_area = areaName;
+			_namespace = typeof(TController).Namespace;
+		}
 
         public override void AddRoutesTo(RouteCollection routeCollection)
         {
@@ -24,8 +31,8 @@ namespace RestfulRouting.Mappings
 
             foreach (var route in routes.Select(x => (Route)x))
             {
-                if (!string.IsNullOrEmpty(_area))
-                    route.Url = _area + "/" + route.Url;
+                if (!string.IsNullOrEmpty(_pathPrefix))
+                    route.Url = _pathPrefix + "/" + route.Url;
                 ConstrainArea(route);
                 routeCollection.Add(route);
             }

@@ -137,21 +137,27 @@ namespace RestfulRouting
 				mappings.Add(mapping);
 		}
 
-		public void Area<T>(string area)
+		public void Area<T>(string areaName)
 		{
-			var areaMapping = new AreaMapping<T>(area);
+			var areaMapping = new AreaMapping<T>(areaName, "");
 
 			foreach (var mapping in mappings)
 			{
 				areaMapping.AddSubMapping(mapping);
 			}
 			mappings = new List<Mapping>{areaMapping};
+
 			_currentMapping = areaMapping;
 		}
 
 		public void Area<T>(string area, Action action)
 		{
-			var mapping = new AreaMapping<T>(area);
+			Area<T>(area, area, action);
+		}
+
+		public void Area<T>(string areaName, string pathPrefix, Action action)
+		{
+			var mapping = new AreaMapping<T>(areaName, pathPrefix);
 
 			AddMapping(mapping);
 
@@ -167,7 +173,7 @@ namespace RestfulRouting
 			MapNested(mapping, action);
 		}
 
-        public void App<T>(string pathPrefix) where T : RouteSet, new()
+        public void Connect<T>(string pathPrefix) where T : RouteSet, new()
         {
             AddMapping(new AppMapping<T>(pathPrefix));
         }

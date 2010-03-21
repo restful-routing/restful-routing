@@ -60,9 +60,9 @@ namespace RestfulRouting.Tests.Integration.Areas
 		{
 			public BlogArea()
 			{
-				Area<Integration.Contexts.Admin.BlogsController>("admin");
+				Area<BlogsController>("blogs");
 
-				Resources<Integration.Contexts.Admin.BlogsController>();
+				Area("admin", () => Resources<BlogsController>());
 			}
 		}
 
