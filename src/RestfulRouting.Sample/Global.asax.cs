@@ -30,32 +30,32 @@ namespace RestfulRouting.Sample
 
 			Map("routedebug").To<RouteDebugController>(x => x.Index());
 
-			Area<BlogsController>("", () =>
-          	{
-				Resources<BlogsController>(() =>
-				{
-					As("weblogs");
-					Only("index", "show");
-					Collection("latest", HttpVerbs.Get);
-
-					Resources<PostsController>(() =>
-					{
-						Except("create", "update", "destroy");
-						Resources<CommentsController>(() => Except("destroy"));
-					});
-				});
-
-          	});
-			
 			//Area<BlogsController>("", () =>
-			//                                {
-			//                                    Resources<BlogsController>(() => Resources<PostsController>());
-			//                                });
-			//Area<Controllers.Admin.BlogsController>("admin", () =>
-			//                                                    {
-			//                                                        Resources<Controllers.Admin.BlogsController>();
-			//                                                        Resources<Controllers.Admin.PostsController>();
-			//                                                    });
+			//{
+			//    Resources<BlogsController>(() =>
+			//    {
+			//        As("weblogs");
+			//        Only("index", "show");
+			//        Collection("latest", HttpVerbs.Get);
+
+			//        Resources<PostsController>(() =>
+			//        {
+			//            Except("create", "update", "destroy");
+			//            Resources<CommentsController>(() => Except("destroy"));
+			//        });
+			//    });
+
+			//});
+
+			Area<BlogsController>("", () =>
+											{
+												Resources<BlogsController>(() => Resources<PostsController>());
+											});
+			Area<Controllers.Admin.BlogsController>("admin", () =>
+																{
+																	Resources<Controllers.Admin.BlogsController>();
+																	Resources<Controllers.Admin.PostsController>();
+																});
 		}
 	}
 }

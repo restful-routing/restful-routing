@@ -75,13 +75,14 @@
     <Compile Include="Integration\AppMappingSpec.cs" />
     <Compile Include="Integration\Areas\BlogsResources.cs" />
     <Compile Include="Integration\Contexts\Admin\BlogsController.cs" />
+    <Compile Include="Integration\Contexts\SessionsController.cs" />
     <Compile Include="Integration\Contexts\ImagesController.cs" />
     <Compile Include="Integration\Behaviours\AdminBlogsResources.cs" />
     <Compile Include="Integration\Behaviours\ImagesResources.cs" />
+    <Compile Include="Integration\ResourceSpec.cs" />
     <Compile Include="Integration\Resources\AsSpec.cs" />
     <Compile Include="Integration\Resources\CollectionSpec.cs" />
     <Compile Include="Integration\RouteSpec.cs" />
-    <Compile Include="Unit\AreaSpec.cs" />
     <Compile Include="Integration\Behaviours\BlogsResources.cs" />
     <Compile Include="Integration\Behaviours\CommentsNestedUnderPostsAndBlogs.cs" />
     <Compile Include="Integration\base_context.cs" />
@@ -96,12 +97,28 @@
     <Compile Include="Integration\Resources\ResourcesSpec.cs" />
     <Compile Include="Integration\StandardMappingSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\HtmlHelperExtensionsSpec.cs" />
-    <Compile Include="Unit\Mappings\MappingSpec.cs" />
-    <Compile Include="Unit\Mappings\AppMappingSpec.cs" />
-    <Compile Include="Unit\Mappings\RouteSpec.cs" />
-    <Compile Include="Unit\ResourcesMapperSpec.cs" />
-    <Compile Include="Unit\Mappings\StandardMappingSpec.cs" />
+    <Compile Include="Unit\AreaSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\HtmlHelperExtensionsSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\Mappings\AppMappingSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\Mappings\MappingSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\Mappings\RouteSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\Mappings\StandardMappingSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Unit\ResourceMapperSpec.cs" />
+    <Compile Include="Unit\ResourcesMapperSpec.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestfulRouting\RestfulRouting.csproj">

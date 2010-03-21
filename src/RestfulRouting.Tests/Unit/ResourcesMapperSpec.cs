@@ -13,7 +13,11 @@ namespace RestfulRouting.Tests.Unit
 		protected static ResourcesMapper mapper;
 		protected static Route route;
 
-		Establish context = () => mapper = new ResourcesMapper(new RouteNames(), "test", "blogs");
+		Establish context = () =>
+		                    	{
+		                    		mapper = new ResourcesMapper(new RouteNames(), "test");
+		                    		mapper.SetResourceAs("blogs");
+		                    	};
 
 		protected static ICollection<string> HttpMethods()
 		{
@@ -24,8 +28,6 @@ namespace RestfulRouting.Tests.Unit
 		{
 			HttpMethods().ShouldContainOnly(httpVerb);
 		}
-
-		//It should_set_controller_to_blogs = () => route.Defaults["controller"].ShouldBe("blogs");
 	}
 
 	public class when_mapping_index_route : base_context
@@ -107,12 +109,23 @@ namespace RestfulRouting.Tests.Unit
 
 	public class when_mapping_members : base_context
 	{
-		Because of = () => route = mapper.MemberRoute("up", HttpVerbs.Post);
+		Because of = () => route = mapper.MemberRoute("up");
 
-		It should_set_default_action_to_destroy = () => route.Defaults["action"].ShouldBe("up");
+		It should_set_default_action_to_up = () => route.Defaults["action"].ShouldBe("up");
 
-		It should_constrain_to_put = () => ShouldOnlyAllow("POST");
+		It should_constrain_to_get_by_default = () => ShouldOnlyAllow("GET");
 
 		It should_set_the_url = () => route.Url.ShouldBe("test/blogs/{id}/up");
+	}
+
+	public class when_mapping_collections : base_context
+	{
+		Because of = () => route = mapper.CollectionRoute("up");
+
+		It should_set_default_action_to_up = () => route.Defaults["action"].ShouldEqual("up");
+
+		It should_constrain_to_get_by_default = () => ShouldOnlyAllow("GET");
+
+		It should_set_the_url = () => route.Url.ShouldEqual("test/blogs/up");
 	}
 }

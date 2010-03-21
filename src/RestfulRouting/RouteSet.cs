@@ -59,11 +59,6 @@ namespace RestfulRouting
 		public void Resources<TController>(Action nestedAction)
 			where TController : Controller
 		{
-			var controllerName = typeof(TController).Name;
-
-			var resourceName = controllerName.Substring(0, controllerName.Length - "Controller".Length).ToLowerInvariant();
-
-			
 			var basePath = VirtualPathUtility.RemoveTrailingSlash(_pathPrefix);
 
 			if (!string.IsNullOrEmpty(basePath))
@@ -79,11 +74,19 @@ namespace RestfulRouting
 			}
 
 
-			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix, resourceName));
+			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
 
 			AddMapping(resourcesMapping);
 
 			MapNested(resourcesMapping, nestedAction);
+		}
+
+		public void Resource<TController>()
+			where TController : Controller
+		{
+			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
+
+			AddMapping(resourcesMapping);
 		}
 
 		private void MapNested(Mapping mapping, Action action)

@@ -108,5 +108,16 @@ namespace RestfulRouting.Mappings
         {
             Mappings.Add(mapping);
         }
+
+    	protected void ConfigureRoute(Route route)
+    	{
+    		if (Context.Constraints != null && Context.Constraints.Count > 0)
+    		{
+    			foreach (var constraint in Context.Constraints)
+    			{
+    				route.Constraints.Add(constraint.Key, constraint.Value);
+    			}
+    		}
+    	}
     }
 }

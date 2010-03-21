@@ -7,9 +7,7 @@ namespace RestfulRouting.Mappings
     {
         private ResourcesMapper _resourcesMapper;
 
-        protected string _resourcePath;
-
-        private RouteNames names;
+    	private RouteNames names;
 
         public ResourcesMapping(RouteNames routeNames, ResourcesMapper resourcesMapper)
         {
@@ -17,21 +15,12 @@ namespace RestfulRouting.Mappings
 
             ResourceName = ControllerName<TController>();
 
+        	resourcesMapper.SetResourceAs(ResourceName);
+
             _resourcesMapper = resourcesMapper;
         }
 
-        protected void ConfigureRoute(Route route)
-        {
-            if (Context.Constraints != null && Context.Constraints.Count > 0)
-            {
-                foreach (var constraint in Context.Constraints)
-                {
-                    route.Constraints.Add(constraint.Key, constraint.Value);
-                }
-            }
-        }
-
-        public override void AddRoutesTo(RouteCollection routeCollection)
+    	public override void AddRoutesTo(RouteCollection routeCollection)
         {
         	_resourcesMapper.SetResourceAs(MappedName ?? ResourceName);
 
