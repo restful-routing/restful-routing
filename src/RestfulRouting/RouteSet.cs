@@ -76,9 +76,11 @@ namespace RestfulRouting
 		{
 			GenerateNestedPathPrefix();
 
-			var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
-
-			_pathPrefix += "/{" + singular + "Id}";
+			if (_currentMapping != null && _currentMapping.ResourceName != null)
+			{
+				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+				_pathPrefix += "/{" + singular + "Id}";
+			}
 
 			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
 
