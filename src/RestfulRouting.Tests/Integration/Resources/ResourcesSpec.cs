@@ -113,4 +113,28 @@ namespace RestfulRouting.Tests.Integration
 
 		Behaves_like<ImagesResources> an_images_resource;
 	}
+
+	public class when_mapping_nested_multiple : base_context
+	{
+		public class BlogArea : RouteSet
+		{
+			public BlogArea()
+			{
+				Resources<BlogsController>(() =>
+				{
+					Resources<PostsController>();
+					Resources<CommentsController>();
+				});
+				
+			}
+		}
+
+		Because of = () => new BlogArea().RegisterRoutes(routes);
+
+		Behaves_like<BlogsResources> a_blogs_resource;
+
+		Behaves_like<PostsNestedUnderBlogs> a_nested_posts_resource;
+
+		It should_map_comments_index = () => "~/blogs/1/avatars".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1, null));
+	}
 }
