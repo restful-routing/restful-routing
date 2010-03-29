@@ -19,8 +19,16 @@ namespace RestfulRouting
             		{
             			if (String.Equals(method, httpContext.Request.HttpMethod, StringComparison.OrdinalIgnoreCase))
             				return true;
-						if (httpContext.Request.Form != null && String.Equals(method, httpContext.Request.Form["_method"], StringComparison.OrdinalIgnoreCase))
-							return true;
+						
+                        if (httpContext.Request.Form == null)
+                            continue;
+                        
+                        var overridden = httpContext.Request.Form["_method"] ?? httpContext.Request.Form["X-HTTP-Method-Override"];
+                        if (String.Equals(method, overridden, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+
             		}
             		break;
             }
