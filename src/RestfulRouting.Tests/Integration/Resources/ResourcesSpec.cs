@@ -135,6 +135,6 @@ namespace RestfulRouting.Tests.Integration
 
 		Behaves_like<PostsNestedUnderBlogs> a_nested_posts_resource;
 
-		It should_map_comments_index = () => "~/blogs/1/avatars".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1, null));
+		It should_map_comments_index = () => "~/blogs/1/comments".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1, null));
 	}
 }
