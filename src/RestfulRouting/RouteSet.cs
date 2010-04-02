@@ -104,6 +104,8 @@ namespace RestfulRouting
 		public void Resource<TController>(Action nestedAction)
 			where TController : Controller
 		{
+			var previousPath = _pathPrefix;
+
 			GenerateNestedPathPrefix();
 
 			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
@@ -111,6 +113,8 @@ namespace RestfulRouting
 			AddMapping(resourcesMapping);
 
 			MapNested(resourcesMapping, nestedAction);
+
+			_pathPrefix = previousPath;
 		}
 
 		private void MapNested(Mapping mapping, Action action)

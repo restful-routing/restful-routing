@@ -76,6 +76,7 @@
     <Compile Include="Integration\Areas\BlogsResources.cs" />
     <Compile Include="Integration\Contexts\Admin\BlogsController.cs" />
     <Compile Include="Integration\Contexts\AvatarsController.cs" />
+    <Compile Include="Integration\Contexts\ProfilesController.cs" />
     <Compile Include="Integration\Contexts\SessionsController.cs" />
     <Compile Include="Integration\Contexts\ImagesController.cs" />
     <Compile Include="Integration\Behaviours\AdminBlogsResources.cs" />

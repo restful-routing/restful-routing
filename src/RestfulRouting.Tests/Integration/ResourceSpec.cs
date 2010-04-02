@@ -66,6 +66,29 @@ namespace RestfulRouting.Tests.Integration
 		Behaves_like<NestedSessionsAvatarsResource> a_nested_avatars_resource;
 	}
 
+	public class when_mapping_multiple_nested_resource : base_context
+	{
+		public class SessionRoutes : RouteSet
+		{
+			public SessionRoutes()
+			{
+				Resource<SessionsController>(() =>
+				                             	{
+				                             		Resource<AvatarsController>();
+				                             		Resource<ProfilesController>();
+				                             	});
+			}
+		}
+
+		Because of = () => new SessionRoutes().RegisterRoutes(routes);
+
+		Behaves_like<SessionsResource> a_sessions_resource;
+
+		Behaves_like<NestedSessionsAvatarsResource> a_nested_avatars_resource;
+
+		Behaves_like<NestedSessionsProfilesResource> a_nested_profiles_resource;
+	}
+
 	[Behaviors]
 	public class NestedSessionsAvatarsResource
 	{
@@ -93,5 +116,34 @@ namespace RestfulRouting.Tests.Integration
 		It should_generate_update = () => OutBoundUrl.Of<AvatarsController>(x => x.Update()).ShouldMapToUrl("/session/avatar");
 
 		It should_generate_destroy = () => OutBoundUrl.Of<AvatarsController>(x => x.Destroy()).ShouldMapToUrl("/session/avatar");
+	}
+
+	[Behaviors]
+	public class NestedSessionsProfilesResource
+	{
+		It should_map_get_show = () => "~/session/profile".WithMethod(HttpVerbs.Get).ShouldMapTo<ProfilesController>(x => x.Show());
+
+		It should_map_get_new = () => "~/session/profile/new".WithMethod(HttpVerbs.Get).ShouldMapTo<ProfilesController>(x => x.New());
+
+		It should_map_post_create = () => "~/session/profile".WithMethod(HttpVerbs.Post).ShouldMapTo<ProfilesController>(x => x.Create());
+
+		It should_map_get_edit = () => "~/session/profile/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<ProfilesController>(x => x.Edit());
+
+		It should_map_put_update = () => "~/session/profile".WithMethod(HttpVerbs.Put).ShouldMapTo<ProfilesController>(x => x.Update());
+
+		It should_map_delete_destroy = () => "~/session/profile".WithMethod(HttpVerbs.Delete).ShouldMapTo<ProfilesController>(x => x.Destroy());
+
+
+		It should_generate_show = () => OutBoundUrl.Of<ProfilesController>(x => x.Show()).ShouldMapToUrl("/session/profile");
+
+		It should_generate_new = () => OutBoundUrl.Of<ProfilesController>(x => x.New()).ShouldMapToUrl("/session/profile/new");
+
+		It should_generate_create = () => OutBoundUrl.Of<ProfilesController>(x => x.Create()).ShouldMapToUrl("/session/profile");
+
+		It should_generate_edit = () => OutBoundUrl.Of<ProfilesController>(x => x.Edit()).ShouldMapToUrl("/session/profile/edit");
+
+		It should_generate_update = () => OutBoundUrl.Of<ProfilesController>(x => x.Update()).ShouldMapToUrl("/session/profile");
+
+		It should_generate_destroy = () => OutBoundUrl.Of<ProfilesController>(x => x.Destroy()).ShouldMapToUrl("/session/profile");
 	}
 }
