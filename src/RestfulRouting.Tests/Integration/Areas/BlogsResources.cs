@@ -70,4 +70,24 @@ namespace RestfulRouting.Tests.Integration.Areas
 
 		Behaves_like<AdminBlogsResources> admin_blogs_resource;
 	}
+
+	public class when_mapping_multiple_nested : base_context
+	{
+		public class BlogArea : RouteSet
+		{
+			public BlogArea()
+			{
+				Area<BlogsController>("admin", () =>
+				                               	{
+				                               		Resources<BlogsController>();
+													Resources<PostsController>();
+				                               	});
+			}
+		}
+
+		Because of = () => new BlogArea().RegisterRoutes(routes);
+
+		Behaves_like<AdminBlogsResources> admin_blogs_resource;
+		Behaves_like<AdminPostsResources> admin_posts_resource;
+	}
 }

@@ -86,8 +86,6 @@ namespace RestfulRouting
 
 			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
 
-			AddMapping(resourcesMapping);
-
 			MapNested(resourcesMapping, nestedAction);
 
 			_pathPrefix = previousPath;
@@ -110,8 +108,6 @@ namespace RestfulRouting
 
 			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
 
-			AddMapping(resourcesMapping);
-
 			MapNested(resourcesMapping, nestedAction);
 
 			_pathPrefix = previousPath;
@@ -119,6 +115,8 @@ namespace RestfulRouting
 
 		private void MapNested(Mapping mapping, Action action)
 		{
+			AddMapping(mapping);
+
 			var parentMapping = _currentMapping;
 
 			_currentMapping = mapping;
@@ -167,16 +165,12 @@ namespace RestfulRouting
 		{
 			var mapping = new AreaMapping<T>(areaName, pathPrefix);
 
-			AddMapping(mapping);
-
 			MapNested(mapping, action);
 		}
 
 		public void Area(string area, Action action)
 		{
 			var mapping = new AreaMapping(area);
-
-			AddMapping(mapping);
 
 			MapNested(mapping, action);
 		}
