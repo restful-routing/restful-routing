@@ -1,3 +1,36 @@
 h1. Restful Routing for ASP .NET MVC
 
-Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html
+Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
+
+<pre><code>public class Routes : RouteSet
+{
+  public Routes()
+  {
+	Resource<SessionsController>();
+    Resources<BlogsController>(() =>
+    {
+      As("weblogs");
+      Only("index", "show");
+      Collection("latest", HttpVerbs.Get);
+
+      Resources<PostsController>(() =>
+      {
+        Except("create", "update", "destroy");
+        Resources<CommentsController>(() => Except("destroy"));
+      });
+    });
+  }
+}
+
+public class MvcApplication : System.Web.HttpApplication
+{
+  protected void Application_Start()
+  {
+    ViewEngines.Engines.Clear();
+    ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
+    
+    RouteTable.Routes.MapRoutes<Routes>();
+    }
+}</pre></code>
+
+"Read more":http://stevehodgkiss.com/blog/2010/03/21/restful-routing-for-asp-net-mvc-2/
