@@ -6,7 +6,7 @@ Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
 {
   public Routes()
   {
-	Resource<SessionsController>();
+    Resource<SessionsController>();
     Resources<BlogsController>(() =>
     {
       As("weblogs");
