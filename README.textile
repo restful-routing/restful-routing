@@ -31,6 +31,6 @@ public class MvcApplication : System.Web.HttpApplication
     
     RouteTable.Routes.MapRoutes<Routes>();
     }
-}</pre></code>
+}</code></pre>
 
 "Read more":http://stevehodgkiss.com/blog/2010/03/21/restful-routing-for-asp-net-mvc-2/
