@@ -91,6 +91,7 @@
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
