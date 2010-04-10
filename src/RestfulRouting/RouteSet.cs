@@ -78,7 +78,7 @@ namespace RestfulRouting
 
 			GenerateNestedPathPrefix();
 
-			if (_currentMapping != null && _currentMapping.ResourceName != null)
+			if (_currentMapping != null && _currentMapping.ResourceName != null && IsNestedResourcesMapping())
 			{
 				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
 				_pathPrefix += "/{" + singular + "Id}";
@@ -91,6 +91,10 @@ namespace RestfulRouting
 			_pathPrefix = previousPath;
 		}
 
+		private bool IsNestedResourcesMapping()
+		{
+			return _currentMapping.GetType().Name.StartsWith("Resources");
+		}
 
 		public void Resource<TController>()
 			where TController : Controller

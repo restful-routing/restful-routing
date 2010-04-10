@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Machine.Specifications;
 using MvcContrib.TestHelper;
+using RestfulRouting.Tests.Integration.Behaviours;
 using RestfulRouting.Tests.Integration.Contexts;
 
 namespace RestfulRouting.Tests.Integration
@@ -89,6 +90,24 @@ namespace RestfulRouting.Tests.Integration
 		Behaves_like<NestedSessionsProfilesResource> a_nested_profiles_resource;
 	}
 
+	public class when_mapping_a_resources_with_a_resource : base_context
+	{
+		public class Routes : RouteSet
+		{
+			public Routes()
+			{
+				Resource<SessionsController>(() =>
+				                             	{
+													Resources<ImagesController>();
+				                             	});
+			}
+		}
+
+		Because of = () => new Routes().RegisterRoutes(routes);
+
+		Behaves_like<ResourcesNestedWithinResource> a_nested_resources;
+	}
+
 	[Behaviors]
 	public class NestedSessionsAvatarsResource
 	{
@@ -145,5 +164,38 @@ namespace RestfulRouting.Tests.Integration
 		It should_generate_update = () => OutBoundUrl.Of<ProfilesController>(x => x.Update()).ShouldMapToUrl("/session/profile");
 
 		It should_generate_destroy = () => OutBoundUrl.Of<ProfilesController>(x => x.Destroy()).ShouldMapToUrl("/session/profile");
+	}
+
+	[Behaviors]
+	public class ResourcesNestedWithinResource
+	{
+		It should_map_get_index = () => "~/session/images".WithMethod(HttpVerbs.Get).ShouldMapTo<ImagesController>(x => x.Index());
+
+		It should_map_get_show = () => "~/session/images/1".WithMethod(HttpVerbs.Get).ShouldMapTo<ImagesController>(x => x.Show(1));
+
+		It should_map_get_new = () => "~/session/images/new".WithMethod(HttpVerbs.Get).ShouldMapTo<ImagesController>(x => x.New());
+
+		It should_map_post_create = () => "~/session/images".WithMethod(HttpVerbs.Post).ShouldMapTo<ImagesController>(x => x.Create());
+
+		It should_map_get_edit = () => "~/session/images/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<ImagesController>(x => x.Edit(1));
+
+		It should_map_put_update = () => "~/session/images/1".WithMethod(HttpVerbs.Put).ShouldMapTo<ImagesController>(x => x.Update(1));
+
+		It should_map_delete_destroy = () => "~/session/images/1".WithMethod(HttpVerbs.Delete).ShouldMapTo<ImagesController>(x => x.Destroy(1));
+
+
+		It should_generate_index = () => OutBoundUrl.Of<ImagesController>(x => x.Index()).ShouldMapToUrl("/session/images");
+
+		It should_generate_show = () => OutBoundUrl.Of<ImagesController>(x => x.Show(1)).ShouldMapToUrl("/session/images/1");
+
+		It should_generate_new = () => OutBoundUrl.Of<ImagesController>(x => x.New()).ShouldMapToUrl("/session/images/new");
+
+		It should_generate_create = () => OutBoundUrl.Of<ImagesController>(x => x.Create()).ShouldMapToUrl("/session/images");
+
+		It should_generate_edit = () => OutBoundUrl.Of<ImagesController>(x => x.Edit(1)).ShouldMapToUrl("/session/images/1/edit");
+
+		It should_generate_update = () => OutBoundUrl.Of<ImagesController>(x => x.Update(1)).ShouldMapToUrl("/session/images/1");
+
+		It should_generate_destroy = () => OutBoundUrl.Of<ImagesController>(x => x.Destroy(1)).ShouldMapToUrl("/session/images/1");
 	}
 }
