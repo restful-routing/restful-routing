@@ -1,0 +1,45 @@
+@import base
+@import layout
+@import typography
+
+pre
+  +border-radius(5px)
+  +liquid
+  margin: 20px 0
+  padding: 10px
+  clear: left
+  
+.example
+  ul
+    margin: 0
+    padding: 0
+    list-style-type: none
+    width: 100%
+  li
+    float: left
+    a
+      display: block
+      padding: 7px
+      +border-top-left-radius(3px)
+      +border-top-right-radius(3px)
+      background-color: #000
+      color: #fff
+      text-decoration: none
+      &:hover
+        background-color: $link_color
+ul
+  li
+    margin: 2px 0
+    ul
+      margin-bottom: 10px
+
+#container
+  p, li
+    a
+      background-color: lighten($link_color, 45)
+      padding: 2px
+      color: $link_color
+      text-decoration: none
+      &:hover
+        background-color: lighten($link_color, 50)
+        color: darken($link_color, 10)

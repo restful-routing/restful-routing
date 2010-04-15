@@ -1,0 +1,244 @@
+%section
+  :textile
+    RestfulRouting is a routing library for ASP.NET MVC based on the "Rails 3 routing DSL":http://edgeguides.rubyonrails.org/routing.html.
+    
+    h1. Links
+  %ul
+    %li
+      %a{:href => 'http://github.com/stevehodgkiss/restful-routing'} Source
+    %li
+      %a{:href => 'http://github.com/stevehodgkiss/restful-routing/issues'} Issues
+    
+  %h1 Table of Contents
+    
+  %ul
+    %li
+      %a{:href => '#example'} Example
+    %li
+      %a{:href => '#gettingstarted'} Getting started
+    %li
+      %a{:href => '#therouteset'} The RouteSet
+    %li
+      %a{:href => '#mappingresources'} Mapping resources
+      %ul
+        %li
+          %a{:href => '#resource'} Resource
+        %li
+          %a{:href => '#resources'} Resources
+    %li
+      %a{:href => '#routeconfiguration'} Route configuration
+    %li
+      %a{:href => '#membercollection'} Member and collection routes
+    %li
+      %a{:href => '#areas'} Areas
+    %li
+      %a{:href => '#restfulroutingviewengine'} RestfulRoutingViewEngine
+    %li
+      %a{:href => '#connectingroutesets'} Connecting RouteSet's together
+    %li
+      %a{:href => '#standardmappings'} Standard mappings
+    
+  %h1
+    %a{:name => 'example'} Example
+  :highlight_cs
+    public class Routes : RouteSet
+    {
+      public Routes()
+      {
+        Resource<SessionsController>();
+        Resources<BlogsController>(() =>
+        {
+          As("weblogs");
+          Only("index", "show");
+          Collection("latest", HttpVerbs.Get);
+
+          Resources<PostsController>(() =>
+          {
+            Except("create", "update", "destroy");
+            Resources<CommentsController>(() => Except("destroy"));
+          });
+        });
+      }
+    }
+    
+    // Global.asax.cs
+    public class MvcApplication : System.Web.HttpApplication
+    {
+      protected void Application_Start()
+      {
+        ViewEngines.Engines.Clear();
+        ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
+
+        RouteTable.Routes.MapRoutes<Routes>();
+      }
+    }
+  
+  %h1
+    %a{:name => 'gettingstarted'} Getting started
+    
+  :textile
+    Clone the "repository":http://github.com/stevehodgkiss/restful-routing and run rake. This will compile and test the project. Now go to the build folder and grab the 2 assemblies you need to reference from your project.
+    
+  :highlight_plain
+    git clone git://github.com/stevehodgkiss/restful-routing.git
+    cd restful-routing
+    rake
+  
+  %h1
+    %a{:name => 'therouteset'} The RouteSet
+  :textile
+    All routes are defined inside the constructor of a class which inherits from RouteSet. You can then connect the main RouteSet to your application routes using RouteTable.Routes.MapRoutes<MyRouteSet>().
+
+  %h1
+    %a{:name => 'mappingresources'} Mapping Resources
+    
+  :textile
+    There are 2 types of resource mappings that you can use. <code>Resource<TController>()</code> and <code>Resources<TController>()</code> (Notice the pluralization). Resources maps a collection of resources. Resource maps a singleton. The two main differences are that Resource doesn't have an {id} route parameter, and it doesn't have an index.
+    
+  %h2
+    %a{:name => 'resource'} Resource
+    
+  :textile
+    This maps a sessions resource as a singleton which has a nested avatars singleton resource.
+  :highlight_cs
+    Resource<SessionsController>(() =>
+    {
+      Resource<AvatarsController>();
+    });
+  
+  :textile
+    The RouteTable will look like this with the above mapping:
+    
+    | Http Method | Path                | Endpoint (controller#action) |
+    | GET         | session             | sessions#show                |
+    | POST        | session             | sessions#create              |
+    | GET         | session/new         | sessions#new                 |
+    | GET         | session/edit        | sessions#edit                |
+    | PUT         | session             | sessions#update              |
+    | DELETE      | session             | sessions#destroy             |
+    | GET         | session/avatar      | avatars#show                 |
+    | POST        | session/avatar      | avatars#create               |
+    | GET         | session/avatar/new  | avatars#new                  |
+    | GET         | session/avatar/edit | avatars#edit                 |
+    | PUT         | session/avatar      | avatars#update               |
+    | DELETE      | session/avatar      | avatars#destroy              |
+    
+  %h2
+    %a{:name => 'resources'} Resources
+  %p
+    This maps a blogs resource with a nested posts resource.
+  :highlight_cs
+    Resources<BlogsController>(() =>
+    {
+      Resources<PostsController>();
+    });
+    
+  :textile
+    The RouteTable will have routes which look like this with the above mapping:
+    
+    | Http Method | Path                           | Endpoint (controller#action) |
+    | GET         | blogs                          | blogs#index                  |
+    | POST        | blogs                          | blogs#create                 |
+    | GET         | blogs/{id}                     | blogs#show                   |
+    | GET         | blogs/new                      | blogs#new                    |
+    | GET         | blogs/{id}/edit                | blogs#edit                   |
+    | PUT         | blogs/{id}                     | blogs#update                 |
+    | DELETE      | blogs/{id}                     | blogs#destroy                |
+    | GET         | blogs/{blogId}/posts           | posts#index                  |
+    | POST        | blogs/{blogId}/posts           | posts#create                 |
+    | GET         | blogs/{blogId}/posts/{id}      | posts#show                   |
+    | GET         | blogs/{blogId}/posts/new       | posts#new                    |
+    | GET         | blogs/{blogId}/posts/{id}/edit | posts#edit                   |
+    | PUT         | blogs/{blogId}/posts/{id}      | posts#update                 |
+    | DELETE      | blogs/{blogId}/posts/{id}      | posts#destroy                |
+    
+  %h1
+    %a{:name => 'routeconfiguration'} Route configuration
+    
+  %p
+    You can adjust the behaviour of a given resource mapping in the context of it's nested action parameter.
+  
+  :highlight_cs
+    Resources<PostsController>(() => {
+      As("weblogs"); // changes the path name to weblogs
+      Only("index", "show") // only maps the index and show actions
+      Except("destroy") // maps all actions except destroy
+      Constrain("id", "\d+"); // constrains the id to digits
+    });
+  %h1
+    %a{:name => 'membercollection'} Member and collection routes
+    
+  :textile
+    Use the Member and Collection methods inside the resource to add routes to the collection (without an id route parameter) or the member (with an id route parameter).
+    
+  :highlight_cs
+    Resources<PostsController>(() => {
+      Collection("latest", HttpVerbs.Get); // GET posts/latest => posts#latest
+      Member("like", HttpVerbs.Post); // POST posts/1/like => posts#like(1)
+    });
+  
+  %h1
+    %a{:name => 'areas'} Areas
+    
+  :highlight_cs
+    Area<Controllers.Admin.BlogsController>("admin", () =>
+    {
+      Resources<BlogsController>(() =>
+      {
+        Resources<PostsController>(() =>
+        {
+          Resources<CommentsController>();
+        });
+      });
+    });
+  :textile
+    This maps an area called admin and will only look for controllers located in the Controllers.Admin namespace. You can specify that the whole RouteSet is to be put into an area without putting a path prefix on the mapping. The following would just constrain all the routes to the namespace of BlogsController, but still look for views based on the area name blogs.
+  
+  :highlight_cs
+    Area<BlogsController>("blogs");
+    
+  %h1
+    %a{:name => 'restfulroutingviewengine'} RestfulRoutingViewEngine
+  :textile  
+    RestfulRoutingViewEngine inherits from WebFormsViewEngine and changes where it looks for area views slightly. It changes it from {area}/Views/{controller}/{action} to Views/{area}/{controller}/{action}.
+    
+  %h1
+    %a{:name => 'connectingroutesets'} Connecting RouteSets together
+  %p
+    The connect method allows you to pull in routes from another routeset.
+    
+  :highlight_cs
+    public class BlogRoutes : RouteSet
+    {
+      public BlogRoutes()
+      {
+        Area<BlogsController>("blogs");
+        Resources<BlogsController>();
+        Resources<PostsController>();
+      }
+    }
+
+    public class Routes : RouteSet
+    {
+      public Routes()
+      {
+        // maps the BlogRoutes route set without a path prefix.
+        Connect<BlogRoutes>("");
+      }
+    }
+
+    // Application_Start()
+    RouteTable.Routes.MapRoutes<Routes>();
+  %h1
+    %a{:name => 'standardmappings'} Standard mappings
+  :textile
+    Two additional methods are provided so you can add custom routes to the route set if you need to. Map is a chainable method that allows you to add standard mappings. Route is a method that will allow you to add a custom route to the route set.
+    
+  :highlight_cs
+    Map("posts/{year}/{slug}")
+      .To<PostsController>(x => x.Post(-1, ""))
+      .Constrain("slug", @"\w+")
+      .Constrain("year", @"\d+");
+    Route(new Route("posts/{action}", 
+      new RouteValueDictionary(new { controller = "posts" }), 
+      new MvcRouteHandler());

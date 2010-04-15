@@ -1,0 +1,72 @@
+--- 
+dependencies: 
+  compass: 
+    group: 
+    - :default
+    version: = 0.10.0.rc3
+  haml: 
+    group: 
+    - :default
+    version: = 3.0.0.beta.3
+  ultraviolet: 
+    group: 
+    - :default
+    version: ">= 0"
+  git: 
+    group: 
+    - :default
+    version: = 1.2.5
+  staticmatic: 
+    group: 
+    - :default
+    version: ">= 0"
+  rdiscount: 
+    group: 
+    - :default
+    version: ">= 0"
+  RedCloth: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- RedCloth: 
+    version: 4.2.3
+- cgi_multipart_eof_fix: 
+    version: 2.5.0
+- haml: 
+    version: 3.0.0.beta.3
+- compass: 
+    version: 0.10.0.rc3
+- daemons: 
+    version: 1.0.10
+- fastthread: 
+    version: 1.0.7
+- gem_plugin: 
+    version: 0.2.3
+- git: 
+    version: 1.2.5
+- mongrel: 
+    version: 1.1.5
+- oniguruma: 
+    version: 1.1.0
+- plist: 
+    version: 3.1.0
+- rack: 
+    version: 1.1.0
+- rdiscount: 
+    version: 1.6.3
+- staticmatic: 
+    version: 0.10.8
+    source: 0
+- textpow: 
+    version: 0.10.1
+- ultraviolet: 
+    version: 0.10.2
+hash: 2043bd090911539d0d687a00a4630c1722778cdf
+sources: 
+- Git: 
+    uri: git://github.com/staticmatic/staticmatic.git
+    git: git://github.com/staticmatic/staticmatic.git
+    ref: 353ee842b078836b45dce1f4ee3cbbfbc0e7561c
+- Rubygems: 
+    uri: http://gemcutter.org

@@ -1,0 +1,33 @@
+@import library/typography.sass
+@import "compass/css3/border-radius"
+@import "compass/css3/text-shadow"
+
+@mixin flexbox($direction, $align: center)
+  display: -webkit-box
+  display: -moz-box
+  -webkit-box-orient: $direction
+  -moz-box-orient: $direction
+  -webkit-box-align: $align
+  -moz-box-align: $align
+
+@mixin liquid($size: 1)
+  -webkit-box-flex: $size
+  -moz-box-flex: $size
+
+html
+  width: 100%
+body
+  font:
+    family: Helvetica, sans-serif
+    size: 10pt
+  padding:
+    top: 10px
+  background:
+    color: #E9EDEE
+
+header, section, footer, aside, nav, article, figure
+  display: block
+
+@font-face
+  font-family: "Kool Beans"
+  src: local("Kool Beans"), local('Kool Beans'), url('KoolBean.ttf') format('truetype')
