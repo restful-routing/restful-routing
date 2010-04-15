@@ -1,3 +1,0 @@
-$(function(){
-  $(".example").tinyTabs();
-})
