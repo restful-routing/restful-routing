@@ -34,7 +34,7 @@ multitask :deploy_github do
   message = ENV["MESSAGE"] || "Site updated at #{Time.now.utc}"
   repo.commit(message)
   puts "\n>>> Pushing generated site to #{deploy_branch} branch <<<\n"
-  repo.push
+  repo.push("gh-pages")
   puts "\n>>> Github Pages deploy complete <<<\n"
   repo.branch("#{source_branch}").checkout
 end
