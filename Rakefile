@@ -23,7 +23,7 @@ multitask :deploy_github do
   repo = Git.open('.')
   puts "\n>>> Checking out #{deploy_branch} branch <<<\n"
   repo.branch("#{deploy_branch}").checkout
-  (Dir["*"] - [site]).each { |f| rm_rf(f) }
+  (Dir["*"] - ["site"]).each { |f| rm_rf(f) }
   Dir["#{site}/*"].each {|f| mv(f, ".")}
   rm_rf(site)
   puts "\n>>> Moving generated site files <<<\n"
