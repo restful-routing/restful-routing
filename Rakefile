@@ -18,12 +18,13 @@ desc "generate and deploy website to github user pages"
 multitask :deploy_github do
   deploy_branch = "gh-pages"
   source_branch = "docs"
+  site = "site"
   puts ">>> Deploying #{deploy_branch} branch to Github Pages <<<"
   require 'git'
   repo = Git.open('.')
   puts "\n>>> Checking out #{deploy_branch} branch <<<\n"
   repo.branch("#{deploy_branch}").checkout
-  (Dir["*"] - ["site"]).each { |f| rm_rf(f) }
+  (Dir["*"] - [site]).each { |f| rm_rf(f) }
   Dir["#{site}/*"].each {|f| mv(f, ".")}
   rm_rf(site)
   puts "\n>>> Moving generated site files <<<\n"
