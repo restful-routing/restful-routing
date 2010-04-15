@@ -16,6 +16,8 @@ end
 
 desc "generate and deploy website to github user pages"
 multitask :deploy_github do
+  deploy_branch = "gh-pages"
+  source_branch = "docs"
   puts ">>> Deploying #{deploy_branch} branch to Github Pages <<<"
   require 'git'
   repo = Git.open('.')
