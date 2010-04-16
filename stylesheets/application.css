@@ -17,8 +17,9 @@ header, section, footer, aside, nav, article, figure {
 }
 
 @font-face {
-  font-family: "Kool Beans";
-  src: local("Kool Beans"), local("Kool Beans"), url('KoolBean.ttf') format("truetype");
+  font-family: "KoolBeansRegular";
+  src: url('koolbean.eot');
+  src: local("☺"), url('koolbean.woff') format("woff"), url('koolbean.ttf') format("truetype"), url('koolbean.svg#KoolBeans') format("svg");
 }
 
 /* line 1, ./src/stylesheets/./_layout.sass */
