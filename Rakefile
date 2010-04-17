@@ -22,6 +22,7 @@ multitask :deploy_github do
   puts ">>> Deploying #{deploy_branch} branch to Github Pages <<<"
   require 'git'
   repo = Git.open('.')
+  Dir["src/site/*"].each {|f| cp(f, "./site")}
   puts "\n>>> Checking out #{deploy_branch} branch <<<\n"
   repo.branch("#{deploy_branch}").checkout
   (Dir["*"] - [site]).each { |f| rm_rf(f) }

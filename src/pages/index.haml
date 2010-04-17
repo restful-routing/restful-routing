@@ -169,12 +169,15 @@
     %a{:name => 'membercollection'} Member and collection routes
     
   :textile
-    Use the Member and Collection methods inside the resource to add routes to the collection (without an id route parameter) or the member (with an id route parameter).
+    Use the Member and Collection methods inside the resource to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head.
     
   :highlight_cs
     Resources<PostsController>(() => {
-      Collection("latest", HttpVerbs.Get); // GET posts/latest => posts#latest
-      Member("like", HttpVerbs.Post); // POST posts/1/like => posts#like(1)
+      Collection(x => {
+        x.Get("latest"); // GET posts/latest => posts#latest
+        x.Put("somaction") // PUT posts/someaction => posts#someaction
+      });
+      Member(x => x.Post("like")); // POST posts/1/like => posts#like(1)
     });
   
   %h1
