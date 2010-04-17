@@ -19,4 +19,19 @@ namespace RestfulRouting.Tests.Integration.Resources
 
 		It should_map_get_latest = () => "~/blogs/latest".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Latest());
 	}
+
+	public class when_mapping_a_collection_action_with_action_syntax : base_context
+	{
+		public class BlogArea : RouteSet
+		{
+			public BlogArea()
+			{
+				Resources<BlogsController>(() => Collection(x => x.Get("latest")));
+			}
+		}
+
+		Because of = () => new BlogArea().RegisterRoutes(routes);
+
+		It should_map_get_latest = () => "~/blogs/latest".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Latest());
+	}
 }
