@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Machine.Specifications.TestGallioAdapter.3.1.TestResources</name>
+    </assembly>
+    <members>
+        <member name="T:Machine.Specifications.GallioAdapter.TestResources.simple_test_spec">
+            <summary>
+            A simple test specification.
+            </summary>  
+        </member>
+        <member name="F:Machine.Specifications.GallioAdapter.TestResources.simple_test_spec.pass">
+            <summary>
+            A passing specification.
+            </summary>
+        </member>
+        <member name="F:Machine.Specifications.GallioAdapter.TestResources.simple_test_spec.fail">
+            <summary>
+            A failing specification.
+            </summary>
+        </member>
+    </members>
+</doc>
