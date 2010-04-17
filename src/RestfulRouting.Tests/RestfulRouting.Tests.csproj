@@ -138,6 +138,7 @@
     <Compile Include="Unit\Mappings\StandardMappingSpec.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Unit\MemberActionSpec.cs" />
     <Compile Include="Unit\ResourceMapperSpec.cs" />
     <Compile Include="Unit\ResourcesMapperSpec.cs">
       <SubType>Code</SubType>

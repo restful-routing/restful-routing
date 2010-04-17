@@ -40,6 +40,12 @@ namespace RestfulRouting
 			_currentMapping.Members[actionName.ToLowerInvariant()] = verbs;
 		}
 
+		public void Member(Action<MemberAction> member)
+		{
+			var memberAction = new MemberAction(_currentMapping);
+			member(memberAction);
+		}
+
 		public void Collection(string actionName, params HttpVerbs[] verbs)
 		{
 			_currentMapping.Collections[actionName.ToLowerInvariant()] = verbs;

@@ -30,14 +30,14 @@ namespace RestfulRouting.Mappings
         public RouteContext Context { get; set; }
 
         private IDictionary<string, HttpVerbs[]> _members = new Dictionary<string, HttpVerbs[]>();
-        public IDictionary<string, HttpVerbs[]> Members
+        public virtual IDictionary<string, HttpVerbs[]> Members
         {
             get { return _members; }
             private set { _members = value; }
         }
 
 		private IDictionary<string, HttpVerbs[]> _collections = new Dictionary<string, HttpVerbs[]>();
-		public IDictionary<string, HttpVerbs[]> Collections
+		public virtual IDictionary<string, HttpVerbs[]> Collections
 		{
 			get { return _collections; }
 			private set { _collections = value; }

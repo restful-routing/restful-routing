@@ -92,6 +92,7 @@
     <Compile Include="Mappings\ResourceMapping.cs" />
     <Compile Include="Mappings\RouteMapping.cs" />
     <Compile Include="MapRoutesExtension.cs" />
+    <Compile Include="MemberAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mappings\ResourcesMapping.cs" />
     <Compile Include="ResourceMapper.cs" />
