@@ -249,8 +249,8 @@
           <h1>
             <a name="membercollection">Member and collection routes</a>
           </h1>
-          <p>Use the Member and Collection methods inside the resource to add routes to the collection (without an id route parameter) or the member (with an id route parameter).</p>
-          <pre class="twilight">Resources&lt;PostsController&gt;(() =&gt; {&#x000A;  Collection(<span class="String"><span class="String">&quot;</span>latest<span class="String">&quot;</span></span>, HttpVerbs.Get); <span class="Comment"><span class="Comment">//</span> GET posts/latest =&gt; posts#latest</span>&#x000A;  Member(<span class="String"><span class="String">&quot;</span>like<span class="String">&quot;</span></span>, HttpVerbs.Post); <span class="Comment"><span class="Comment">//</span> POST posts/1/like =&gt; posts#like(1)</span>&#x000A;});&#x000A;</pre>
+          <p>Use the Member and Collection methods inside the resource to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head.</p>
+          <pre class="twilight">Resources&lt;PostsController&gt;(() =&gt; {&#x000A;  Collection(x =&gt; {&#x000A;    x.Get(<span class="String"><span class="String">&quot;</span>latest<span class="String">&quot;</span></span>); <span class="Comment"><span class="Comment">//</span> GET posts/latest =&gt; posts#latest</span>&#x000A;    x.Put(<span class="String"><span class="String">&quot;</span>somaction<span class="String">&quot;</span></span>) <span class="Comment"><span class="Comment">//</span> PUT posts/someaction =&gt; posts#someaction</span>&#x000A;  });&#x000A;  Member(x =&gt; x.Post(<span class="String"><span class="String">&quot;</span>like<span class="String">&quot;</span></span>)); <span class="Comment"><span class="Comment">//</span> POST posts/1/like =&gt; posts#like(1)</span>&#x000A;});&#x000A;</pre>
           <h1>
             <a name="areas">Areas</a>
           </h1>
