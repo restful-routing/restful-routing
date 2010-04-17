@@ -11,7 +11,10 @@ Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
     {
       As("weblogs");
       Only("index", "show");
-      Collection("latest", HttpVerbs.Get);
+      Collection(x => {
+	    x.Get("latest");
+		x.Post("someaction");
+	  );
 
       Resources<PostsController>(() =>
       {
@@ -33,4 +36,12 @@ public class MvcApplication : System.Web.HttpApplication
     }
 }</code></pre>
 
-"Read more":http://stevehodgkiss.com/blog/2010/03/21/restful-routing-for-asp-net-mvc-2/
+"Read more":http://stevehodgkiss.github.com/restful-routing/
+
+h2. Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a
+  future version unintentionally.
+* Send me a pull request. Bonus points for topic branches.
