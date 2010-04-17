@@ -11,3 +11,13 @@ http_images_path = "/images"
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 # relative_assets = true
+
+# hack to copy static assets over to the site directory for preview and deploy
+class StaticMatic::Base
+  def build
+    super
+    Dir["src/site/*"].each do |f|
+      system("cp #{f} ./site")
+    end
+  end
+end
