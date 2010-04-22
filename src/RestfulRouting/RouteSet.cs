@@ -13,7 +13,18 @@ namespace RestfulRouting
 		private RouteNames names;
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
-		public static Func<string, string> Singularize = Inflector.Net.Inflector.Singularize;
+		public static Func<string, string> Singularize = x =>
+		{
+			var singular = x;
+			try
+			{
+				Inflector.Net.Inflector.Singularize(x);
+			}
+			catch
+			{
+			}
+			return singular;
+		};
 
 		protected RouteSet()
 		{

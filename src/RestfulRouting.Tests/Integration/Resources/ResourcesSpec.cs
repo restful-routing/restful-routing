@@ -137,4 +137,22 @@ namespace RestfulRouting.Tests.Integration
 
 		It should_map_comments_index = () => "~/blogs/1/comments".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1, null));
 	}
+
+	public class when_mapping_controller_with_non_singularizable_name : base_context
+	{
+		public class BlogArea : RouteSet
+		{
+			public BlogArea()
+			{
+				Resources<BlogAdminController>(() =>
+				                           	{
+				                           		Resources<BlogsController>();
+				                           	});
+			}
+		}
+
+		Because of = () => new BlogArea().RegisterRoutes(routes);
+
+		It should_map_blog_admin_index = () => "~/blogadmin/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
+	}
 }
