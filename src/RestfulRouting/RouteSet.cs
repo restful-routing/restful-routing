@@ -18,12 +18,12 @@ namespace RestfulRouting
 			var singular = x;
 			try
 			{
-				Inflector.Net.Inflector.Singularize(x);
+				singular = Inflector.Net.Inflector.Singularize(x);
 			}
 			catch
 			{
 			}
-			return singular;
+			return singular ?? x;
 		};
 
 		protected RouteSet()
