@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace RestfulRouting
 {
@@ -14,27 +15,40 @@ namespace RestfulRouting
 
 		public void Get(string action)
 		{
-			_actions[action.ToLowerInvariant()] = new[] { HttpVerbs.Get };
+			Route(action, HttpVerbs.Get);
 		}
 
 		public void Post(string action)
 		{
-			_actions[action.ToLowerInvariant()] = new[] { HttpVerbs.Post };
+			Route(action, HttpVerbs.Post);
 		}
 
 		public void Put(string action)
 		{
-			_actions[action.ToLowerInvariant()] = new[] { HttpVerbs.Put };
+			Route(action, HttpVerbs.Put);
 		}
 
 		public void Delete(string action)
 		{
-			_actions[action.ToLowerInvariant()] = new[] { HttpVerbs.Delete };
+			Route(action, HttpVerbs.Delete);
 		}
 
 		public void Head(string action)
 		{
-			_actions[action.ToLowerInvariant()] = new[] { HttpVerbs.Head };
+			Route(action, HttpVerbs.Head);
+		}
+
+		private void Route(string action, HttpVerbs verb)
+		{
+			var actionName = action.ToLowerInvariant();
+			if (!_actions.ContainsKey(action))
+				_actions[actionName] = new[] { verb };
+			else
+			{
+				var verbs = _actions[actionName].ToList();
+				verbs.Add(verb);
+				_actions[actionName] = verbs.ToArray();
+			}
 		}
 	}
 }

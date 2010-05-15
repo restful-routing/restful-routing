@@ -50,4 +50,16 @@ namespace RestfulRouting.Tests.Unit
 
 		It should_map_delete_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Head });
 	}
+
+	public class collection_multiple : additional_action_context
+	{
+		Because of = () =>
+		{
+			AdditionalAction.Get("actionname");
+			AdditionalAction.Post("actionname");
+		};
+
+		It should_map_get_and_post = () => _actionsAndMethods["actionname"].ShouldContain(HttpVerbs.Get, HttpVerbs.Post);
+	}
+
 }

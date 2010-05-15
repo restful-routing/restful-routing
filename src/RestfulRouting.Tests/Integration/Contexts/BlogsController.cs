@@ -51,4 +51,12 @@ namespace RestfulRouting.Tests.Integration.Contexts
 			return Content("");
 		}
 	}
+
+	public class BlogAdminController : Controller
+	{
+		public ActionResult Index()
+		{
+			return Content("");
+		}
+	}
 }

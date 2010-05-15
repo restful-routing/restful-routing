@@ -15,10 +15,16 @@ namespace RestfulRouting.Sample.Controllers
 		{
 			return View(new Blog());
 		}
+		
+		public ActionResult Test(int id, string t)
+		{
+			var c = ControllerContext.RouteData.Values.Count;
+
+			return Content("t: " + t);
+		}
 
 		public ActionResult Create()
 		{
-
 			TempData["notice"] = "Created";
 
 			return RedirectToAction("Index");
