@@ -97,7 +97,7 @@
     <Compile Include="Mappings\ResourcesMapping.cs" />
     <Compile Include="ResourceMapper.cs" />
     <Compile Include="ResourcesMapper.cs" />
-    <Compile Include="RestfulRouteHandler.cs" />
+    <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="RouteSet.cs" />
     <Compile Include="RestfulRoutingViewEngine.cs" />
     <Compile Include="RouteNames.cs" />
