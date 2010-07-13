@@ -1,3 +1,4 @@
+using System.Web.Routing;
 using Machine.Specifications;
 using RestfulRouting.Mappings;
 using RestfulRouting.Tests.Integration.Contexts;
@@ -19,7 +20,12 @@ namespace RestfulRouting.Tests.Unit.Mappings
 
         It should_set_the_constraint = () => mapping.Route.Constraints["slug"].ShouldEqual(@"\w+");
 
-        It should_be_get_only = () => mapping.Route.Constraints["httpMethod"].ShouldEqual("GET");
+		It should_be_get_only = () =>
+		                        	{
+		                        		mapping.Route.Constraints["httpMethod"].ShouldBeOfType<HttpMethodConstraint>();
+		                        		var constraint = (HttpMethodConstraint) mapping.Route.Constraints["httpMethod"];
+										constraint.AllowedMethods.ShouldContain("GET");
+		                        	};
 
         It should_default_to_minus_1_id = () => mapping.Route.Defaults["id"].ShouldEqual(-1);
     }

@@ -67,7 +67,7 @@ namespace RestfulRouting.Mappings
 
         public StandardMapping GetOnly()
         {
-            Route.Constraints["httpMethod"] = "GET";
+            Route.Constraints["httpMethod"] = new HttpMethodConstraint("GET");
 
             return this;
         }
