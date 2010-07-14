@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -71,5 +72,12 @@ namespace RestfulRouting.Mappings
 
             return this;
         }
+
+		public StandardMapping Allow(params HttpVerbs[] methods)
+		{
+			Route.Constraints["httpMethod"] = new HttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+
+			return this;
+		}
     }
 }

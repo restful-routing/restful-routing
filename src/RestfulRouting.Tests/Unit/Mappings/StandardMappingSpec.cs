@@ -1,3 +1,4 @@
+using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
 using RestfulRouting.Mappings;
@@ -29,4 +30,16 @@ namespace RestfulRouting.Tests.Unit.Mappings
 
         It should_default_to_minus_1_id = () => mapping.Route.Defaults["id"].ShouldEqual(-1);
     }
+
+	[Subject(typeof(StandardMapping))]
+	public class Allow : base_context
+	{
+		static StandardMapping mapping;
+
+		Establish context = () => mapping = new StandardMapping("");
+
+		Because of = () => mapping.Map("redirects/{id}").To<BlogsController>(x => x.Show(1)).Allow(HttpVerbs.Get, HttpVerbs.Post);
+
+		It should_allow_get_and_post_only = () => ((HttpMethodConstraint)mapping.Route.Constraints["httpMethod"]).AllowedMethods.ShouldContainOnly("GET", "POST");
+	}
 }
