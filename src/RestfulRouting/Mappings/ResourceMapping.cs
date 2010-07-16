@@ -33,9 +33,6 @@ namespace RestfulRouting.Mappings
 			if (IncludesAction(_names.UpdateName))
 				routeCollection.Add(_resourceMapper.UpdateRoute());
 
-			if (IncludesAction(_names.CreateName))
-				routeCollection.Add(_resourceMapper.CreateRoute());
-
 			if (IncludesAction(_names.NewName))
 				routeCollection.Add(_resourceMapper.NewRoute());
 
@@ -44,6 +41,9 @@ namespace RestfulRouting.Mappings
 
 			if (IncludesAction(_names.DestroyName))
 				routeCollection.Add(_resourceMapper.DestroyRoute());
+
+			if (IncludesAction(_names.CreateName))
+				routeCollection.Add(_resourceMapper.CreateRoute());
 
 			foreach (var route in routeCollection)
 			{
