@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RestfulRouting.Mappings;
+using System.Linq.Expressions;
 
 namespace RestfulRouting
 {
@@ -18,7 +19,7 @@ namespace RestfulRouting
 			var singular = x;
 			try
 			{
-				singular = Inflector.Net.Inflector.Singularize(x);
+				singular = Inflector.Singularize(x);
 			}
 			catch
 			{
@@ -162,7 +163,16 @@ namespace RestfulRouting
 			return mapping;
 		}
 
-		private void AddMapping(Mapping mapping)
+        public void Root<TController>(Expression<Func<TController, object>> action)
+        {
+            var basePath = "";
+            if (!string.IsNullOrEmpty(_pathPrefix))
+                basePath = _pathPrefix + "/";
+
+            Map(basePath).To<TController>(action);
+        }
+
+        private void AddMapping(Mapping mapping)
 		{
 			if (_currentMapping != null)
 				_currentMapping.AddSubMapping(mapping);

@@ -52,10 +52,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Inflector.Net, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\inflector\Inflector.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -87,6 +83,7 @@
   <ItemGroup>
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="Inflector.cs" />
     <Compile Include="Mappings\AppMapping.cs" />
     <Compile Include="Mappings\Mapping.cs" />
     <Compile Include="Mappings\AreaMapping.cs" />

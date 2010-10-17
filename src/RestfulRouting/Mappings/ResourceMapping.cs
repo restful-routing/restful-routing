@@ -15,7 +15,7 @@ namespace RestfulRouting.Mappings
 
 			ResourceName = ControllerName<TController>();
 
-			MappedName = Inflector.Net.Inflector.Singularize(ResourceName);
+			MappedName = Inflector.Singularize(ResourceName);
 
 			resourceMapper.ResourceName = ResourceName;
 

@@ -6,7 +6,7 @@ namespace RestfulRouting.Sample
     {
         public Routes()
         {
-            Map("").To<RootController>(x => x.Index());
+            Root<RootController>(x => x.Index());
 
             Map("routedebug").To<RouteDebugController>(x => x.Index());
             Area<BlogsController>("", () =>
@@ -16,7 +16,6 @@ namespace RestfulRouting.Sample
                     Resources<PostsController>();
                 });                
             });
-
 
             Area<Controllers.Admin.BlogsController>("admin", () =>
             {

@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'albacore'
 
 PROJECT = 'RestfulRouting'
 
@@ -10,9 +11,15 @@ task :clean do
 end
 
 desc 'compile'
-task :compile => :clean do
-	msbuild_path = File.join(ENV['windir'].dup, 'Microsoft.NET', 'Framework', 'v3.5', 'msbuild.exe')
-	sh "#{msbuild_path} src\\#{PROJECT}.sln /maxcpucount /v:m /property:BuildInParallel=false /property:Configuration=release /property:Architecture=x86 /t:Rebuild"
+msbuild :compile => :clean do |msb|
+	msb.solution = "src\\#{PROJECT}.sln"
+	msb.verbosity = 'minimal'
+	msb.properties = { 
+		:configuration => :Release, 
+		:BuildInParallel => :false, 
+		:Architecture => 'x86' 
+	}
+	msb.targets :Rebuild
 	
 	FileUtils.mkdir_p 'build'
 	
@@ -22,6 +29,8 @@ task :compile => :clean do
 end
 
 desc 'runs tests'
-task :test do
-	sh "tools\\mspec\\mspec.exe src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
+mspec :test do |mspec|
+	mspec.path_to_command = 'tools\\mspec\\mspec.exe'
+	mspec.assemblies "src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
+	mspec.html_output = "src\\#{PROJECT}.Tests\\Reports\\specs.html"
 end
