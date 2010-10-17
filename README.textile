@@ -50,4 +50,4 @@ h2. Contributors
 
 * "Steve Hodgkiss":http://github.com/stevehodgkiss
 * "Cory Deppen":http://github.com/corydeppen
-* "defeated":http://github.com/defeated
+* "Eddie Cianci":http://github.com/defeated
