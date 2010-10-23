@@ -24,10 +24,14 @@ namespace HtmlExtensionsSpecs
 			var requestContext = new RequestContext(builder.HttpContext, new RouteData());
 			requestContext.HttpContext.Response.Stub(x => x.ApplyAppPathModifier(null)).IgnoreArguments().Do(new Func<string, string>(s => s)).Repeat.Any();
 
+			var viewData = new ViewDataDictionary();
+
 			var viewContext = MockRepository.GenerateStub<ViewContext>();
 			viewContext.RequestContext = requestContext;
+			viewContext.ViewData = viewData;
 
 			var viewDataContainer = MockRepository.GenerateStub<IViewDataContainer>();
+			viewDataContainer.ViewData = viewData;
 
 			_htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
 		};
