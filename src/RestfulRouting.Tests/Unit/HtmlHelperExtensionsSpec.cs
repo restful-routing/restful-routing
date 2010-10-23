@@ -27,7 +27,9 @@ namespace HtmlExtensionsSpecs
 			var viewContext = MockRepository.GenerateStub<ViewContext>();
 			viewContext.RequestContext = requestContext;
 
-			_htmlHelper = new HtmlHelper(viewContext, MockRepository.GenerateStub<IViewDataContainer>());
+			var viewDataContainer = MockRepository.GenerateStub<IViewDataContainer>();
+
+			_htmlHelper = new HtmlHelper(viewContext, viewDataContainer);
 		};
 	}
 
