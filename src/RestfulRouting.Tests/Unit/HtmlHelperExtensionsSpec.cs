@@ -39,22 +39,22 @@ namespace HtmlExtensionsSpecs
 
 	public class when_generating_a_put_override : base_context
 	{
-		static string _tag;
+		static MvcHtmlString _tag;
 
 		Because of = () => _tag = _htmlHelper.PutOverrideTag();
 
 		It should_return_a_hidden_field_with_method_put = () => 
-			_tag.ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"put\" />");
+			_tag.ToHtmlString().ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"put\" />");
 		
 	}
 
 	public class when_generating_a_delete_override : base_context
 	{
-		static string _tag;
+		static MvcHtmlString _tag;
 
 		Because of = () => _tag = _htmlHelper.DeleteOverrideTag();
 
-		It should_return_a_hidden_field_with_method_delete = () => _tag.ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"delete\" />");
+		It should_return_a_hidden_field_with_method_delete = () => _tag.ToHtmlString().ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"delete\" />");
 		
 	}
 }
