@@ -44,7 +44,7 @@ namespace HtmlExtensionsSpecs
 		Because of = () => _tag = _htmlHelper.PutOverrideTag();
 
 		It should_return_a_hidden_field_with_method_put = () => 
-			_tag.ToHtmlString().ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"put\" />");
+			_tag.ToHtmlString().ShouldBe("<input name=\"_method\" type=\"hidden\" value=\"put\" />");
 		
 	}
 
@@ -54,7 +54,7 @@ namespace HtmlExtensionsSpecs
 
 		Because of = () => _tag = _htmlHelper.DeleteOverrideTag();
 
-		It should_return_a_hidden_field_with_method_delete = () => _tag.ToHtmlString().ShouldBe("<input type=\"hidden\" name=\"_method\" value=\"delete\" />");
+		It should_return_a_hidden_field_with_method_delete = () => _tag.ToHtmlString().ShouldBe("<input name=\"_method\" type=\"hidden\" value=\"delete\" />");
 		
 	}
 }
