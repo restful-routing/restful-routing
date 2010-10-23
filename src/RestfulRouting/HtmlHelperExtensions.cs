@@ -4,14 +4,14 @@ namespace RestfulRouting
 {
     public static class HtmlHelperExtensions
     {
-        public static string PutOverrideTag(this HtmlHelper html)
+        public static MvcHtmlString PutOverrideTag(this HtmlHelper html)
         {
-            return "<input type=\"hidden\" name=\"_method\" value=\"put\" />";
+            return MvcHtmlString.Create("<input type=\"hidden\" name=\"_method\" value=\"put\" />");
         }
 
-        public static string DeleteOverrideTag(this HtmlHelper html)
+        public static MvcHtmlString DeleteOverrideTag(this HtmlHelper html)
         {
-            return "<input type=\"hidden\" name=\"_method\" value=\"delete\" />";
+            return MvcHtmlString.Create("<input type=\"hidden\" name=\"_method\" value=\"delete\" />");
         }
     }
 }
