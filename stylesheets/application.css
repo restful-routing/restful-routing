@@ -618,3 +618,53 @@ ul li ul {
   background-color: #bfd5f9;
   color: #0c367a;
 }
+
+/* line 47 */
+footer {
+  margin-top: 50px;
+  width: 100%;
+}
+/* line 50 */
+footer #resharper {
+  position: relative;
+  background: #7d255b url(http://www.jetbrains.com/resharper/features/rs/rs1/rs468x60_violet.gif) no-repeat 10px 50%;
+  border: solid 1px #7d255b;
+  margin: 0 auto;
+  padding: 0;
+  text-decoration: none;
+  text-indent: 0;
+  letter-spacing: -0.001em;
+  width: 466px;
+  height: 58px;
+}
+/* line 61 */
+footer #resharper span {
+  margin: 7px 0 0 67px;
+  padding: 0;
+  float: left;
+  font-size: 12px;
+  cursor: pointer;
+  background-image: none;
+  border: 0;
+  color: #e9d5e1;
+  font-family: trebuchet ms, arial, sans-serif;
+  font-weight: normal;
+}
+/* line 72 */
+footer #resharper a {
+  position: absolute;
+  left: 0;
+  width: 281px;
+  margin: 0;
+  padding: 18px 0 14px 185px;
+  line-height: 13px;
+  font-size: 13px;
+  cursor: pointer;
+  background-image: none;
+  border: none;
+  display: block;
+  color: #e9d5e1;
+  font-family: trebuchet ms, arial, sans-serif;
+  font-weight: normal;
+  text-decoration: none;
+}

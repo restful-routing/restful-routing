@@ -274,6 +274,16 @@
           <p>Two additional methods are provided so you can add custom routes to the route set if you need to. Map is a chainable method that allows you to add standard mappings. Route is a method that will allow you to add a custom route to the route set.</p>
           <pre class="twilight">Map(<span class="String"><span class="String">&quot;</span>posts/{year}/{slug}<span class="String">&quot;</span></span>)&#x000A;  .To&lt;PostsController&gt;(x =&gt; x.Post(-<span class="Constant">1</span>, <span class="String"><span class="String">&quot;</span><span class="String">&quot;</span></span>))&#x000A;  .Constrain(<span class="String"><span class="String">&quot;</span>slug<span class="String">&quot;</span></span>, @<span class="String"><span class="String">&quot;</span><span class="StringConstant">\w</span>+<span class="String">&quot;</span></span>)&#x000A;  .Constrain(<span class="String"><span class="String">&quot;</span>year<span class="String">&quot;</span></span>, @<span class="String"><span class="String">&quot;</span><span class="StringConstant">\d</span>+<span class="String">&quot;</span></span>);&#x000A;Route(<span class="Keyword">new</span> Route(<span class="String"><span class="String">&quot;</span>posts/{action}<span class="String">&quot;</span></span>, &#x000A;  <span class="Keyword">new</span> RouteValueDictionary(<span class="Keyword">new</span> { controller = <span class="String"><span class="String">&quot;</span>posts<span class="String">&quot;</span></span> }), &#x000A;  <span class="Keyword">new</span> MvcRouteHandler());&#x000A;</pre>
         </section>
+        <footer>
+          <div id="resharper">
+            <span>
+              Can't code without
+            </span>
+            <a alt="The best C# &amp; VB.NET refactoring plugin for Visual Studio" href="http://www.jetbrains.com/resharper/features/code_refactoring.html" title="The best C# &amp; VB.NET refactoring plugin for Visual Studio">
+              The best C# & VB.NET refactoring plugin for Visual Studio
+            </a>
+          </div>
+        </footer>
       </div>
     </div>
     <a href="http://github.com/stevehodgkiss/restful-routing" id="github">
