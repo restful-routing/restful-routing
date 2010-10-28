@@ -10,8 +10,17 @@ task :clean do
 	FileUtils.rm_rf("build")
 end
 
+desc 'generates assembly info'
+assemblyinfo :assemblyinfo do |asm|
+	asm.version = "1.0.1"
+	asm.product_name = "RestfulRouting"
+	asm.title = "RestfulRouting"
+	asm.description = "RestfulRouting is a routing library for ASP.NET MVC based on the Rails 3 routing DSL."
+	asm.output_file = "src/RestfulRouting/Properties/AssemblyInfo.cs"
+end
+
 desc 'compile'
-msbuild :compile => :clean do |msb|
+msbuild :compile => [:clean, :assemblyinfo] do |msb|
 	msb.solution = "src\\#{PROJECT}.sln"
 	msb.verbosity = 'minimal'
 	msb.properties = { 
