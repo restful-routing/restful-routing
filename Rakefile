@@ -39,7 +39,7 @@ end
 
 desc 'runs tests'
 mspec :test do |mspec|
-	mspec.path_to_command = 'tools\\mspec\\mspec.exe'
+	mspec.command = 'tools\\mspec\\mspec.exe'
 	mspec.assemblies "src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
 	mspec.html_output = "src\\#{PROJECT}.Tests\\Reports\\specs.html"
 end
