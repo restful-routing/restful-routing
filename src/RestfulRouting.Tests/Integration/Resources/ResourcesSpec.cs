@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Machine.Specifications;
 using RestfulRouting.Tests.Integration.Behaviours;
 using RestfulRouting.Tests.Integration.Contexts;
@@ -155,4 +157,32 @@ namespace RestfulRouting.Tests.Integration
 
 		It should_map_blog_admin_index = () => "~/blogadmin/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
 	}
+
+    public class when_mapping_nested_resources : base_context
+    {
+        public class BlogArea : RouteSet
+        {
+            public BlogArea()
+            {
+                Resources<BlogsController>(() =>
+                {
+                    Constrain("id", @"\d+");
+                    Resources<PostsController>();
+                    Map("{year}/{slug}").To<PostsController>(x => x.Post(1, ""));
+                });
+            }
+        }
+
+        Because of = () => new BlogArea().RegisterRoutes(routes);
+
+        It should_inherit_constraints = () =>
+                                            {
+                                                foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "posts"))
+                                                {
+                                                    var constraint = route.Constraints.First(x => x.Key == "blogId");
+                                                    constraint.Key.ShouldBe("blogId");
+                                                    constraint.Value.ShouldBe(@"\d+");
+                                                }
+                                            };
+    }
 }

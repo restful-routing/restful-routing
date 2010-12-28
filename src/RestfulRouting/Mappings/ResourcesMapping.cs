@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
 
@@ -24,50 +25,66 @@ namespace RestfulRouting.Mappings
         {
         	_resourcesMapper.SetResourceAs(MappedName ?? ResourceName);
 
+    	    var routes = new List<Route>();
+
 			if (Collections != null && Collections.Any())
 			{
 				foreach (var member in Collections)
 				{
-					routeCollection.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
+					routes.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
 				}
 			}
 
             if (IncludesAction(names.IndexName))
-                routeCollection.Add(_resourcesMapper.IndexRoute());
+                routes.Add(_resourcesMapper.IndexRoute());
 
             if (IncludesAction(names.CreateName))
-                routeCollection.Add(_resourcesMapper.CreateRoute());
+                routes.Add(_resourcesMapper.CreateRoute());
 
             if (IncludesAction(names.NewName))
-                routeCollection.Add(_resourcesMapper.NewRoute());
+                routes.Add(_resourcesMapper.NewRoute());
 
             if (IncludesAction(names.EditName))
-                routeCollection.Add(_resourcesMapper.EditRoute());
+                routes.Add(_resourcesMapper.EditRoute());
 
             if (IncludesAction(names.ShowName))
-                routeCollection.Add(_resourcesMapper.ShowRoute());
+                routes.Add(_resourcesMapper.ShowRoute());
 
             if (IncludesAction(names.UpdateName))
-                routeCollection.Add(_resourcesMapper.UpdateRoute());
+                routes.Add(_resourcesMapper.UpdateRoute());
 
             if (IncludesAction(names.DestroyName))
-                routeCollection.Add(_resourcesMapper.DestroyRoute());
-
-            foreach (var route in routeCollection)
-            {
-                ConfigureRoute(route as Route);
-            }
+                routes.Add(_resourcesMapper.DestroyRoute());
 
             if (Members != null && Members.Any())
             {
                 foreach (var member in Members)
                 {
-                    routeCollection.Add(_resourcesMapper.MemberRoute(member.Key, member.Value));
+                    routes.Add(_resourcesMapper.MemberRoute(member.Key, member.Value));
                 }
+            }
+
+            foreach (var route in routes)
+            {
+                ConfigureRoute(route);
+                routeCollection.Add(route);
+            }
+
+    	    var newConstraints = Context.Constraints;
+    	    
+            if (newConstraints.ContainsKey("id"))
+            {
+                var idConstraint = newConstraints.FirstOrDefault(x => x.Key == "id");
+
+                newConstraints.Remove("id");
+
+                newConstraints[RouteSet.Singularize(_resourcesMapper.ResourceName) + "Id"] = idConstraint.Value;
             }
 
             foreach (var mapping in Mappings)
             {
+                mapping.Context.Constraints = newConstraints;
+
                 mapping.AddRoutesTo(routeCollection);
             }
         }

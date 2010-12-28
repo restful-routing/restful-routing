@@ -18,6 +18,8 @@ namespace RestfulRouting.Mappings
 
         public override void AddRoutesTo(RouteCollection routeCollection)
         {
+            ConfigureRoute(Route);
+
             routeCollection.Add(Route);
         }
 

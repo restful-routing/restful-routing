@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Routing;
 
 namespace RestfulRouting.Mappings
@@ -26,37 +27,39 @@ namespace RestfulRouting.Mappings
 		{
 			_resourceMapper.SetResourceAs(MappedName ?? ResourceName);
 
+            var routes = new List<Route>();
 
 			if (IncludesAction(_names.ShowName))
-				routeCollection.Add(_resourceMapper.ShowRoute());
+                routes.Add(_resourceMapper.ShowRoute());
 
 			if (IncludesAction(_names.UpdateName))
-				routeCollection.Add(_resourceMapper.UpdateRoute());
+                routes.Add(_resourceMapper.UpdateRoute());
 
 			if (IncludesAction(_names.NewName))
-				routeCollection.Add(_resourceMapper.NewRoute());
+                routes.Add(_resourceMapper.NewRoute());
 
 			if (IncludesAction(_names.EditName))
-				routeCollection.Add(_resourceMapper.EditRoute());
+                routes.Add(_resourceMapper.EditRoute());
 
 			if (IncludesAction(_names.DestroyName))
-				routeCollection.Add(_resourceMapper.DestroyRoute());
+                routes.Add(_resourceMapper.DestroyRoute());
 
 			if (IncludesAction(_names.CreateName))
-				routeCollection.Add(_resourceMapper.CreateRoute());
-
-			foreach (var route in routeCollection)
-			{
-				ConfigureRoute(route as Route);
-			}
+                routes.Add(_resourceMapper.CreateRoute());
 
 			if (Members != null && Members.Any())
 			{
 				foreach (var member in Members)
 				{
-					routeCollection.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
+					routes.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
 				}
 			}
+
+            foreach (var route in routes)
+            {
+                ConfigureRoute(route);
+                routeCollection.Add(route);
+            }
 
 			foreach (var mapping in Mappings)
 			{
