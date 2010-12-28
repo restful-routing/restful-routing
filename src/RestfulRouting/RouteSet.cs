@@ -134,6 +134,11 @@ namespace RestfulRouting
 
 			GenerateNestedPathPrefix();
 
+            if (_currentMapping != null && _currentMapping.GetType().Name.StartsWith("ResourcesMapping")) // this sucks
+            {
+                _pathPrefix += "/{id}";
+            }
+
 			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
 
 			MapNested(resourcesMapping, nestedAction);

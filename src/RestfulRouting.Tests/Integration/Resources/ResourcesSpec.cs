@@ -185,4 +185,28 @@ namespace RestfulRouting.Tests.Integration
                                                 }
                                             };
     }
+
+    public class when_mapping_nested_singular_resource : base_context
+    {
+        public class BlogArea : RouteSet
+        {
+            public BlogArea()
+            {
+                Resources<BlogsController>(() =>
+                {
+                    Resource<SessionsController>();
+                });
+            }
+        }
+
+        Because of = () => new BlogArea().RegisterRoutes(routes);
+
+        It should_set_the_correct_base_path = () =>
+                                                 {
+                                                     foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "sessions"))
+                                                     {
+                                                         route.Url.ShouldStartWith("blogs/{id}/session");
+                                                     }
+                                                 };
+    }
 }
