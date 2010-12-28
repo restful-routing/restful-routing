@@ -173,7 +173,8 @@ namespace RestfulRouting
         }
 
         private void AddMapping(Mapping mapping)
-		{
+        {
+            mapping.Context.PathPrefix = _pathPrefix;
 			if (_currentMapping != null)
 				_currentMapping.AddSubMapping(mapping);
 			else
