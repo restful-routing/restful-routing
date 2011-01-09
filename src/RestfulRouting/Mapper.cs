@@ -7,6 +7,11 @@ namespace RestfulRouting
 	{
 		private readonly IRouteHandler _routeHandler;
 
+		protected Mapper()
+		{
+			_routeHandler = new MvcRouteHandler();
+		}
+
 		protected Route GenerateRoute(string path, string controller, string action, string[] httpMethods)
 		{
 			return new Route(path,
