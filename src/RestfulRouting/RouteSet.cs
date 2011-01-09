@@ -108,7 +108,7 @@ namespace RestfulRouting
 				_pathPrefix += "/{" + singular + "Id}";
 			}
 
-			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
+			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix, new MvcRouteHandler()));
 
 			MapNested(resourcesMapping, nestedAction);
 
@@ -139,7 +139,7 @@ namespace RestfulRouting
                 _pathPrefix += "/{id}";
             }
 
-			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
+			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix, new MvcRouteHandler()));
 
 			MapNested(resourcesMapping, nestedAction);
 

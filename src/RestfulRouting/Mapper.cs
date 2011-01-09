@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 
 namespace RestfulRouting
 {
@@ -7,9 +6,9 @@ namespace RestfulRouting
 	{
 		private readonly IRouteHandler _routeHandler;
 
-		protected Mapper()
+		protected Mapper(IRouteHandler routeHandler)
 		{
-			_routeHandler = new MvcRouteHandler();
+			_routeHandler = routeHandler;
 		}
 
 		protected Route GenerateRoute(string path, string controller, string action, string[] httpMethods)

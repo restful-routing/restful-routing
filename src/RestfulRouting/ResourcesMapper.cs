@@ -12,7 +12,8 @@ namespace RestfulRouting
 		public string ResourceName;
 		private string _resourcePath;
 
-		public ResourcesMapper(RouteNames names, string pathPrefix)
+		public ResourcesMapper(RouteNames names, string pathPrefix, IRouteHandler routeHandler)
+			: base(routeHandler)
 		{
 			_pathPrefix = pathPrefix;
 			_names = names;
