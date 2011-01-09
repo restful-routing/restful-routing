@@ -84,6 +84,7 @@
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="Mappings\AppMapping.cs" />
     <Compile Include="Mappings\Mapping.cs" />
     <Compile Include="Mappings\AreaMapping.cs" />
