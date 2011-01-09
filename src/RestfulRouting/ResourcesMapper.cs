@@ -34,7 +34,7 @@ namespace RestfulRouting
 			var route = new Route(
 									_resourcePath,
 									new RouteValueDictionary(new { action = _names.IndexName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler());
 			return route;
 		}
@@ -58,7 +58,7 @@ namespace RestfulRouting
 			return new Route(
 									_resourcePath,
 									new RouteValueDictionary(new { action = _names.CreateName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
 									new MvcRouteHandler());
 		}
 
@@ -70,7 +70,7 @@ namespace RestfulRouting
 									new RouteValueDictionary(new { action = _names.UpdateName, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{
-                                        httpMethod = new RestfulHttpMethodConstraint("PUT")
+										httpMethod = new RestfulHttpMethodConstraint("PUT")
 									}),
 									new MvcRouteHandler());
 		}
@@ -83,7 +83,7 @@ namespace RestfulRouting
 									new RouteValueDictionary(new { action = _names.DestroyName, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{
-                                        httpMethod = new RestfulHttpMethodConstraint("DELETE")
+										httpMethod = new RestfulHttpMethodConstraint("DELETE")
 									}),
 									new MvcRouteHandler());
 		}
@@ -94,7 +94,7 @@ namespace RestfulRouting
 			return new Route(
 									_resourcePath + "/" + _names.NewName,
 									new RouteValueDictionary(new { action = _names.NewName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
+									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler());
 		}
 
@@ -106,7 +106,7 @@ namespace RestfulRouting
 									new RouteValueDictionary(new { action = _names.EditName, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{
-                                        httpMethod = new HttpMethodConstraint("GET")
+										httpMethod = new HttpMethodConstraint("GET")
 									}),
 									new MvcRouteHandler());
 		}
@@ -121,7 +121,7 @@ namespace RestfulRouting
 									new RouteValueDictionary(new { action = action, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{
-                                        httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
+										httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
 									}),
 									new MvcRouteHandler());
 		}
