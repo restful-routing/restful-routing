@@ -14,6 +14,7 @@ namespace RestfulRouting
 		private RouteNames _names;
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
+		private readonly IRouteHandler _routeHandler;
 		public static Func<string, string> Singularize = x =>
 		{
 			var singular = x;
