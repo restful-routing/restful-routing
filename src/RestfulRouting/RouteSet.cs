@@ -33,8 +33,8 @@ namespace RestfulRouting
 		}
 
 		protected RouteSet()
+			: this(new RouteNames())
 		{
-			_names = new RouteNames();
 		}
 
 		public void As(string resourceName)
