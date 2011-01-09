@@ -42,7 +42,7 @@ namespace RestfulRouting
 		{
 			// GET /session/edit => Edit
 			return new Route(
-									_resourcePath + "/edit",
+									_resourcePath + "/" + _names.EditName,
 									new RouteValueDictionary(new { action = _names.EditName, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{

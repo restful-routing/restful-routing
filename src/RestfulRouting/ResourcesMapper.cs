@@ -102,7 +102,7 @@ namespace RestfulRouting
 		{
 			// GET /blogs/1/edit => Edit
 			return new Route(
-									_resourcePath + "/{id}/edit",
+									_resourcePath + "/{id}/" + _names.EditName,
 									new RouteValueDictionary(new { action = _names.EditName, controller = ResourceName }),
 									new RouteValueDictionary(new
 									{
