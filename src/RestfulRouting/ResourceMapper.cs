@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RestfulRouting
 {
-	public class ResourceMapper
+	public class ResourceMapper : Mapper
 	{
 		private RouteNames _names;
 		private string _pathPrefix;

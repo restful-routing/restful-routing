@@ -5,7 +5,7 @@ using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public class ResourcesMapper
+	public class ResourcesMapper : Mapper
 	{
 		private RouteNames _names;
 		private string _pathPrefix;
