@@ -31,12 +31,11 @@ namespace RestfulRouting
 		public Route IndexRoute()
 		{
 			// GET /blogs => Index
-			var route = new Route(
+			return new Route(
 									_resourcePath,
 									new RouteValueDictionary(new { action = _names.IndexName, controller = ResourceName }),
 									new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
 									new MvcRouteHandler());
-			return route;
 		}
 
 		public Route ShowRoute()
