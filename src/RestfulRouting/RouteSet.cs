@@ -27,6 +27,11 @@ namespace RestfulRouting
 			return singular ?? x;
 		};
 
+		protected RouteSet(RouteNames names)
+		{
+			_names = names;
+		}
+
 		protected RouteSet()
 		{
 			_names = new RouteNames();
