@@ -28,13 +28,14 @@ namespace RestfulRouting
 			return singular ?? x;
 		};
 
-		protected RouteSet(RouteNames names)
+		protected RouteSet(RouteNames names, IRouteHandler routeHandler)
 		{
 			_names = names;
+			_routeHandler = routeHandler;
 		}
 
 		protected RouteSet()
-			: this(new RouteNames())
+			: this(new RouteNames(), new MvcRouteHandler())
 		{
 		}
 
