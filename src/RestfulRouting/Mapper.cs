@@ -5,6 +5,8 @@ namespace RestfulRouting
 {
 	public abstract class Mapper
 	{
+		private readonly IRouteHandler _routeHandler;
+
 		protected Route GenerateRoute(string path, string controller, string action, string[] httpMethods)
 		{
 			return new Route(path,
