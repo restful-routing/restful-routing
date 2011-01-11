@@ -102,6 +102,7 @@
     <Compile Include="Integration\Contexts\ImagesController.cs" />
     <Compile Include="Integration\Behaviours\AdminBlogsResources.cs" />
     <Compile Include="Integration\Behaviours\ImagesResources.cs" />
+    <Compile Include="Integration\FormatSpec.cs" />
     <Compile Include="Integration\ResourceSpec.cs" />
     <Compile Include="Integration\Resources\AsSpec.cs" />
     <Compile Include="Integration\Resources\CollectionSpec.cs" />

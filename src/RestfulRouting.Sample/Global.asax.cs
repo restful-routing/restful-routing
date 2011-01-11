@@ -18,6 +18,7 @@ namespace RestfulRouting.Sample
 			ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
 
 			RegisterRoutes(RouteTable.Routes);
+            //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
 		}
 	}
 }

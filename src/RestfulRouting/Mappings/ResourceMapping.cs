@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace RestfulRouting.Mappings
@@ -29,29 +30,29 @@ namespace RestfulRouting.Mappings
 
             var routes = new List<Route>();
 
-			if (IncludesAction(_names.ShowName))
-                routes.Add(_resourceMapper.ShowRoute());
+            if (IncludesAction(_names.ShowName))
+                routes.AddRange(_resourceMapper.ShowRoute().ExplicitAndImplicit());
 
 			if (IncludesAction(_names.UpdateName))
-                routes.Add(_resourceMapper.UpdateRoute());
+                routes.AddRange(_resourceMapper.UpdateRoute().ExplicitAndImplicit());
 
 			if (IncludesAction(_names.NewName))
-                routes.Add(_resourceMapper.NewRoute());
+                routes.AddRange(_resourceMapper.NewRoute().ExplicitAndImplicit());
 
 			if (IncludesAction(_names.EditName))
-                routes.Add(_resourceMapper.EditRoute());
+                routes.AddRange(_resourceMapper.EditRoute().ExplicitAndImplicit());
 
 			if (IncludesAction(_names.DestroyName))
-                routes.Add(_resourceMapper.DestroyRoute());
+                routes.AddRange(_resourceMapper.DestroyRoute().ExplicitAndImplicit());
 
 			if (IncludesAction(_names.CreateName))
-                routes.Add(_resourceMapper.CreateRoute());
+                routes.AddRange(_resourceMapper.CreateRoute().ExplicitAndImplicit());
 
 			if (Members != null && Members.Any())
 			{
 				foreach (var member in Members)
 				{
-					routes.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
+                    routes.AddRange(_resourceMapper.MemberRoute(member.Key, member.Value).ExplicitAndImplicit());
 				}
 			}
 
@@ -66,5 +67,6 @@ namespace RestfulRouting.Mappings
 				mapping.AddRoutesTo(routeCollection);
 			}
 		}
+
 	}
 }

@@ -71,4 +71,5 @@ namespace RestfulRouting.Tests.Integration
 
         Behaves_like<PostsResources> a_posts_resource;
     }
+    
 }

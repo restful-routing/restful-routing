@@ -19,7 +19,7 @@
 				<td><%= blog.Author %></td>
 				<td>
 					<a href="<%= Url.Action("index", "posts", new { blogId = blog.Id }) %>">view posts</a>
-					<%= Html.ActionLink("show", "show", new { id = blog.Id }) %>
+					<%= Html.ActionLink("show", "show", new { id = blog.Id, format= "xml" }) %>
 					<%= Html.ActionLink("edit", "edit", new { id = blog.Id }) %>
 					<%= Html.ActionLink("delete", "delete", new { id = blog.Id }) %>
 				</td>
