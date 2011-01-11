@@ -145,6 +145,8 @@
     <Compile Include="Unit\ResourcesMapperSpec.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Unit\RespondToExtensionsSpec.cs" />
+    <Compile Include="Unit\RespondToSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestfulRouting\RestfulRouting.csproj">

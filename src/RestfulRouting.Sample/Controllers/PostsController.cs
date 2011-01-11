@@ -19,7 +19,10 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult Index()
 		{
-			return View(SampleData.Posts());
+            return RespondTo.Do(format: RouteData.Format())
+                  .Default(View(SampleData.Posts()))
+                  .Format("json", Json(SampleData.Posts()).AllowGet())
+                .End();
 		}
 
 		public ActionResult New()
@@ -64,7 +67,10 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult Show(int id)
 		{
-			return View(SampleData.Post(id));
+            return RespondTo.Do(format: RouteData.Format())
+               .Default(View(SampleData.Post(id)))
+               .Format("json", Json(SampleData.Post(id)).AllowGet())
+             .End();
 		}
 	}
 }
