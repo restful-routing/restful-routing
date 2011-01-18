@@ -39,7 +39,7 @@ namespace RestfulRouting.Tests.Integration
 
         Because of = () => new SessionRoutes().RegisterRoutes(routes);
 
-        Behaves_like<SessionsResource> a_sessions_resource;
+        Behaves_like<FormatSessionsResource> a_sessions_resource;
     }
 
     public class when_mapping_a_nested_resource_with_format : base_context
@@ -54,9 +54,9 @@ namespace RestfulRouting.Tests.Integration
 
         Because of = () => new SessionRoutes().RegisterRoutes(routes);
 
-        Behaves_like<SessionsResource> a_sessions_resource;
+        Behaves_like<FormatSessionsResource> a_sessions_resource;
 
-        Behaves_like<NestedSessionsAvatarsResource> a_nested_avatars_resource;
+        Behaves_like<FormatNestedSessionsAvatarsResource> a_nested_avatars_resource;
     }
 
     public class when_mapping_multiple_nested_resource_with_format : base_context
@@ -75,11 +75,11 @@ namespace RestfulRouting.Tests.Integration
 
         Because of = () => new SessionRoutes().RegisterRoutes(routes);
 
-        Behaves_like<SessionsResource> a_sessions_resource;
+        Behaves_like<FormatSessionsResource> a_sessions_resource;
 
-        Behaves_like<NestedSessionsAvatarsResource> a_nested_avatars_resource;
+        Behaves_like<FormatNestedSessionsAvatarsResource> a_nested_avatars_resource;
 
-        Behaves_like<NestedSessionsProfilesResource> a_nested_profiles_resource;
+        Behaves_like<FormatNestedSessionsProfilesResource> a_nested_profiles_resource;
     }
 
     public class when_mapping_a_resources_with_a_resource_with_format : base_context
@@ -97,7 +97,7 @@ namespace RestfulRouting.Tests.Integration
 
         Because of = () => new Routes().RegisterRoutes(routes);
 
-        Behaves_like<ResourcesNestedWithinResource> a_nested_resources;
+        Behaves_like<FormatResourcesNestedWithinResource> a_nested_resources;
     }
 
     [Behaviors]
