@@ -11,9 +11,10 @@ namespace RestfulRouting
 	public abstract class RouteSet
 	{
 		private Mapping _currentMapping;
-		private RouteNames names;
+		private RouteNames _names;
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
+		private readonly IRouteHandler _routeHandler;
 		public static Func<string, string> Singularize = x =>
 		{
 			var singular = x;
@@ -27,9 +28,15 @@ namespace RestfulRouting
 			return singular ?? x;
 		};
 
-		protected RouteSet()
+		protected RouteSet(RouteNames names, IRouteHandler routeHandler)
 		{
-			names = new RouteNames();
+			_names = names;
+			_routeHandler = routeHandler;
+		}
+
+		protected RouteSet()
+			: this(new RouteNames(), new MvcRouteHandler())
+		{
 		}
 
 		public void As(string resourceName)
@@ -108,7 +115,7 @@ namespace RestfulRouting
 				_pathPrefix += "/{" + singular + "Id}";
 			}
 
-			var resourcesMapping = new ResourcesMapping<TController>(names, new ResourcesMapper(names, _pathPrefix));
+			var resourcesMapping = new ResourcesMapping<TController>(_names, new ResourcesMapper(_names, _pathPrefix, _routeHandler));
 
 			MapNested(resourcesMapping, nestedAction);
 
@@ -139,7 +146,7 @@ namespace RestfulRouting
                 _pathPrefix += "/{id}";
             }
 
-			var resourcesMapping = new ResourceMapping<TController>(names, new ResourceMapper(names, _pathPrefix));
+			var resourcesMapping = new ResourceMapping<TController>(_names, new ResourceMapper(_names, _pathPrefix, _routeHandler));
 
 			MapNested(resourcesMapping, nestedAction);
 
