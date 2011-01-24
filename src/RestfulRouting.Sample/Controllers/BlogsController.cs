@@ -7,11 +7,11 @@ namespace RestfulRouting.Sample.Controllers
 	public class BlogsController : Controller
 	{
 		public ActionResult Index()
-		{
-            return RespondTo.Do(format: RouteData.Format())
-                   .Default(View(SampleData.Blogs()))
-                   .Format("json", Json(SampleData.Blogs()).AllowGet())
-                 .End();
+        {
+            return Responder.Do(format => {
+                format.Any(() => View(SampleData.Blogs()));
+                format["json"] = () => Json(SampleData.Blogs()).AllowGet();
+            });
 		}
 
 		public ActionResult New()
@@ -59,10 +59,10 @@ namespace RestfulRouting.Sample.Controllers
 
 		public ActionResult Show(int id)
 		{
-		    return RespondTo.Do(format: RouteData.Format())
-		            .Default(View(SampleData.Blog(id)))
-		            .Format("json", Json(SampleData.Blog(id)).AllowGet())
-		          .End();
+            return Responder.Do(format => {
+                format.Any(() => View(SampleData.Blog(id)));
+                format["json"] = () => Json(SampleData.Blog(id)).AllowGet();
+            });
 		}
 	}
 }
