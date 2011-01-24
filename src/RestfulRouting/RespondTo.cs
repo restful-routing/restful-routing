@@ -27,28 +27,50 @@ namespace RestfulRouting
 
             public void Any(Func<ActionResult> result)
             {
-                IsDefault(result);
+                DefaultIs(result);
             }
 
-            public void IsDefault(Func<ActionResult> result)
+            public void DefaultIs(Func<ActionResult> result)
             {
                 Default = result;
             }
 
-            public Func<ActionResult> this[string id]      // indexer
+            public Func<ActionResult> this[string id] 
             {
                 get { return Results[id]; }
                 set { Results[id] = value; }
             }
         }
 
+        /// <summary>
+        /// Will return the correct action result based on the format. Format will be read from HttpContext.Current.
+        /// </summary>
+        /// <param name="formatCollection">Your rules for the specific formats.</param>
+        /// <returns>An action result for the format.</returns>
         public static ActionResult Do(Action<FormatCollection> formatCollection)
         {
-            var collection = new FormatCollection();
             var format = GetFormat();
+            return With(format, formatCollection);
+        }
+
+        /// <summary>
+        /// Will return the correct action result based on the format. Specify the format yourself.
+        /// </summary>
+        /// <param name="format">The format from where you want to read it.</param>
+        /// <param name="formatCollection">Your rules for the specific formats.</param>
+        /// <returns>An action result for the format.</returns>
+        public static ActionResult With(string format, Action<FormatCollection> formatCollection)
+        {
+            if (format == null) throw new ArgumentNullException("format");
+
+            var collection = new FormatCollection();
 
             // populate collection
             formatCollection.Invoke(collection);
+
+            if (collection.Default == null)
+                throw new ArgumentException(
+                    "Default format handler required. Please call Any() or DefaultIs() on format collection.");
 
             if (string.IsNullOrEmpty(format) || !collection.Results.ContainsKey(format)) {
                 return collection.Default.Invoke();
