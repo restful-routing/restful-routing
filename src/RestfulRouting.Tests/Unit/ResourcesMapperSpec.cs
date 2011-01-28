@@ -15,7 +15,7 @@ namespace RestfulRouting.Tests.Unit
 
 		Establish context = () =>
 		                    	{
-		                    		mapper = new ResourcesMapper(new RouteNames(), "test");
+		                    		mapper = new ResourcesMapper(new RouteNames(), "test", new MvcRouteHandler());
 		                    		mapper.SetResourceAs("blogs");
 		                    	};
 
