@@ -8,8 +8,5 @@ dist
 *resharper*
 *.user
 TestResult.xml
-<<<<<<< HEAD
 specs.html
-=======
 src/RestfulRouting.Tests/Reports/specs.html
->>>>>>> 090803c9e8f0053e68678ec44f0ac1ae89fcf261
