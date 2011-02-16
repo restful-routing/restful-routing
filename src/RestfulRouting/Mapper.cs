@@ -15,7 +15,7 @@ namespace RestfulRouting
 		{
 			return new Route(path,
 				new RouteValueDictionary(new { controller, action }),
-				new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint(httpMethods) }),
+				new RouteValueDictionary(new { httpMethod = new RestfulHttpMethodConstraint(httpMethods) }),
 				_routeHandler);
 		}
 	}
