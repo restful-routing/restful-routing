@@ -5,14 +5,15 @@ using System.Web.Routing;
 
 namespace RestfulRouting
 {
-	public class ResourcesMapper
+	public class ResourcesMapper : Mapper
 	{
 		private RouteNames _names;
 		private string _pathPrefix;
 		public string ResourceName;
 		private string _resourcePath;
 
-		public ResourcesMapper(RouteNames names, string pathPrefix)
+		public ResourcesMapper(RouteNames names, string pathPrefix, IRouteHandler routeHandler)
+			: base(routeHandler)
 		{
 			_pathPrefix = pathPrefix;
 			_names = names;
@@ -31,84 +32,43 @@ namespace RestfulRouting
 		public Route IndexRoute()
 		{
 			// GET /blogs => Index
-			var route = new Route(
-									_resourcePath,
-									new RouteValueDictionary(new { action = _names.IndexName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
-									new MvcRouteHandler());
-			return route;
+			return GenerateRoute(_resourcePath, ResourceName, _names.IndexName, new[] { "GET" });
 		}
 
 		public Route ShowRoute()
 		{
 			// GET /blogs/1 => Show
-			return new Route(
-									_resourcePath + "/{id}",
-									new RouteValueDictionary(new { action = _names.ShowName, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-										httpMethod = new HttpMethodConstraint("GET")
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/{id}", ResourceName, _names.ShowName, new[] { "GET" });
 		}
 
 		public Route CreateRoute()
 		{
 			// POST /blogs => Create
-			return new Route(
-									_resourcePath,
-									new RouteValueDictionary(new { action = _names.CreateName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("POST") }),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath, ResourceName, _names.CreateName, new[] { "POST" });
 		}
 
 		public Route UpdateRoute()
 		{
 			// PUT /blogs/1 => Update
-			return new Route(
-									_resourcePath + "/{id}",
-									new RouteValueDictionary(new { action = _names.UpdateName, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-                                        httpMethod = new RestfulHttpMethodConstraint("PUT")
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/{id}", ResourceName, _names.UpdateName, new[] { "PUT" });
 		}
 
 		public Route DestroyRoute()
 		{
 			// DELETE /blogs/1 => Delete
-			return new Route(
-									_resourcePath + "/{id}",
-									new RouteValueDictionary(new { action = _names.DestroyName, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-                                        httpMethod = new RestfulHttpMethodConstraint("DELETE")
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/{id}", ResourceName, _names.DestroyName, new[] { "DELETE" });
 		}
 
 		public Route NewRoute()
 		{
 			// GET /blogs/new => New
-			return new Route(
-									_resourcePath + "/" + _names.NewName,
-									new RouteValueDictionary(new { action = _names.NewName, controller = ResourceName }),
-                                    new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/" + _names.NewName, ResourceName, _names.NewName, new[] { "GET" });
 		}
 
 		public Route EditRoute()
 		{
 			// GET /blogs/1/edit => Edit
-			return new Route(
-									_resourcePath + "/{id}/edit",
-									new RouteValueDictionary(new { action = _names.EditName, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-                                        httpMethod = new HttpMethodConstraint("GET")
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/{id}/" + _names.EditName, ResourceName, _names.EditName, new[] { "GET" });
 		}
 
 		public Route MemberRoute(string action, params HttpVerbs[] methods)
@@ -116,14 +76,7 @@ namespace RestfulRouting
 			if (methods.Length == 0)
 				methods = new []{HttpVerbs.Get};
 
-			return new Route(
-									_resourcePath + "/{id}/" + action,
-									new RouteValueDictionary(new { action = action, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-                                        httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/{id}/" + action, ResourceName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
 		}
 
 		public Route CollectionRoute(string action, params HttpVerbs[] methods)
@@ -131,14 +84,7 @@ namespace RestfulRouting
 			if (methods.Length == 0)
 				methods = new[] { HttpVerbs.Get };
 
-			return new Route(
-									_resourcePath + "/" + action,
-									new RouteValueDictionary(new { action = action, controller = ResourceName }),
-									new RouteValueDictionary(new
-									{
-										httpMethod = new RestfulHttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray())
-									}),
-									new MvcRouteHandler());
+			return GenerateRoute(_resourcePath + "/" + action, ResourceName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
 		}
 	}
 }
