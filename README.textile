@@ -52,3 +52,4 @@ h2. Contributors
 * "Cory Deppen":http://github.com/corydeppen
 * "Eddie Cianci":http://github.com/defeated
 * "Troels Thomsen":http://github.com/troethom
+* "Khalid Abuhakmeh":http://github.com/khalidabuhakmeh
