@@ -87,6 +87,8 @@
     <Compile Include="RespondTo.cs" />
     <Compile Include="RespondToExtensions.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
+    <Compile Include="RestfulRoutingRazorViewEngine.cs" />
+    <Compile Include="RestfulRoutingWebFormViewEngine.cs" />
     <Compile Include="RouteSet.cs" />
     <Compile Include="RestfulRoutingViewEngine.cs" />
     <Compile Include="RouteNames.cs" />

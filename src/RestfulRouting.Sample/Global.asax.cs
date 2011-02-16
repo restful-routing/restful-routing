@@ -15,7 +15,7 @@ namespace RestfulRouting.Sample
 			AreaRegistration.RegisterAllAreas();
 
 			ViewEngines.Engines.Clear();
-			ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
+			ViewEngines.Engines.Add(new RestfulRoutingWebFormViewEngine());
 
 			RegisterRoutes(RouteTable.Routes);
             //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
