@@ -168,7 +168,7 @@ namespace RestfulRouting
 
 		public StandardMapping Map(string url)
 		{
-			var mapping = new StandardMapping(_currentMapping == null ? "" : _currentMapping.BasePath()).Map(url);
+			var mapping = new StandardMapping(_currentMapping == null ? "" : _currentMapping.BasePath(), _routeHandler).Map(url);
 
 			AddMapping(mapping);
 

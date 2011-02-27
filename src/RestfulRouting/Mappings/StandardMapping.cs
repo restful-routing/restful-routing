@@ -12,9 +12,10 @@ namespace RestfulRouting.Mappings
         private string _pathPrefix;
         private readonly IRouteHandler _routeHandler;
 
-        public StandardMapping(string pathPrefix)
+        public StandardMapping(string pathPrefix, IRouteHandler routeHandler)
         {
             _pathPrefix = pathPrefix;
+            _routeHandler = routeHandler;
         }
 
         public override void AddRoutesTo(RouteCollection routeCollection)
