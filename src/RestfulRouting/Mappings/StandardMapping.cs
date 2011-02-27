@@ -10,6 +10,7 @@ namespace RestfulRouting.Mappings
     {
         public Route Route;
         private string _pathPrefix;
+        private readonly IRouteHandler _routeHandler;
 
         public StandardMapping(string pathPrefix)
         {
