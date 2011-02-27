@@ -35,7 +35,7 @@ namespace RestfulRouting.Mappings
                 new RouteValueDictionary(),
                 new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
                 new RouteValueDictionary(),
-                new MvcRouteHandler());
+                _routeHandler);
 
             return this;
         }
