@@ -11,7 +11,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
     {
         static StandardMapping mapping;
 
-        Establish context = () => mapping = new StandardMapping("");
+        Establish context = () => mapping = new StandardMapping("", new MvcRouteHandler());
 
         Because of = () => mapping.Map("redirects/{id}").To<BlogsController>(x => x.Show(1)).Constrain("slug", @"\w+").GetOnly().Default("id", -1);
 
@@ -36,7 +36,7 @@ namespace RestfulRouting.Tests.Unit.Mappings
 	{
 		static StandardMapping mapping;
 
-		Establish context = () => mapping = new StandardMapping("");
+		Establish context = () => mapping = new StandardMapping("", new MvcRouteHandler());
 
 		Because of = () => mapping.Map("redirects/{id}").To<BlogsController>(x => x.Show(1)).Allow(HttpVerbs.Get, HttpVerbs.Post);
 

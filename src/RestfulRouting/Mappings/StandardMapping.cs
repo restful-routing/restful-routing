@@ -10,10 +10,12 @@ namespace RestfulRouting.Mappings
     {
         public Route Route;
         private string _pathPrefix;
+        private readonly IRouteHandler _routeHandler;
 
-        public StandardMapping(string pathPrefix)
+        public StandardMapping(string pathPrefix, IRouteHandler routeHandler)
         {
             _pathPrefix = pathPrefix;
+            _routeHandler = routeHandler;
         }
 
         public override void AddRoutesTo(RouteCollection routeCollection)
@@ -33,7 +35,7 @@ namespace RestfulRouting.Mappings
                 new RouteValueDictionary(),
                 new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
                 new RouteValueDictionary(),
-                new MvcRouteHandler());
+                _routeHandler);
 
             return this;
         }
