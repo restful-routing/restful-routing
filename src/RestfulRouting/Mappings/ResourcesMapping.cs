@@ -16,6 +16,8 @@ namespace RestfulRouting.Mappings
 
 			ResourceName = ControllerName<TController>();
 
+			MappedName = Inflector.Pluralize(ResourceName);
+
 			resourcesMapper.SetResourceAs(ResourceName);
 
 			_resourcesMapper = resourcesMapper;

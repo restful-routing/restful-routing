@@ -155,7 +155,7 @@ namespace RestfulRouting.Tests.Integration
 
 		Because of = () => new BlogArea().RegisterRoutes(routes);
 
-		It should_map_blog_admin_index = () => "~/blogadmin/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
+		It should_map_blog_admin_index = () => "~/blogadmins/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
 	}
 
     public class when_mapping_nested_resources : base_context
