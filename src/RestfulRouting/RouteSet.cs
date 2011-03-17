@@ -143,7 +143,8 @@ namespace RestfulRouting
 
 			if (_currentMapping != null && _currentMapping.GetType().Name.StartsWith("ResourcesMapping")) // this sucks
 			{
-				_pathPrefix += "/{id}";
+				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+				_pathPrefix += "/{" + singular + "Id}";
 			}
 
 			var resourcesMapping = new ResourceMapping<TController>(_names, new ResourceMapper(_names, _pathPrefix, _routeHandler));
