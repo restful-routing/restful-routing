@@ -2,6 +2,7 @@
  * CREDIT - Originaly adapted from Inflector.Net (http://andrewpeters.net/inflectornet/)
  */
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -22,6 +23,19 @@ namespace RestfulRouting
         /// </summary>
         static Inflector()
         {
+            Reset();
+        }
+
+        public static void Clear()
+        {
+            _plurals.Clear();
+            _singulars.Clear();
+            _uncountables.Clear();
+        }
+
+        public static void Reset()
+        {
+            Clear();
             AddPlural("$", "s");
             AddPlural("s$", "s");
             AddPlural("(ax|test)is$", "$1es");
@@ -138,8 +152,8 @@ namespace RestfulRouting
                     }
                 }
             }
-
-            return result;
+            
+            return result ?? word;
         }
         
         /// <summary>

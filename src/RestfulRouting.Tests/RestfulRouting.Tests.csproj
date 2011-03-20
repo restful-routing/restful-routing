@@ -128,6 +128,7 @@
     <Compile Include="Unit\HtmlHelperExtensionsSpec.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Unit\InflectorSpec.cs" />
     <Compile Include="Unit\Mappings\AppMappingSpec.cs">
       <SubType>Code</SubType>
     </Compile>

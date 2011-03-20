@@ -15,18 +15,6 @@ namespace RestfulRouting
 		private IList<Mapping> mappings = new List<Mapping>();
 		private string _pathPrefix;
 		private readonly IRouteHandler _routeHandler;
-		public static Func<string, string> Singularize = x =>
-		{
-			var singular = x;
-			try
-			{
-				singular = Inflector.Singularize(x);
-			}
-			catch
-			{
-			}
-			return singular ?? x;
-		};
 
 		protected RouteSet(RouteNames names, IRouteHandler routeHandler)
 		{
@@ -111,7 +99,7 @@ namespace RestfulRouting
 
 			if (_currentMapping != null && _currentMapping.ResourceName != null && IsNestedResourcesMapping())
 			{
-				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+				var singular = Inflector.Singularize(_currentMapping.ResourceName).ToLowerInvariant();
 				_pathPrefix += "/{" + singular + "Id}";
 			}
 
@@ -143,7 +131,7 @@ namespace RestfulRouting
 
 			if (_currentMapping != null && _currentMapping.GetType().Name.StartsWith("ResourcesMapping")) // this sucks
 			{
-				var singular = Singularize(_currentMapping.ResourceName).ToLowerInvariant();
+				var singular = Inflector.Singularize(_currentMapping.ResourceName).ToLowerInvariant();
 				_pathPrefix += "/{" + singular + "Id}";
 			}
 

@@ -78,7 +78,7 @@ namespace RestfulRouting.Mappings
 
                 newConstraints.Remove("id");
 
-                newConstraints[RouteSet.Singularize(_resourcesMapper.ResourceName) + "Id"] = idConstraint.Value;
+                newConstraints[Inflector.Singularize(_resourcesMapper.ResourceName) + "Id"] = idConstraint.Value;
             }
 
             foreach (var mapping in Mappings)
