@@ -17,9 +17,12 @@ namespace RestfulRouting.Sample.Controllers
             _blog = new Blog{ Id = blogId };
         }
 
-        public ActionResult Index()
+        public ActionResult Index()      
         {
-            return View(SampleData.Posts());
+            return Responder.Do(format => {
+                format.Any(() => View(SampleData.Posts()));
+                format["json"] = () => Json(SampleData.Posts()).AllowGet();
+            });
         }
 
         public ActionResult New()
@@ -64,7 +67,10 @@ namespace RestfulRouting.Sample.Controllers
 
         public ActionResult Show(int id)
         {
-            return View(SampleData.Post(id));
+            return Responder.Do(format => {
+                        format.Any(() => View(SampleData.Post(id)));
+                        format["json"] = () => Json(SampleData.Post(id)).AllowGet();
+                   });
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace RestfulRouting.Mappings
@@ -33,36 +34,38 @@ namespace RestfulRouting.Mappings
             {
                 foreach (var member in Collections)
                 {
-                    routes.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
+                    routes.AddRange(_resourcesMapper.CollectionRoute(member.Key, member.Value).ExplicitAndImplicit());
                 }
             }
 
             if (IncludesAction(names.IndexName))
-                routes.Add(_resourcesMapper.IndexRoute());
+                routes.AddRange(_resourcesMapper.IndexRoute().ExplicitAndImplicit());
+
 
             if (IncludesAction(names.CreateName))
-                routes.Add(_resourcesMapper.CreateRoute());
+                routes.AddRange(_resourcesMapper.CreateRoute().ExplicitAndImplicit());
+                
 
             if (IncludesAction(names.NewName))
-                routes.Add(_resourcesMapper.NewRoute());
+                routes.AddRange(_resourcesMapper.NewRoute().ExplicitAndImplicit());
 
             if (IncludesAction(names.EditName))
-                routes.Add(_resourcesMapper.EditRoute());
+                routes.AddRange(_resourcesMapper.EditRoute().ExplicitAndImplicit());
 
             if (IncludesAction(names.ShowName))
-                routes.Add(_resourcesMapper.ShowRoute());
+                routes.AddRange(_resourcesMapper.ShowRoute().ExplicitAndImplicit());
 
             if (IncludesAction(names.UpdateName))
-                routes.Add(_resourcesMapper.UpdateRoute());
+                routes.AddRange(_resourcesMapper.UpdateRoute().ExplicitAndImplicit());
 
             if (IncludesAction(names.DestroyName))
-                routes.Add(_resourcesMapper.DestroyRoute());
+                routes.AddRange(_resourcesMapper.DestroyRoute().ExplicitAndImplicit());
 
             if (Members != null && Members.Any())
             {
                 foreach (var member in Members)
                 {
-                    routes.Add(_resourcesMapper.MemberRoute(member.Key, member.Value));
+                    routes.AddRange(_resourcesMapper.MemberRoute(member.Key, member.Value).ExplicitAndImplicit());
                 }
             }
 
@@ -73,7 +76,7 @@ namespace RestfulRouting.Mappings
             }
 
             var newConstraints = Context.Constraints;
-
+            
             if (newConstraints.ContainsKey("id"))
             {
                 var idConstraint = newConstraints.FirstOrDefault(x => x.Key == "id");
@@ -90,7 +93,6 @@ namespace RestfulRouting.Mappings
                 mapping.AddRoutesTo(routeCollection);
             }
         }
-
 
     }
 }
