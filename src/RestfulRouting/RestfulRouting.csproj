@@ -84,8 +84,6 @@
     <Compile Include="Mappings\ResourcesMapping.cs" />
     <Compile Include="ResourceMapper.cs" />
     <Compile Include="ResourcesMapper.cs" />
-    <Compile Include="RespondTo.cs" />
-    <Compile Include="RespondToExtensions.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="RestfulRoutingRazorViewEngine.cs" />
     <Compile Include="RestfulRoutingWebFormViewEngine.cs" />
