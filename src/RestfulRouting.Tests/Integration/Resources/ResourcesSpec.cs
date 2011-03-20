@@ -205,7 +205,7 @@ namespace RestfulRouting.Tests.Integration
                                                  {
                                                      foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "sessions"))
                                                      {
-                                                         route.Url.ShouldStartWith("blogs/{id}/session");
+                                                         route.Url.ShouldStartWith("blogs/{blogId}/session");
                                                      }
                                                  };
     }
