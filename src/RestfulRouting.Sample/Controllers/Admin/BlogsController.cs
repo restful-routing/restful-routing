@@ -4,53 +4,53 @@ using RestfulRouting.Sample.Models;
 
 namespace RestfulRouting.Sample.Controllers.Admin
 {
-	public class BlogsController : Controller
-	{
-		public ActionResult Index()
-		{
-			return View(SampleData.Blogs());
-		}
+    public class BlogsController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View(SampleData.Blogs());
+        }
 
-		public ActionResult New()
-		{
-			return View(new Blog());
-		}
+        public ActionResult New()
+        {
+            return View(new Blog());
+        }
 
-		public ActionResult Create()
-		{
+        public ActionResult Create()
+        {
 
-			TempData["notice"] = "Created";
+            TempData["notice"] = "Created";
 
-			return RedirectToAction("Index");
-		}
+            return RedirectToAction("Index");
+        }
 
-		public ActionResult Edit(int id)
-		{
-			return View(SampleData.Blog(id));
-		}
+        public ActionResult Edit(int id)
+        {
+            return View(SampleData.Blog(id));
+        }
 
-		public ActionResult Update(int id, Blog blog)
-		{
-			TempData["notice"] = "Updated " + id;
+        public ActionResult Update(int id, Blog blog)
+        {
+            TempData["notice"] = "Updated " + id;
 
-			return RedirectToAction("Index");
-		}
+            return RedirectToAction("Index");
+        }
 
-		public ActionResult Delete(int id)
-		{
-			return View(SampleData.Blog(id));
-		}
+        public ActionResult Delete(int id)
+        {
+            return View(SampleData.Blog(id));
+        }
 
-		public ActionResult Destroy(int id)
-		{
-			TempData["notice"] = "Deleted " + id;
+        public ActionResult Destroy(int id)
+        {
+            TempData["notice"] = "Deleted " + id;
 
-			return RedirectToAction("Index");
-		}
+            return RedirectToAction("Index");
+        }
 
-		public ActionResult Show(int id)
-		{
-			return View(SampleData.Blog(id));
-		}
-	}
+        public ActionResult Show(int id)
+        {
+            return View(SampleData.Blog(id));
+        }
+    }
 }

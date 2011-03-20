@@ -40,22 +40,22 @@ namespace RestfulRouting.Tests.Integration.Behaviours
         //It should_generate_destroy = () => OutBoundUrl.Of<Contexts.Admin.BlogsController>(x => x.Destroy(1)).ShouldMapToUrl("/admin/blogs/1");
     }
 
-	[Behaviors]
-	public class AdminPostsResources
-	{
-		It should_map_get_index = () => "~/admin/posts".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index(null));
+    [Behaviors]
+    public class AdminPostsResources
+    {
+        It should_map_get_index = () => "~/admin/posts".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index(null));
 
-		It should_map_get_show = () => "~/admin/posts/1".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(null, 1));
+        It should_map_get_show = () => "~/admin/posts/1".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(null, 1));
 
-		It should_map_get_new = () => "~/admin/posts/new".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New(null));
+        It should_map_get_new = () => "~/admin/posts/new".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New(null));
 
-		It should_map_post_create = () => "~/admin/posts".WithMethod(HttpVerbs.Post).ShouldMapTo<PostsController>(x => x.Create(null));
+        It should_map_post_create = () => "~/admin/posts".WithMethod(HttpVerbs.Post).ShouldMapTo<PostsController>(x => x.Create(null));
 
-		It should_map_get_edit = () => "~/admin/posts/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(null, 1));
+        It should_map_get_edit = () => "~/admin/posts/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(null, 1));
 
-		It should_map_put_update = () => "~/admin/posts/1".WithMethod(HttpVerbs.Put).ShouldMapTo<PostsController>(x => x.Update(null, 1));
+        It should_map_put_update = () => "~/admin/posts/1".WithMethod(HttpVerbs.Put).ShouldMapTo<PostsController>(x => x.Update(null, 1));
 
-		It should_map_delete_destroy = () => "~/admin/posts/1".WithMethod(HttpVerbs.Delete).ShouldMapTo<PostsController>(x => x.Destroy(null, 1));
+        It should_map_delete_destroy = () => "~/admin/posts/1".WithMethod(HttpVerbs.Delete).ShouldMapTo<PostsController>(x => x.Destroy(null, 1));
 
-	}
+    }
 }

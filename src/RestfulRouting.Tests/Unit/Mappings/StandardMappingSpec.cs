@@ -21,25 +21,25 @@ namespace RestfulRouting.Tests.Unit.Mappings
 
         It should_set_the_constraint = () => mapping.Route.Constraints["slug"].ShouldEqual(@"\w+");
 
-		It should_be_get_only = () =>
-		                        	{
-		                        		mapping.Route.Constraints["httpMethod"].ShouldBeOfType<HttpMethodConstraint>();
-		                        		var constraint = (HttpMethodConstraint) mapping.Route.Constraints["httpMethod"];
-										constraint.AllowedMethods.ShouldContain("GET");
-		                        	};
+        It should_be_get_only = () =>
+                                    {
+                                        mapping.Route.Constraints["httpMethod"].ShouldBeOfType<HttpMethodConstraint>();
+                                        var constraint = (HttpMethodConstraint) mapping.Route.Constraints["httpMethod"];
+                                        constraint.AllowedMethods.ShouldContain("GET");
+                                    };
 
         It should_default_to_minus_1_id = () => mapping.Route.Defaults["id"].ShouldEqual(-1);
     }
 
-	[Subject(typeof(StandardMapping))]
-	public class Allow : base_context
-	{
-		static StandardMapping mapping;
+    [Subject(typeof(StandardMapping))]
+    public class Allow : base_context
+    {
+        static StandardMapping mapping;
 
-		Establish context = () => mapping = new StandardMapping("", new MvcRouteHandler());
+        Establish context = () => mapping = new StandardMapping("", new MvcRouteHandler());
 
-		Because of = () => mapping.Map("redirects/{id}").To<BlogsController>(x => x.Show(1)).Allow(HttpVerbs.Get, HttpVerbs.Post);
+        Because of = () => mapping.Map("redirects/{id}").To<BlogsController>(x => x.Show(1)).Allow(HttpVerbs.Get, HttpVerbs.Post);
 
-		It should_allow_get_and_post_only = () => ((HttpMethodConstraint)mapping.Route.Constraints["httpMethod"]).AllowedMethods.ShouldContainOnly("GET", "POST");
-	}
+        It should_allow_get_and_post_only = () => ((HttpMethodConstraint)mapping.Route.Constraints["httpMethod"]).AllowedMethods.ShouldContainOnly("GET", "POST");
+    }
 }

@@ -22,7 +22,7 @@ namespace RestfulRouting.Tests.Integration.Behaviours
 
         It should_map_delete_destroy = () => "~/blogs/1".WithMethod(HttpVerbs.Delete).ShouldMapTo<BlogsController>(x => x.Destroy(1));
 
-		
+        
         It should_generate_index = () => OutBoundUrl.Of<BlogsController>(x => x.Index()).ShouldMapToUrl("/blogs");
 
         It should_generate_show = () => OutBoundUrl.Of<BlogsController>(x => x.Show(1)).ShouldMapToUrl("/blogs/1");

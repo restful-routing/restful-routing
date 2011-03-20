@@ -15,11 +15,11 @@ namespace RestfulRouting
             switch (routeDirection)
             {
                 case RouteDirection.IncomingRequest:
-            		foreach (var method in AllowedMethods)
-            		{
-            			if (String.Equals(method, httpContext.Request.HttpMethod, StringComparison.OrdinalIgnoreCase))
-            				return true;
-						
+                    foreach (var method in AllowedMethods)
+                    {
+                        if (String.Equals(method, httpContext.Request.HttpMethod, StringComparison.OrdinalIgnoreCase))
+                            return true;
+                        
                         if (httpContext.Request.Form == null)
                             continue;
                         
@@ -29,8 +29,8 @@ namespace RestfulRouting
                             return true;
                         }
 
-            		}
-            		break;
+                    }
+                    break;
             }
 
             return base.Match(httpContext, route, parameterName, values, routeDirection);   

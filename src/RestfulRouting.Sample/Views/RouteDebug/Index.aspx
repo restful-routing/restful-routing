@@ -5,13 +5,13 @@
 <!DOCTYPE HTML>
 <html lang="en-GB">
 <head>
-	<meta charset="UTF-8">
-	<title>Restful Routing</title>
-	<style>
-	  * { margin: 0; padding: 0; }
-	  body {
-	    font: 16px Helvetica,Arial,sans-serif;
-	  }
+    <meta charset="UTF-8">
+    <title>Restful Routing</title>
+    <style>
+      * { margin: 0; padding: 0; }
+      body {
+        font: 16px Helvetica,Arial,sans-serif;
+      }
     #container {
       background: #fff;
       padding: 50px;
@@ -40,7 +40,7 @@
       border-bottom: #666;
       text-align: left;
     }
-	</style>
+    </style>
 </head>
 <body>
   <div id="container">
@@ -48,21 +48,21 @@
     <table>
       <thead>
         <tr>
-			<th>HttpMethods</th>
-			<th>Area</th>
-			<th>Path</th>
-			<th>Endpoint</th>
-			<th>Namespaces</th>
+            <th>HttpMethods</th>
+            <th>Area</th>
+            <th>Path</th>
+            <th>Endpoint</th>
+            <th>Namespaces</th>
         </tr>
       </thead>
       <tbody>
         <% foreach (var routeInfo in Model.RouteInfos) { %>
         <tr>
-		  <td><%= routeInfo.HttpMethod %></td>
-		  <td><%= routeInfo.Area %></td>
-		  <td><a href="<%= routeInfo.Path %>" target="_blank"><%= routeInfo.Path %></a></td>
-		  <td><%= routeInfo.Endpoint %></td>
-		  <td><%= routeInfo.Namespaces %></td>
+          <td><%= routeInfo.HttpMethod %></td>
+          <td><%= routeInfo.Area %></td>
+          <td><a href="<%= routeInfo.Path %>" target="_blank"><%= routeInfo.Path %></a></td>
+          <td><%= routeInfo.Endpoint %></td>
+          <td><%= routeInfo.Namespaces %></td>
         </tr>
         <% } %>
       </tbody>

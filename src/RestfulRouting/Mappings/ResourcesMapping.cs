@@ -8,7 +8,7 @@ namespace RestfulRouting.Mappings
     {
         private ResourcesMapper _resourcesMapper;
 
-    	private RouteNames names;
+        private RouteNames names;
 
         public ResourcesMapping(RouteNames routeNames, ResourcesMapper resourcesMapper)
         {
@@ -16,24 +16,24 @@ namespace RestfulRouting.Mappings
 
             ResourceName = ControllerName<TController>();
 
-        	resourcesMapper.SetResourceAs(ResourceName);
+            resourcesMapper.SetResourceAs(ResourceName);
 
             _resourcesMapper = resourcesMapper;
         }
 
-    	public override void AddRoutesTo(RouteCollection routeCollection)
+        public override void AddRoutesTo(RouteCollection routeCollection)
         {
-        	_resourcesMapper.SetResourceAs(MappedName ?? ResourceName);
+            _resourcesMapper.SetResourceAs(MappedName ?? ResourceName);
 
-    	    var routes = new List<Route>();
+            var routes = new List<Route>();
 
-			if (Collections != null && Collections.Any())
-			{
-				foreach (var member in Collections)
-				{
-					routes.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
-				}
-			}
+            if (Collections != null && Collections.Any())
+            {
+                foreach (var member in Collections)
+                {
+                    routes.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
+                }
+            }
 
             if (IncludesAction(names.IndexName))
                 routes.Add(_resourcesMapper.IndexRoute());
@@ -70,8 +70,8 @@ namespace RestfulRouting.Mappings
                 routeCollection.Add(route);
             }
 
-    	    var newConstraints = Context.Constraints;
-    	    
+            var newConstraints = Context.Constraints;
+            
             if (newConstraints.ContainsKey("id"))
             {
                 var idConstraint = newConstraints.FirstOrDefault(x => x.Key == "id");

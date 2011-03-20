@@ -16,7 +16,7 @@
             </div>
               
             <div id="logindisplay">
-				&nbsp;
+                &nbsp;
             </div> 
             
             <div id="menucontainer">
@@ -31,16 +31,16 @@
         </div>
 
         <div id="main">
-			
-			<% if (TempData["notice"] != null) { %>
-			<p class="notice">
-				<%= TempData["notice"] %>
-			</p>
-			<% } %>
+            
+            <% if (TempData["notice"] != null) { %>
+            <p class="notice">
+                <%= TempData["notice"] %>
+            </p>
+            <% } %>
         
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
-			<% Html.RenderPartial("Routes"); %>
+            <% Html.RenderPartial("Routes"); %>
 
             <div id="footer">
             </div>

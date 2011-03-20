@@ -36,16 +36,16 @@ namespace RestfulRouting.Mappings
             private set { _members = value; }
         }
 
-		private IDictionary<string, HttpVerbs[]> _collections = new Dictionary<string, HttpVerbs[]>();
-		public virtual IDictionary<string, HttpVerbs[]> Collections
-		{
-			get { return _collections; }
-			private set { _collections = value; }
-		}
+        private IDictionary<string, HttpVerbs[]> _collections = new Dictionary<string, HttpVerbs[]>();
+        public virtual IDictionary<string, HttpVerbs[]> Collections
+        {
+            get { return _collections; }
+            private set { _collections = value; }
+        }
 
-		public string ResourceName;
+        public string ResourceName;
 
-		public string MappedName;
+        public string MappedName;
 
         private IList<string> IncludedActions { get; set; }
 
@@ -53,7 +53,7 @@ namespace RestfulRouting.Mappings
         {
             var basePath = VirtualPathUtility.RemoveTrailingSlash(Context.PathPrefix);
 
-        	var nameToMap = MappedName ?? ResourceName;
+            var nameToMap = MappedName ?? ResourceName;
 
             if (!string.IsNullOrEmpty(basePath))
             {
@@ -109,15 +109,15 @@ namespace RestfulRouting.Mappings
             Mappings.Add(mapping);
         }
 
-    	protected void ConfigureRoute(Route route)
-    	{
-    		if (Context.Constraints != null && Context.Constraints.Count > 0)
-    		{
-    			foreach (var constraint in Context.Constraints)
-    			{
-    				route.Constraints.Add(constraint.Key, constraint.Value);
-    			}
-    		}
-    	}
+        protected void ConfigureRoute(Route route)
+        {
+            if (Context.Constraints != null && Context.Constraints.Count > 0)
+            {
+                foreach (var constraint in Context.Constraints)
+                {
+                    route.Constraints.Add(constraint.Key, constraint.Value);
+                }
+            }
+        }
     }
 }

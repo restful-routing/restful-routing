@@ -12,7 +12,7 @@ namespace RestfulRouting.Sample
             Area<BlogsController>("", () =>
             {
                 Resources<BlogsController>(() => {
-					Member(x => x.Get("test"));
+                    Member(x => x.Get("test"));
                     Resources<PostsController>();
                 });                
             });

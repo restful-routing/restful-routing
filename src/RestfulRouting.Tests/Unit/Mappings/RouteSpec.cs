@@ -5,24 +5,24 @@ using RestfulRouting.Mappings;
 
 namespace RestfulRouting.Tests.Unit.Mappings
 {
-	[Subject(typeof(RouteMapping))]
-	public class when_mapping_custom_route_mapping
-	{
-		static RouteMapping mapping;
+    [Subject(typeof(RouteMapping))]
+    public class when_mapping_custom_route_mapping
+    {
+        static RouteMapping mapping;
 
-		static RouteCollection collection;
+        static RouteCollection collection;
 
-		static Route route;
+        static Route route;
 
-		private Establish context = () =>
-		                            	{
-											collection = new RouteCollection();
-		                            		route = new Route("test/{action}", new RouteValueDictionary(new { controller = "test" }), new MvcRouteHandler());
-		                            		mapping = new RouteMapping(route);
-		                            	};
+        private Establish context = () =>
+                                        {
+                                            collection = new RouteCollection();
+                                            route = new Route("test/{action}", new RouteValueDictionary(new { controller = "test" }), new MvcRouteHandler());
+                                            mapping = new RouteMapping(route);
+                                        };
 
-		Because of = () => mapping.AddRoutesTo(collection);
+        Because of = () => mapping.AddRoutesTo(collection);
 
-		It should_add_the_given_route_to_the_collection = () => mapping.Route.ShouldEqual(route);
-	}
+        It should_add_the_given_route_to_the_collection = () => mapping.Route.ShouldEqual(route);
+    }
 }

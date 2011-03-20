@@ -7,19 +7,19 @@ namespace RestfulRouting.Mappings
     {
         private string _namespace;
         private string _area;
-    	private string _pathPrefix;
+        private string _pathPrefix;
 
-    	public AreaMapping(string area) : this(area, area)
+        public AreaMapping(string area) : this(area, area)
         {
             
         }
 
-		public AreaMapping(string areaName, string pathPrefix)
-		{
-			_pathPrefix = pathPrefix;
-			_area = areaName;
-			_namespace = typeof(TController).Namespace;
-		}
+        public AreaMapping(string areaName, string pathPrefix)
+        {
+            _pathPrefix = pathPrefix;
+            _area = areaName;
+            _namespace = typeof(TController).Namespace;
+        }
 
         public override void AddRoutesTo(RouteCollection routeCollection)
         {

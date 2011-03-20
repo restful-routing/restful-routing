@@ -4,56 +4,56 @@ using System.Web.Routing;
 
 namespace RestfulRouting.Mappings
 {
-	public class ResourceMapping<TController> : Mapping
-	{
-		private RouteNames _names;
+    public class ResourceMapping<TController> : Mapping
+    {
+        private RouteNames _names;
 
-		private ResourceMapper _resourceMapper;
+        private ResourceMapper _resourceMapper;
 
-		public ResourceMapping(RouteNames names, ResourceMapper resourceMapper)
-		{
-			_names = names;
+        public ResourceMapping(RouteNames names, ResourceMapper resourceMapper)
+        {
+            _names = names;
 
-			ResourceName = ControllerName<TController>();
+            ResourceName = ControllerName<TController>();
 
-			MappedName = Inflector.Singularize(ResourceName);
+            MappedName = Inflector.Singularize(ResourceName);
 
-			resourceMapper.ResourceName = ResourceName;
+            resourceMapper.ResourceName = ResourceName;
 
-			_resourceMapper = resourceMapper;
-		}
+            _resourceMapper = resourceMapper;
+        }
 
-		public override void AddRoutesTo(RouteCollection routeCollection)
-		{
-			_resourceMapper.SetResourceAs(MappedName ?? ResourceName);
+        public override void AddRoutesTo(RouteCollection routeCollection)
+        {
+            _resourceMapper.SetResourceAs(MappedName ?? ResourceName);
 
             var routes = new List<Route>();
 
-			if (IncludesAction(_names.ShowName))
+            if (IncludesAction(_names.ShowName))
                 routes.Add(_resourceMapper.ShowRoute());
 
-			if (IncludesAction(_names.UpdateName))
+            if (IncludesAction(_names.UpdateName))
                 routes.Add(_resourceMapper.UpdateRoute());
 
-			if (IncludesAction(_names.NewName))
+            if (IncludesAction(_names.NewName))
                 routes.Add(_resourceMapper.NewRoute());
 
-			if (IncludesAction(_names.EditName))
+            if (IncludesAction(_names.EditName))
                 routes.Add(_resourceMapper.EditRoute());
 
-			if (IncludesAction(_names.DestroyName))
+            if (IncludesAction(_names.DestroyName))
                 routes.Add(_resourceMapper.DestroyRoute());
 
-			if (IncludesAction(_names.CreateName))
+            if (IncludesAction(_names.CreateName))
                 routes.Add(_resourceMapper.CreateRoute());
 
-			if (Members != null && Members.Any())
-			{
-				foreach (var member in Members)
-				{
-					routes.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
-				}
-			}
+            if (Members != null && Members.Any())
+            {
+                foreach (var member in Members)
+                {
+                    routes.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
+                }
+            }
 
             foreach (var route in routes)
             {
@@ -61,10 +61,10 @@ namespace RestfulRouting.Mappings
                 routeCollection.Add(route);
             }
 
-			foreach (var mapping in Mappings)
-			{
-				mapping.AddRoutesTo(routeCollection);
-			}
-		}
-	}
+            foreach (var mapping in Mappings)
+            {
+                mapping.AddRoutesTo(routeCollection);
+            }
+        }
+    }
 }

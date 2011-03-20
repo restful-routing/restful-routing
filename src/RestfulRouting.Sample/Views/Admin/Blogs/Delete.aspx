@@ -4,16 +4,16 @@
 
     <h2>Delete</h2>
 
-	<p>
-		Are you sure?
-	</p>
+    <p>
+        Are you sure?
+    </p>
 
-	<form action="<%= Url.Action("Destroy", new { id = Model.Id }) %>" method="post">
-		<%= Html.DeleteOverrideTag() %>
-	
-		<div class="group">
-			<input type="submit" value="Delete" />
-		</div>
-	</form>
-	
+    <form action="<%= Url.Action("Destroy", new { id = Model.Id }) %>" method="post">
+        <%= Html.DeleteOverrideTag() %>
+    
+        <div class="group">
+            <input type="submit" value="Delete" />
+        </div>
+    </form>
+    
 </asp:Content>

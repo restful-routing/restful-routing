@@ -4,62 +4,62 @@ using Machine.Specifications;
 
 namespace RestfulRouting.Tests.Unit
 {
-	public class additional_action_context : base_context
-	{
-		protected static AdditionalAction AdditionalAction;
-		protected static Dictionary<string, HttpVerbs[]> _actionsAndMethods;
+    public class additional_action_context : base_context
+    {
+        protected static AdditionalAction AdditionalAction;
+        protected static Dictionary<string, HttpVerbs[]> _actionsAndMethods;
 
-		Establish context = () =>
-		                    	{
-		                    		_actionsAndMethods = new Dictionary<string, HttpVerbs[]>();
-									AdditionalAction = new AdditionalAction(_actionsAndMethods);
-		                    	};
-	}
+        Establish context = () =>
+                                {
+                                    _actionsAndMethods = new Dictionary<string, HttpVerbs[]>();
+                                    AdditionalAction = new AdditionalAction(_actionsAndMethods);
+                                };
+    }
 
-	public class collection_get : additional_action_context
-	{
-		Because of = () => AdditionalAction.Get("actionname");
+    public class collection_get : additional_action_context
+    {
+        Because of = () => AdditionalAction.Get("actionname");
 
-		It should_map_get_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Get });
-	}
+        It should_map_get_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Get });
+    }
 
-	public class collection_post : additional_action_context
-	{
-		Because of = () => AdditionalAction.Post("actionname");
+    public class collection_post : additional_action_context
+    {
+        Because of = () => AdditionalAction.Post("actionname");
 
-		It should_map_post_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Post });
-	}
+        It should_map_post_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Post });
+    }
 
-	public class collection_put : additional_action_context
-	{
-		Because of = () => AdditionalAction.Put("actionname");
+    public class collection_put : additional_action_context
+    {
+        Because of = () => AdditionalAction.Put("actionname");
 
-		It should_map_post_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Put });
-	}
+        It should_map_post_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Put });
+    }
 
-	public class collection_delete : additional_action_context
-	{
-		Because of = () => AdditionalAction.Delete("actionname");
+    public class collection_delete : additional_action_context
+    {
+        Because of = () => AdditionalAction.Delete("actionname");
 
-		It should_map_delete_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Delete });
-	}
+        It should_map_delete_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Delete });
+    }
 
-	public class collection_head : additional_action_context
-	{
-		Because of = () => AdditionalAction.Head("actionname");
+    public class collection_head : additional_action_context
+    {
+        Because of = () => AdditionalAction.Head("actionname");
 
-		It should_map_delete_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Head });
-	}
+        It should_map_delete_actionname = () => _actionsAndMethods["actionname"].ShouldEqual(new[] { HttpVerbs.Head });
+    }
 
-	public class collection_multiple : additional_action_context
-	{
-		Because of = () =>
-		{
-			AdditionalAction.Get("actionname");
-			AdditionalAction.Post("actionname");
-		};
+    public class collection_multiple : additional_action_context
+    {
+        Because of = () =>
+        {
+            AdditionalAction.Get("actionname");
+            AdditionalAction.Post("actionname");
+        };
 
-		It should_map_get_and_post = () => _actionsAndMethods["actionname"].ShouldContain(HttpVerbs.Get, HttpVerbs.Post);
-	}
+        It should_map_get_and_post = () => _actionsAndMethods["actionname"].ShouldContain(HttpVerbs.Get, HttpVerbs.Post);
+    }
 
 }

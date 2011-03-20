@@ -2,7 +2,7 @@
 
 namespace RestfulRouting.Sample.Controllers
 {
-	public class CommentsController : Controller
-	{
-	}
+    public class CommentsController : Controller
+    {
+    }
 }

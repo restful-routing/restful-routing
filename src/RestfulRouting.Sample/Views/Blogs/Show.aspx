@@ -4,11 +4,11 @@
 
     <h2>Show</h2>
 
-	<%= Html.DisplayForModel() %>
-	
-	<p>
-		<%= Html.ActionLink("edit", "edit", new { id = Model.Id }) %>
-		<%= Html.ActionLink("delete", "delete", new { id = Model.Id }) %>
-	</p>
-	
+    <%= Html.DisplayForModel() %>
+    
+    <p>
+        <%= Html.ActionLink("edit", "edit", new { id = Model.Id }) %>
+        <%= Html.ActionLink("delete", "delete", new { id = Model.Id }) %>
+    </p>
+    
 </asp:Content>
