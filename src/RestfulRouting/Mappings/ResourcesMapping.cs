@@ -16,6 +16,8 @@ namespace RestfulRouting.Mappings
 
             ResourceName = ControllerName<TController>();
 
+            MappedName = Inflector.Pluralize(ResourceName);
+
             resourcesMapper.SetResourceAs(ResourceName);
 
             _resourcesMapper = resourcesMapper;
@@ -71,7 +73,7 @@ namespace RestfulRouting.Mappings
             }
 
             var newConstraints = Context.Constraints;
-            
+
             if (newConstraints.ContainsKey("id"))
             {
                 var idConstraint = newConstraints.FirstOrDefault(x => x.Key == "id");

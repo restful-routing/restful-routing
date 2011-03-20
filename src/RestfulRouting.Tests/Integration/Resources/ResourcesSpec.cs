@@ -48,12 +48,12 @@ namespace RestfulRouting.Tests.Integration
             public BlogArea()
             {
                 Resources<BlogsController>(() =>
-                                               {
-                                                   Resources<PostsController>(() =>
-                                                                                  {
-                                                                                      Resources<CommentsController>();
-                                                                                  });
-                                               });
+                {
+                    Resources<PostsController>(() =>
+                    {
+                        Resources<CommentsController>();
+                    });
+                });
             }
         }
 
@@ -91,12 +91,12 @@ namespace RestfulRouting.Tests.Integration
             public BlogArea()
             {
                 Resources<BlogsController>(() =>
-                                               {
-                                                   Resources<PostsController>(() =>
-                                                                                  {
-                                                                                      Resources<CommentsController>(() => Only("new", "create"));
-                                                                                  });
-                                               });
+                {
+                    Resources<PostsController>(() =>
+                    {
+                        Resources<CommentsController>(() => Only("new", "create"));
+                    });
+                });
                 Resources<ImagesController>();
             }
         }
@@ -127,7 +127,7 @@ namespace RestfulRouting.Tests.Integration
                     Resources<PostsController>();
                     Resources<CommentsController>();
                 });
-                
+
             }
         }
 
@@ -147,15 +147,15 @@ namespace RestfulRouting.Tests.Integration
             public BlogArea()
             {
                 Resources<BlogAdminController>(() =>
-                                               {
-                                                   Resources<BlogsController>();
-                                               });
+                {
+                    Resources<BlogsController>();
+                });
             }
         }
 
         Because of = () => new BlogArea().RegisterRoutes(routes);
 
-        It should_map_blog_admin_index = () => "~/blogadmin/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
+        It should_map_blog_admin_index = () => "~/blogadmins/1/blogs".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Index());
     }
 
     public class when_mapping_nested_resources : base_context
@@ -176,14 +176,14 @@ namespace RestfulRouting.Tests.Integration
         Because of = () => new BlogArea().RegisterRoutes(routes);
 
         It should_inherit_constraints = () =>
-                                            {
-                                                foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "posts"))
-                                                {
-                                                    var constraint = route.Constraints.First(x => x.Key == "blogId");
-                                                    constraint.Key.ShouldBe("blogId");
-                                                    constraint.Value.ShouldBe(@"\d+");
-                                                }
-                                            };
+        {
+            foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "posts"))
+            {
+                var constraint = route.Constraints.First(x => x.Key == "blogId");
+                constraint.Key.ShouldBe("blogId");
+                constraint.Value.ShouldBe(@"\d+");
+            }
+        };
     }
 
     public class when_mapping_nested_singular_resource : base_context
@@ -194,7 +194,6 @@ namespace RestfulRouting.Tests.Integration
             {
                 Resources<BlogsController>(() =>
                 {
-                    Resource<SessionsController>();
                 });
             }
         }
@@ -202,11 +201,11 @@ namespace RestfulRouting.Tests.Integration
         Because of = () => new BlogArea().RegisterRoutes(routes);
 
         It should_set_the_correct_base_path = () =>
-                                                 {
-                                                     foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "sessions"))
-                                                     {
-                                                         route.Url.ShouldStartWith("blogs/{blogId}/session");
-                                                     }
-                                                 };
+        {
+            foreach (var route in routes.Select(x => (Route)x).Where(x => (string)x.Defaults["controller"] == "sessions"))
+            {
+                route.Url.ShouldStartWith("blogs/{blogId}/session");
+            }
+        };
     }
 }
