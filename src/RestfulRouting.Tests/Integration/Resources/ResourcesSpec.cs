@@ -23,6 +23,32 @@ namespace RestfulRouting.Tests.Integration
         Behaves_like<BlogsResources> a_blogs_resource;
     }
 
+    public class when_mapping_a_blogs_resources_with_format_routes : base_context
+    {
+        public class BlogArea : RouteSet
+        {
+            public BlogArea()
+            {
+                WithFormatRoutes();
+                Resources<BlogsController>(() =>
+                                               {
+                                                   Member(x => x.Post("up"));
+                                                   Collection(x => x.Get("latest"));
+                                               });
+            }
+        }
+
+        Because of = () => new BlogArea().RegisterRoutes(routes);
+
+        Behaves_like<BlogsResources> a_blogs_resoure;
+
+        Behaves_like<BlogsResourcesWithFormatRoutes> a_blogs_resource_with_format_routes;
+
+        It maps_members_with_format = () => "~/blogs/1/up.json".WithMethod(HttpVerbs.Post).ShouldMapTo<BlogsController>(x => x.Up(1)).WithFormat("json");
+
+        It maps_collections_with_format = () => "~/blogs/latest.json".WithMethod(HttpVerbs.Get).ShouldMapTo<BlogsController>(x => x.Latest()).WithFormat("json");
+    }
+
     public class when_mapping_a_blogs_resource_with_a_nested_posts_resource : base_context
     {
         public class BlogArea : RouteSet
@@ -38,6 +64,28 @@ namespace RestfulRouting.Tests.Integration
         Behaves_like<BlogsResources> a_blogs_resource;
 
         Behaves_like<PostsNestedUnderBlogs> a_nested_posts_resource;
+    }
+
+    public class when_mapping_a_blogs_resource_with_a_nested_post_resource_with_format : base_context
+    {
+        public class BlogArea : RouteSet
+        {
+            public BlogArea()
+            {
+                WithFormatRoutes();
+                Resources<BlogsController>(Resources<PostsController>);
+            }
+        }
+
+        Because of = () => new BlogArea().RegisterRoutes(routes);
+
+        Behaves_like<BlogsResources> a_blogs_resource;
+
+        Behaves_like<PostsNestedUnderBlogs> a_nested_posts_resource;
+
+        Behaves_like<BlogsResourcesWithFormatRoutes> a_blogs_resource_with_format_routes;
+
+        Behaves_like<PostsNestedUnderBlogsFormat> a_nested_posts_resource_with_format_routes;
     }
 
     public class when_mapping_a_comments_resource_under_posts_and_blogs : base_context

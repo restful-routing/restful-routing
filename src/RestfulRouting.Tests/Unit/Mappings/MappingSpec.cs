@@ -27,6 +27,8 @@ namespace RestfulRouting.Tests.Unit.Mappings
         It should_set_the_mapped_name = () => mapping.MappedName.ShouldEqual("test");
 
         It should_set_the_base_path = () => mapping.BasePath().ShouldEqual("test");
+
+        It defaults_to_not_generate_routes = () => mapping.Context.GenerateFormatRoutes.ShouldEqual(false);
     }
 
     public class when_configuring_only : when_configuring_a_mapping

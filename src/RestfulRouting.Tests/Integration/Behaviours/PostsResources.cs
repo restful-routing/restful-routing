@@ -37,4 +37,22 @@ namespace RestfulRouting.Tests.Integration.Behaviours
 
         It should_generate_destroy = () => OutBoundUrl.Of<PostsController>(x => x.Destroy(null, 1)).ShouldMapToUrl("/posts/1");
     }
+
+    [Behaviors]
+    public class FormatPostsResources
+    {
+        It should_map_get_index = () => "~/posts.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index(null)).WithFormat("json");
+
+        It should_map_get_show = () => "~/posts/1.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(null, 1)).WithFormat("json");
+
+        It should_map_get_new = () => "~/posts/new.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New(null)).WithFormat("json");
+
+        It should_map_post_create = () => "~/posts.json".WithMethod(HttpVerbs.Post).ShouldMapTo<PostsController>(x => x.Create(null)).WithFormat("json");
+
+        It should_map_get_edit = () => "~/posts/1/edit.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(null, 1)).WithFormat("json");
+
+        It should_map_put_update = () => "~/posts/1.json".WithMethod(HttpVerbs.Put).ShouldMapTo<PostsController>(x => x.Update(null, 1)).WithFormat("json");
+
+        It should_map_delete_destroy = () => "~/posts/1.json".WithMethod(HttpVerbs.Delete).ShouldMapTo<PostsController>(x => x.Destroy(null, 1)).WithFormat("json");
+    }
 }

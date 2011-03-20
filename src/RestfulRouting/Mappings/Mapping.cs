@@ -119,5 +119,25 @@ namespace RestfulRouting.Mappings
                 }
             }
         }
+
+        public void WithFormatRoutes()
+        {
+            Context.GenerateFormatRoutes = true;
+        }
+
+        public List<Route> AddFormatRoutes(List<Route> routes)
+        {
+            if (Context.GenerateFormatRoutes)
+            {
+                var formatRoutes = new List<Route>();
+                foreach (var route in routes)
+                {
+                    formatRoutes.Add(route.WithFormatExtension());
+                }
+                formatRoutes.AddRange(routes);
+                return formatRoutes;
+            }
+            return routes;
+        }
     }
 }

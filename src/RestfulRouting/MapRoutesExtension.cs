@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Web.Routing;
 
 namespace RestfulRouting
@@ -10,8 +9,8 @@ namespace RestfulRouting
         {
             new TRoutes().RegisterRoutes(routes);
         }
-
-        public static IEnumerable<Route> ExplicitAndImplicit(this Route implicitRoute)
+        
+        public static Route WithFormatExtension(this Route implicitRoute)
         {
             var explicitRoute = new Route(implicitRoute.Url + ".{format}", implicitRoute.RouteHandler)
             {
@@ -22,7 +21,7 @@ namespace RestfulRouting
 
             explicitRoute.Constraints.Add("format", @"[A-Za-z0-9]+");
 
-            return new[] { explicitRoute, implicitRoute };
+            return explicitRoute;
         }
     }
 }

@@ -26,6 +26,10 @@ namespace RestfulRouting.Mappings
             var routes = new RouteCollection();
             foreach (var mapping in Mappings)
             {
+                if (Context.GenerateFormatRoutes)
+                {
+                    mapping.WithFormatRoutes();
+                }
                 mapping.AddRoutesTo(routes);
             }
 

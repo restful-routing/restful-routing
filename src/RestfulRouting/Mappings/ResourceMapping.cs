@@ -31,30 +31,32 @@ namespace RestfulRouting.Mappings
             var routes = new List<Route>();
 
             if (IncludesAction(_names.ShowName))
-                routes.AddRange(_resourceMapper.ShowRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.ShowRoute());
 
             if (IncludesAction(_names.UpdateName))
-                routes.AddRange(_resourceMapper.UpdateRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.UpdateRoute());
 
             if (IncludesAction(_names.NewName))
-                routes.AddRange(_resourceMapper.NewRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.NewRoute());
 
             if (IncludesAction(_names.EditName))
-                routes.AddRange(_resourceMapper.EditRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.EditRoute());
 
             if (IncludesAction(_names.DestroyName))
-                routes.AddRange(_resourceMapper.DestroyRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.DestroyRoute());
 
             if (IncludesAction(_names.CreateName))
-                routes.AddRange(_resourceMapper.CreateRoute().ExplicitAndImplicit());
+                routes.Add(_resourceMapper.CreateRoute());
 
             if (Members != null && Members.Any())
             {
                 foreach (var member in Members)
                 {
-                    routes.AddRange(_resourceMapper.MemberRoute(member.Key, member.Value).ExplicitAndImplicit());
+                    routes.Add(_resourceMapper.MemberRoute(member.Key, member.Value));
                 }
             }
+
+            routes = AddFormatRoutes(routes);
 
             foreach (var route in routes)
             {

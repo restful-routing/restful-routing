@@ -33,7 +33,7 @@ namespace RestfulRouting.Tests.Integration
         {
             public SessionRoutes()
             {
-                Resource<SessionsController>();
+                Resource<SessionsController>(() => WithFormatRoutes());
             }
         }
 
@@ -48,7 +48,11 @@ namespace RestfulRouting.Tests.Integration
         {
             public SessionRoutes()
             {
-                Resource<SessionsController>(() => Resource<AvatarsController>());
+                WithFormatRoutes();
+                Resource<SessionsController>(() =>
+                                                 {
+                                                     Resource<AvatarsController>();
+                                                 });
             }
         }
 
@@ -65,6 +69,7 @@ namespace RestfulRouting.Tests.Integration
         {
             public SessionRoutes()
             {
+                WithFormatRoutes();
                 Resource<SessionsController>(() =>
                 {
                     Resource<AvatarsController>();
@@ -88,6 +93,7 @@ namespace RestfulRouting.Tests.Integration
         {
             public Routes()
             {
+                WithFormatRoutes();
                 Resource<SessionsController>(() =>
                 {
                     Resources<ImagesController>();

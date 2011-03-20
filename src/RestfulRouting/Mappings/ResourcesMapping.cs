@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -34,40 +35,40 @@ namespace RestfulRouting.Mappings
             {
                 foreach (var member in Collections)
                 {
-                    routes.AddRange(_resourcesMapper.CollectionRoute(member.Key, member.Value).ExplicitAndImplicit());
+                    routes.Add(_resourcesMapper.CollectionRoute(member.Key, member.Value));
                 }
             }
 
             if (IncludesAction(names.IndexName))
-                routes.AddRange(_resourcesMapper.IndexRoute().ExplicitAndImplicit());
-
+                routes.Add(_resourcesMapper.IndexRoute());
 
             if (IncludesAction(names.CreateName))
-                routes.AddRange(_resourcesMapper.CreateRoute().ExplicitAndImplicit());
-                
-
+                routes.Add(_resourcesMapper.CreateRoute());
+            
             if (IncludesAction(names.NewName))
-                routes.AddRange(_resourcesMapper.NewRoute().ExplicitAndImplicit());
+                routes.Add(_resourcesMapper.NewRoute());
 
             if (IncludesAction(names.EditName))
-                routes.AddRange(_resourcesMapper.EditRoute().ExplicitAndImplicit());
+                routes.Add(_resourcesMapper.EditRoute());
 
             if (IncludesAction(names.ShowName))
-                routes.AddRange(_resourcesMapper.ShowRoute().ExplicitAndImplicit());
+                routes.Add(_resourcesMapper.ShowRoute());
 
             if (IncludesAction(names.UpdateName))
-                routes.AddRange(_resourcesMapper.UpdateRoute().ExplicitAndImplicit());
+                routes.Add(_resourcesMapper.UpdateRoute());
 
             if (IncludesAction(names.DestroyName))
-                routes.AddRange(_resourcesMapper.DestroyRoute().ExplicitAndImplicit());
+                routes.Add(_resourcesMapper.DestroyRoute());
 
             if (Members != null && Members.Any())
             {
                 foreach (var member in Members)
                 {
-                    routes.AddRange(_resourcesMapper.MemberRoute(member.Key, member.Value).ExplicitAndImplicit());
+                    routes.Add(_resourcesMapper.MemberRoute(member.Key, member.Value));
                 }
             }
+
+            routes = AddFormatRoutes(routes);
 
             foreach (var route in routes)
             {
@@ -94,5 +95,6 @@ namespace RestfulRouting.Mappings
             }
         }
 
+        
     }
 }

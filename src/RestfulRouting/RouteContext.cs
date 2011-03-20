@@ -14,5 +14,6 @@ namespace RestfulRouting
         public RouteValueDictionary Defaults { get; set; }
 
         public string PathPrefix;
+        public bool GenerateFormatRoutes { get; set; }
     }
 }

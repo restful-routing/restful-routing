@@ -15,6 +15,7 @@ namespace RestfulRouting
         private IList<Mapping> mappings = new List<Mapping>();
         private string _pathPrefix;
         private readonly IRouteHandler _routeHandler;
+        private bool _alwaysGenerateFormatRoutes;
 
         protected RouteSet(RouteNames names, IRouteHandler routeHandler)
         {
@@ -228,8 +229,41 @@ namespace RestfulRouting
         {
             foreach (var mapping in mappings)
             {
-                mapping.AddRoutesTo(routeCollection);
+                if (_alwaysGenerateFormatRoutes)
+                {
+                    var routesWithoutFormat = new RouteCollection();
+                    mapping.AddRoutesTo(routesWithoutFormat);
+                    var routesWithFormat = new List<RouteBase>();
+                    foreach (var routeBase in routesWithoutFormat)
+                    {
+                        var route = routeBase as Route;
+                        if (route != null)
+                        {
+                            routesWithFormat.Add(route.WithFormatExtension());
+                        }
+                    }
+                    foreach (var route in routesWithFormat)
+                    {
+                        routeCollection.Add(route);
+                    }
+                    foreach (var route in routesWithoutFormat)
+                    {
+                        routeCollection.Add(route);
+                    }
+                    
+                } else
+                {
+                    mapping.AddRoutesTo(routeCollection);
+                }
             }
+        }
+
+        public void WithFormatRoutes()
+        {
+            if (_currentMapping != null && _alwaysGenerateFormatRoutes == false)
+                _currentMapping.WithFormatRoutes();
+            else
+                _alwaysGenerateFormatRoutes = true;
         }
     }
 }
