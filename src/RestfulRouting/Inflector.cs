@@ -17,7 +17,7 @@ namespace RestfulRouting
         private static readonly List<Rule> _plurals = new List<Rule>();
         private static readonly List<Rule> _singulars = new List<Rule>();
         private static readonly List<string> _uncountables = new List<string>();
-        
+
         /// <summary>
         /// Class Constructor.
         /// </summary>
@@ -116,7 +116,7 @@ namespace RestfulRouting
                 return _regex.Replace(word, _replacement);
             }
         }
-        
+
         public static void AddIrregular(string singular, string plural)
         {
             AddPlural("(" + singular[0] + ")" + singular.Substring(1) + "$", "$1" + plural.Substring(1));
@@ -152,10 +152,10 @@ namespace RestfulRouting
                     }
                 }
             }
-            
+
             return result ?? word;
         }
-        
+
         /// <summary>
         /// Returns the plural form of the word in the string
         /// </summary>

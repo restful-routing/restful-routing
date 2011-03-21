@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{47C7FF9A-D323-47B6-BFCE-04335FFCAF72}</ProjectGuid>
+    <ProjectGuid>{C02C90C0-D6AA-4F40-88D2-15D1F7F2B03D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RestfulRouting</RootNamespace>
-    <AssemblyName>RestfulRouting</AssemblyName>
+    <RootNamespace>RestfulRouting.Spec</RootNamespace>
+    <AssemblyName>RestfulRouting.Spec</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\tools\mspec\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib.TestHelper">
+      <HintPath>..\..\tools\mvccontrib.testhelper\MvcContrib.TestHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\tools\rhinomocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -46,26 +55,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionalAction.cs" />
-    <Compile Include="HtmlHelperExtensions.cs" />
-    <Compile Include="Inflector.cs" />
-    <Compile Include="Mapper.cs" />
-    <Compile Include="Mappers\AreaMapper.cs" />
-    <Compile Include="Mappers\ConnectMapper.cs" />
-    <Compile Include="Mappers\ResourceMapper.cs" />
-    <Compile Include="Mappers\ResourcesMapper.cs" />
-    <Compile Include="Mappers\ResourcesMapperBase.cs" />
-    <Compile Include="Mappers\RootMapper.cs" />
-    <Compile Include="Mappers\RouteMapper.cs" />
-    <Compile Include="Mappers\StandardMapper.cs" />
-    <Compile Include="MapRoutesExtension.cs" />
-    <Compile Include="RestfulHttpMethodConstraint.cs" />
-    <Compile Include="ViewEngines\RestfulRoutingRazorViewEngine.cs" />
-    <Compile Include="ViewEngines\RestfulRoutingViewEngine.cs" />
-    <Compile Include="ViewEngines\RestfulRoutingWebFormViewEngine.cs" />
-    <Compile Include="RouteNames.cs" />
-    <Compile Include="RouteSet.cs" />
+    <Compile Include="AdditionalActionSpec.cs" />
+    <Compile Include="InflectorSpec.cs" />
+    <Compile Include="MapperSpec.cs" />
+    <Compile Include="Mappers\AreaMapperSpec.cs" />
+    <Compile Include="Mappers\ConnectMapperSpec.cs" />
+    <Compile Include="Mappers\ResourceMapperSpec.cs" />
+    <Compile Include="Mappers\ResourcesMapperBaseSpec.cs" />
+    <Compile Include="Mappers\ResourcesMapperSpec.cs" />
+    <Compile Include="Mappers\RootMapperSpec.cs" />
+    <Compile Include="Mappers\RouteMapperSpec.cs" />
+    <Compile Include="Mappers\StandardMapperSpec.cs" />
+    <Compile Include="RouteSetSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecHelper.cs" />
+    <Compile Include="TestObjects\AvatarsController.cs" />
+    <Compile Include="TestObjects\CommentsController.cs" />
+    <Compile Include="TestObjects\LikesController.cs" />
+    <Compile Include="TestObjects\PostsController.cs" />
+    <Compile Include="TestObjects\SessionsController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RestfulRouting\RestfulRouting.csproj">
+      <Project>{47C7FF9A-D323-47B6-BFCE-04335FFCAF72}</Project>
+      <Name>RestfulRouting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

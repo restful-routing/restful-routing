@@ -3,6 +3,6 @@ using System;
 namespace RestfulRouting
 {
     [Obsolete("please use the RestfulRoutingWebFormViewEngine or RestfulRoutingRazorViewEngine.")]
-	public class RestfulRoutingViewEngine : RestfulRoutingWebFormViewEngine
-	{}
+    public class RestfulRoutingViewEngine : RestfulRoutingWebFormViewEngine
+    { }
 }

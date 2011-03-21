@@ -1,37 +1,19 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace RestfulRouting.Mappings
+namespace RestfulRouting.Mappers
 {
-    public class StandardMapping : Mapping
+    public class StandardMapper : Mapper
     {
-        public Route Route;
-        private string _pathPrefix;
         private readonly IRouteHandler _routeHandler;
+        public Route Route;
 
-        public StandardMapping(string pathPrefix, IRouteHandler routeHandler)
+        public StandardMapper Map(string url)
         {
-            _pathPrefix = pathPrefix;
-            _routeHandler = routeHandler;
-        }
-
-        public override void AddRoutesTo(RouteCollection routeCollection)
-        {
-            ConfigureRoute(Route);
-
-            routeCollection.Add(Route);
-        }
-
-        public StandardMapping Map(string url)
-        {
-            var basePath = "";
-            if (!string.IsNullOrEmpty(_pathPrefix))
-                basePath = _pathPrefix + "/";
-
-            Route = new Route(basePath + url,
+            Route = new Route(url,
                 new RouteValueDictionary(),
                 new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
                 new RouteValueDictionary(),
@@ -47,7 +29,7 @@ namespace RestfulRouting.Mappings
             return actionName;
         }
 
-        public StandardMapping To<T>(Expression<Func<T, object>> func)
+        public StandardMapper To<T>(Expression<Func<T, object>> func)
         {
             Route.Defaults["controller"] = ControllerName<T>();
 
@@ -56,32 +38,39 @@ namespace RestfulRouting.Mappings
             return this;
         }
 
-        public StandardMapping Constrain(string name, object constraint)
+        public StandardMapper Constrain(string name, object constraint)
         {
             Route.Constraints[name] = constraint;
 
             return this;
         }
 
-        public StandardMapping Default(string name, object constraint)
+        public StandardMapper Default(string name, object constraint)
         {
             Route.Defaults[name] = constraint;
 
             return this;
         }
 
-        public StandardMapping GetOnly()
+        public StandardMapper GetOnly()
         {
             Route.Constraints["httpMethod"] = new HttpMethodConstraint("GET");
 
             return this;
         }
 
-        public StandardMapping Allow(params HttpVerbs[] methods)
+        public StandardMapper Allow(params HttpVerbs[] methods)
         {
             Route.Constraints["httpMethod"] = new HttpMethodConstraint(methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
 
             return this;
+        }
+
+        public override void RegisterRoutes(RouteCollection routeCollection)
+        {
+            Route.Url = Join(BasePath, Route.Url);
+            Route.RouteHandler = RouteHandler;
+            routeCollection.Add(Route);
         }
     }
 }
