@@ -242,6 +242,7 @@ namespace RestfulRouting.Tests.Integration
             {
                 Resources<BlogsController>(() =>
                 {
+                    Resource<SessionsController>();
                 });
             }
         }
