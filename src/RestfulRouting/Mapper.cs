@@ -13,6 +13,7 @@ namespace RestfulRouting
         protected List<Mapper> Mappers = new List<Mapper>();
         protected string BasePath;
         protected IRouteHandler RouteHandler = new MvcRouteHandler();
+        protected RouteValueDictionary Constraints = new RouteValueDictionary();
 
         public void Root<TController>(Expression<Func<TController, object>> action)
         {
@@ -104,13 +105,35 @@ namespace RestfulRouting
             {
                 mapper.SetBasePath(BasePath);
                 mapper.SetRouteHandler(RouteHandler);
+                mapper.InheritConstraints(Constraints);
                 mapper.RegisterRoutes(routeCollection);
+            }
+        }
+
+        private void InheritConstraints(RouteValueDictionary constraints)
+        {
+            foreach (var constraint in constraints)
+            {
+                if (!Constraints.ContainsKey(constraint.Key))
+                {
+                    Constraints[constraint.Key] = constraint.Value;
+                }
             }
         }
 
         public void SetRouteHandler(IRouteHandler routeHandler)
         {
             RouteHandler = routeHandler;
+        }
+
+        protected void ConfigureRoute(Route route)
+        {
+            if (route.Constraints == null)
+                route.Constraints = new RouteValueDictionary();
+            foreach (var constraint in Constraints)
+            {
+                route.Constraints[constraint.Key] = constraint.Value;
+            }
         }
     }
 }

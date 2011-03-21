@@ -73,6 +73,7 @@ namespace RestfulRouting.Mappers
 
             foreach (var route in routes)
             {
+                ConfigureRoute(route);
                 routeCollection.Add(route);
             }
 
@@ -80,6 +81,12 @@ namespace RestfulRouting.Mappers
             {
                 var singular = Inflector.Singularize(resourceName);
                 BasePath = Join(resourcePath, "{" + singular + "Id}");
+                var idConstraint = Constraints["id"];
+                if (idConstraint != null)
+                {
+                    Constraints.Remove("id");
+                    Constraints.Add(singular + "Id", idConstraint);
+                }
 
                 RegisterNested(routeCollection);
             }

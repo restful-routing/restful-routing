@@ -58,6 +58,7 @@ namespace RestfulRouting.Mappers
 
             foreach (var route in routes)
             {
+                ConfigureRoute(route);
                 routeCollection.Add(route);
             }
 

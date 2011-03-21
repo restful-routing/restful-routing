@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
@@ -225,5 +227,62 @@ namespace RestfulRouting.Spec.Mappers
         It sets_the_first_7_to_format = () => routes.Take(7).ShouldEachConformTo(x => ((Route)x).Url.EndsWith(".{format}"));
 
         It sets_the_last_7_to_normal = () => routes.Skip(7).Take(7).ShouldEachConformTo(x => !((Route)x).Url.EndsWith("test"));
+    }
+
+    public class mapping_nested_resources_with_constraints : base_context
+    {
+        Because of = () => new ResourcesMapper<PostsController>(posts =>
+                                                                    {
+                                                                        posts.Constrain("id", @"\d+");
+                                                                        posts.Resources<CommentsController>(comments =>
+                                                                                                                {
+                                                                                                                    comments.Resources<LikesController>(x => x.Member(m => m.Get("test")));
+                                                                                                                    comments.Resource<SessionsController>();
+                                                                                                                });
+                                                                    }).RegisterRoutes(routes);
+
+        static Func<string, List<Route>> RoutesForController = controller => routes.Select(x => (Route)x).Where(x => x.Defaults["controller"].ToString() == controller).ToList();
+
+        It adds_the_constraint = () =>
+                            {
+                                var postRoutes = routes.Select(x => (Route)x).Where(x => x.Defaults["controller"].ToString() == "posts").ToList();
+                                postRoutes.Count.ShouldBeGreaterThan(1);
+                                foreach (var route in postRoutes)
+                                {
+                                    route.Constraints["id"].ShouldEqual(@"\d+");
+                                }
+                            };
+
+        It constrains_the_id = () => "~/posts/1".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(1));
+
+        It adds_it_for_the_comments = () =>
+                                          {
+                                              var commentRoutes = RoutesForController("comments");
+                                              commentRoutes.Count.ShouldBeGreaterThan(1);
+                                              foreach (var route in commentRoutes)
+                                              {
+                                                  route.Constraints["postId"].ShouldEqual(@"\d+");
+                                              }
+                                          };
+
+        It adds_it_for_likes = () =>
+                                   {
+                                       var likesRoutes = RoutesForController("likes");
+                                       likesRoutes.Count.ShouldBeGreaterThan(1);
+                                       foreach (var route in likesRoutes)
+                                       {
+                                           route.Constraints["postId"].ShouldEqual(@"\d+");
+                                       }
+                                   };
+
+        It adds_it_for_sessions = () =>
+                                   {
+                                       var sessionRoutes = RoutesForController("sessions");
+                                       sessionRoutes.Count.ShouldBeGreaterThan(1);
+                                       foreach (var route in sessionRoutes)
+                                       {
+                                           route.Constraints["postId"].ShouldEqual(@"\d+");
+                                       }
+                                   };
     }
 }

@@ -98,5 +98,10 @@ namespace RestfulRouting.Mappers
 
             return explicitRoute;
         }
+
+        public void Constrain(string key, object value)
+        {
+            Constraints[key] = value;
+        }
     }
 }
