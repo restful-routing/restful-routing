@@ -4,25 +4,22 @@ namespace RestfulRouting.Sample
 {
     public class Routes : RouteSet
     {
-        public Routes()
+        public override void Map(Mapper map)
         {
-            Root<RootController>(x => x.Index());
+            map.Root<RootController>(x => x.Index());
+            map.Map("routedebug").To<RouteDebugController>(x => x.Index());
+            map.Area<BlogsController>("", area => area.Resources<BlogsController>(blogs =>
+                                                                                      {
+                                                                                          blogs.WithFormatRoutes();
+                                                                                          blogs.Member(x => x.Get("test"));
+                                                                                          blogs.Resources<PostsController>();
+                                                                                      }));
 
-            Map("routedebug").To<RouteDebugController>(x => x.Index());
-            Area<BlogsController>("", () =>
-            {
-                Resources<BlogsController>(() => {
-                    WithFormatRoutes();
-                    Member(x => x.Get("test"));
-                    Resources<PostsController>();
-                });                
-            });
-
-            Area<Controllers.Admin.BlogsController>("admin", () =>
-            {
-                Resources<Controllers.Admin.BlogsController>();
-                Resources<Controllers.Admin.PostsController>();
-            });
+            map.Area<Controllers.Admin.BlogsController>("admin", admin =>
+                                                                     {
+                                                                         admin.Resources<BlogsController>();
+                                                                         admin.Resources<PostsController>();
+                                                                     });
         }
     }
 }
