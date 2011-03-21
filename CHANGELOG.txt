@@ -1,0 +1,7 @@
+* Added PathNames method to change the name of predefined actions, i.e. PathNames(x => x.CreateName = "upload")
+
+* Added SetRouteHandler to specify the route handler for the current scope and below.
+
+* Refactored to use typed actions instead of untyped ones, i.e. more like rails 2 routes. This is a big change.
+	The routes are no longer specified in the constructor, their is an abstract Map method that gets called with
+	the Mapper.
