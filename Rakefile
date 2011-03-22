@@ -3,7 +3,7 @@ require 'albacore'
 
 PROJECT = 'RestfulRouting'
 
-task :default => [:clean, :compile, :test]
+task :default => [:clean, :compile, :spec]
 
 desc 'removes build files'
 task :clean do
@@ -37,9 +37,9 @@ msbuild :compile => [:clean, :assemblyinfo] do |msb|
 	end
 end
 
-desc 'runs tests'
-mspec :test do |mspec|
+desc 'runs specs'
+mspec :spec do |mspec|
 	mspec.command = 'tools\\mspec\\mspec-x86-clr4.exe'
-	mspec.assemblies "src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
-	mspec.html_output = "src\\#{PROJECT}.Tests\\Reports\\specs.html"
+	mspec.assemblies "src\\#{PROJECT}.Spec\\bin\\Release\\#{PROJECT}.Spec.dll"
+	mspec.html_output = "build\\specs.html"
 end
