@@ -44,10 +44,12 @@ mspec :test do |mspec|
 	mspec.html_output = "src\\#{PROJECT}.Tests\\Reports\\specs.html"
 end
 
+desc 'Create the nuget distribution package'
 task :package => :compile do
 	system "nuget pack RestfulRouting.nuspec -o build"
 end
 
+desc 'Release to nuget'
 task :release => :package do
 	nuspecs = Dir['build/*.nupkg']
 	raise "Could not find nupkg file" unless nuspecs.size == 1
