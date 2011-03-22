@@ -43,3 +43,14 @@ mspec :test do |mspec|
 	mspec.assemblies "src\\#{PROJECT}.Tests\\bin\\Release\\#{PROJECT}.Tests.dll"
 	mspec.html_output = "src\\#{PROJECT}.Tests\\Reports\\specs.html"
 end
+
+task :package => :compile do
+	FileUtils.mkdir_p "tmp/lib"
+	FileUtils.cp "build/RestfulRouting.dll", "tmp/lib/"
+	FileUtils.cp_r "content/", "tmp/"
+	
+	if system "nuget pack RestfulRouting.nuspec -b tmp -o build"
+		FileUtils.rm_rf "tmp"
+	end
+end
+
