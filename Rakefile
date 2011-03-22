@@ -45,12 +45,14 @@ mspec :test do |mspec|
 end
 
 task :package => :compile do
-	FileUtils.mkdir_p "tmp/lib"
-	FileUtils.cp "build/RestfulRouting.dll", "tmp/lib/"
-	FileUtils.cp_r "content/", "tmp/"
-	
-	if system "nuget pack RestfulRouting.nuspec -b tmp -o build"
-		FileUtils.rm_rf "tmp"
-	end
+	system "nuget pack RestfulRouting.nuspec -o build"
 end
 
+task :release => :package do
+	nuspecs = Dir['build/*.nupkg']
+	raise "Could not find nupkg file" unless nuspecs.size == 1
+	api_key_file = "#{ENV["USERPROFILE"]}/.nuget_api_key"
+	api_key = ENV["API_KEY"] || File.exist?(api_key_file) && IO.read(api_key_file)
+	raise "Could not find api_key." unless api_key
+	system "nuget push #{nuspecs.first} #{api_key}"
+end
