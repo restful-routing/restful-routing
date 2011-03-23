@@ -13,7 +13,7 @@ namespace RestfulRouting.Mappers
 
         public ResourceMapper(Action<ResourceMapper<TController>> subMapper = null)
         {
-            As(Inflector.Singularize(controllerName));
+            As(_singularResourceName);
             includedActions = new Dictionary<string, Func<Route>>
                                   {
                                       {names.ShowName, () => GenerateNamedRoute(JoinResources(resourceName), resourcePath, controllerName, names.ShowName, new[] { "GET" })},
