@@ -13,15 +13,15 @@ namespace RestfulRouting.Spec.Mappers
     [Behaviors]
     public class PostsResource
     {
-        It should_map_get_index = () => "~/posts".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index());
+        It should_map_get_index = () => "~/posts".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index()).ShouldBeNamed("posts");
 
-        It should_map_get_show = () => "~/posts/1".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(1));
+        It should_map_get_show = () => "~/posts/1".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(1)).ShouldBeNamed("post");
 
-        It should_map_get_new = () => "~/posts/new".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New());
+        It should_map_get_new = () => "~/posts/new".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New()).ShouldBeNamed("new_post");
 
         It should_map_post_create = () => "~/posts".WithMethod(HttpVerbs.Post).ShouldMapTo<PostsController>(x => x.Create());
 
-        It should_map_get_edit = () => "~/posts/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(1));
+        It should_map_get_edit = () => "~/posts/1/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(1)).ShouldBeNamed("edit_post");
 
         It should_map_put_update = () => "~/posts/1".WithMethod(HttpVerbs.Put).ShouldMapTo<PostsController>(x => x.Update(1));
 
@@ -121,15 +121,15 @@ namespace RestfulRouting.Spec.Mappers
     [Behaviors]
     public class NestedCommentsResource
     {
-        It should_map_posts_get_index = () => "~/posts/1/comments".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1));
+        It should_map_posts_get_index = () => "~/posts/1/comments".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Index(1)).ShouldBeNamed("post_comments");
 
-        It should_map_posts_get_show = () => "~/posts/1/comments/2".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Show(1, 2));
+        It should_map_posts_get_show = () => "~/posts/1/comments/2".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Show(1, 2)).ShouldBeNamed("post_comment");
 
-        It should_map_posts_get_new = () => "~/posts/1/comments/new".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.New(1));
+        It should_map_posts_get_new = () => "~/posts/1/comments/new".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.New(1)).ShouldBeNamed("new_post_comment");
 
         It should_map_posts_post_create = () => "~/posts/1/comments".WithMethod(HttpVerbs.Post).ShouldMapTo<CommentsController>(x => x.Create(1));
 
-        It should_map_posts_get_edit = () => "~/posts/1/comments/2/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Edit(1, 2));
+        It should_map_posts_get_edit = () => "~/posts/1/comments/2/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<CommentsController>(x => x.Edit(1, 2)).ShouldBeNamed("edit_post_comment");
 
         It should_map_posts_put_update = () => "~/posts/1/comments/2".WithMethod(HttpVerbs.Put).ShouldMapTo<CommentsController>(x => x.Update(1, 2));
 
@@ -168,15 +168,15 @@ namespace RestfulRouting.Spec.Mappers
 
         Behaves_like<NestedCommentsResource> a_nested_comments_resource;
 
-        It should_map_posts_get_index = () => "~/posts/1/comments/2/likes".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Index(1, 2));
+        It should_map_posts_get_index = () => "~/posts/1/comments/2/likes".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Index(1, 2)).ShouldBeNamed("post_comment_likes");
 
-        It should_map_posts_get_show = () => "~/posts/1/comments/2/likes/3".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Show(1, 2, 3));
+        It should_map_posts_get_show = () => "~/posts/1/comments/2/likes/3".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Show(1, 2, 3)).ShouldBeNamed("post_comment_like");
 
-        It should_map_posts_get_new = () => "~/posts/1/comments/2/likes/new".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.New(1, 2));
+        It should_map_posts_get_new = () => "~/posts/1/comments/2/likes/new".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.New(1, 2)).ShouldBeNamed("new_post_comment_like");
 
         It should_map_posts_post_create = () => "~/posts/1/comments/2/likes".WithMethod(HttpVerbs.Post).ShouldMapTo<LikesController>(x => x.Create(1, 2));
 
-        It should_map_posts_get_edit = () => "~/posts/1/comments/2/likes/3/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Edit(1, 2, 3));
+        It should_map_posts_get_edit = () => "~/posts/1/comments/2/likes/3/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<LikesController>(x => x.Edit(1, 2, 3)).ShouldBeNamed("edit_post_comment_like");
 
         It should_map_posts_put_update = () => "~/posts/1/comments/2/likes/3".WithMethod(HttpVerbs.Put).ShouldMapTo<LikesController>(x => x.Update(1, 2, 3));
 
@@ -201,15 +201,15 @@ namespace RestfulRouting.Spec.Mappers
     [Behaviors]
     public class FormatPostsResource
     {
-        It should_map_get_index = () => "~/posts.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index()).WithFormat("json");
+        It should_map_get_index = () => "~/posts.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index()).WithFormat("json").ShouldBeNamed("formatted_posts");
 
-        It should_map_get_show = () => "~/posts/1.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(1)).WithFormat("json");
+        It should_map_get_show = () => "~/posts/1.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Show(1)).WithFormat("json").ShouldBeNamed("formatted_post");
 
-        It should_map_get_new = () => "~/posts/new.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New()).WithFormat("json");
+        It should_map_get_new = () => "~/posts/new.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.New()).WithFormat("json").ShouldBeNamed("formatted_new_post");
 
         It should_map_post_create = () => "~/posts.json".WithMethod(HttpVerbs.Post).ShouldMapTo<PostsController>(x => x.Create()).WithFormat("json");
 
-        It should_map_get_edit = () => "~/posts/1/edit.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(1)).WithFormat("json");
+        It should_map_get_edit = () => "~/posts/1/edit.json".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Edit(1)).WithFormat("json").ShouldBeNamed("formatted_edit_post");
 
         It should_map_put_update = () => "~/posts/1.json".WithMethod(HttpVerbs.Put).ShouldMapTo<PostsController>(x => x.Update(1)).WithFormat("json");
 

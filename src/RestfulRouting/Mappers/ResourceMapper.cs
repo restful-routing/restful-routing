@@ -16,10 +16,10 @@ namespace RestfulRouting.Mappers
             As(Inflector.Singularize(controllerName));
             includedActions = new Dictionary<string, Func<Route>>
                                   {
-                                      {names.ShowName, () => GenerateRoute(resourcePath, controllerName, names.ShowName, new[] { "GET" })},
+                                      {names.ShowName, () => GenerateNamedRoute(JoinResources(resourceName), resourcePath, controllerName, names.ShowName, new[] { "GET" })},
                                       {names.UpdateName, () => GenerateRoute(resourcePath, controllerName, names.UpdateName, new[] { "PUT" })},
-                                      {names.NewName, () => GenerateRoute(resourcePath + "/" + names.NewName, controllerName, names.NewName, new[] { "GET" })},
-                                      {names.EditName, () => GenerateRoute(resourcePath + "/" + names.EditName, controllerName, names.EditName, new[] { "GET" })},
+                                      {names.NewName, () => GenerateNamedRoute("new_" + JoinResources(resourceName), resourcePath + "/" + names.NewName, controllerName, names.NewName, new[] { "GET" })},
+                                      {names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(resourceName), resourcePath + "/" + names.EditName, controllerName, names.EditName, new[] { "GET" })},
                                       {names.DestroyName, () => GenerateRoute(resourcePath, controllerName, names.DestroyName, new[] { "DELETE" })},
                                       {names.CreateName, () => GenerateRoute(resourcePath, controllerName, names.CreateName, new[] { "POST" })}
                                   };
@@ -66,7 +66,8 @@ namespace RestfulRouting.Mappers
             {
                 BasePath = resourcePath;
 
-                RegisterNested(routeCollection);
+                resourcePaths.Add(_singularResourceName);
+                RegisterNested(routeCollection, mapper => mapper.SetParentResources(resourcePaths));
             }
         }
     }

@@ -10,5 +10,11 @@ namespace RestfulRouting.Spec
             routeData.Values["format"].ShouldEqual(format);
             return routeData;
         }
+
+        public static RouteData ShouldBeNamed(this RouteData routeData, string name)
+        {
+            ((NamedRoute) routeData.Route).Name.ShouldEqual(name);
+            return routeData;
+        }
     }
 }

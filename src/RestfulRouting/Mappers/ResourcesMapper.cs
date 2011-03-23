@@ -16,11 +16,11 @@ namespace RestfulRouting.Mappers
         {
             includedActions = new Dictionary<string, Func<Route>>
                                   {
-                                      {names.IndexName, () => GenerateRoute(resourcePath, controllerName, names.IndexName, new[] { "GET" })},
+                                      {names.IndexName, () => GenerateNamedRoute(JoinResources(resourceName), resourcePath, controllerName, names.IndexName, new[] { "GET" })},
                                       {names.CreateName, () => GenerateRoute(resourcePath, controllerName, names.CreateName, new[] { "POST" })},
-                                      {names.NewName, () => GenerateRoute(resourcePath + "/" + names.NewName, controllerName, names.NewName, new[] { "GET" })},
-                                      {names.EditName, () => GenerateRoute(resourcePath + "/{id}/" + names.EditName, controllerName, names.EditName, new[] { "GET" })},
-                                      {names.ShowName, () => GenerateRoute(resourcePath + "/{id}", controllerName, names.ShowName, new[] { "GET" })},
+                                      {names.NewName, () => GenerateNamedRoute("new_" + JoinResources(_singularResourceName), resourcePath + "/" + names.NewName, controllerName, names.NewName, new[] { "GET" })},
+                                      {names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(_singularResourceName), resourcePath + "/{id}/" + names.EditName, controllerName, names.EditName, new[] { "GET" })},
+                                      {names.ShowName, () => GenerateNamedRoute(JoinResources(_singularResourceName), resourcePath + "/{id}", controllerName, names.ShowName, new[] { "GET" })},
                                       {names.UpdateName, () => GenerateRoute(resourcePath + "/{id}", controllerName, names.UpdateName, new[] { "PUT" })},
                                       {names.DestroyName, () => GenerateRoute(resourcePath + "/{id}", controllerName, names.DestroyName, new[] { "DELETE" })}
                                   };
@@ -79,16 +79,16 @@ namespace RestfulRouting.Mappers
 
             if (Mappers.Any())
             {
-                var singular = Inflector.Singularize(resourceName);
-                BasePath = Join(resourcePath, "{" + singular + "Id}");
+                BasePath = Join(resourcePath, "{" + _singularResourceName + "Id}");
                 var idConstraint = Constraints["id"];
                 if (idConstraint != null)
                 {
                     Constraints.Remove("id");
-                    Constraints.Add(singular + "Id", idConstraint);
+                    Constraints.Add(_singularResourceName + "Id", idConstraint);
                 }
 
-                RegisterNested(routeCollection);
+                resourcePaths.Add(_singularResourceName);
+                RegisterNested(routeCollection, mapper => mapper.SetParentResources(resourcePaths));
             }
         }
     }

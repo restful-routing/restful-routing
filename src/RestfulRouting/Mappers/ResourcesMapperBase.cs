@@ -14,11 +14,13 @@ namespace RestfulRouting.Mappers
         protected RouteNames names = new RouteNames();
         protected Dictionary<string, Func<Route>> includedActions;
         protected bool generateFormatRoutes;
+        protected string _singularResourceName;
 
         public ResourcesMapperBase()
         {
             controllerName = ControllerName<TController>();
             As(Inflector.Pluralize(controllerName));
+            _singularResourceName = Inflector.Singularize(resourceName);
         }
 
         public void As(string resourceName)
@@ -66,6 +68,14 @@ namespace RestfulRouting.Mappers
             CalculatePath();
         }
 
+        protected NamedRoute GenerateNamedRoute(string name, string path, string controller, string action, string[] httpMethods)
+        {
+            return new NamedRoute(name, path,
+                             new RouteValueDictionary(new { controller, action }),
+                             new RouteValueDictionary(new { httpMethod = new RestfulHttpMethodConstraint(httpMethods) }),
+                             RouteHandler);
+        }
+
         protected Route GenerateRoute(string path, string controller, string action, string[] httpMethods)
         {
             return new Route(path,
@@ -87,16 +97,34 @@ namespace RestfulRouting.Mappers
 
         protected Route WithFormatExtension(Route implicitRoute)
         {
-            var explicitRoute = new Route(implicitRoute.Url + ".{format}", implicitRoute.RouteHandler)
-                                    {
-                                        Constraints = new RouteValueDictionary(implicitRoute.Constraints ?? new RouteValueDictionary()),
-                                        DataTokens = new RouteValueDictionary(implicitRoute.DataTokens ?? new RouteValueDictionary()),
-                                        Defaults = new RouteValueDictionary(implicitRoute.Defaults ?? new RouteValueDictionary())
-                                    };
+            var namedRoute = implicitRoute as NamedRoute;
+            if (namedRoute != null)
+            {
+                var explicitRoute = new NamedRoute("formatted_" + namedRoute.Name, implicitRoute.Url + ".{format}", implicitRoute.RouteHandler)
+                {
+                    Constraints = new RouteValueDictionary(implicitRoute.Constraints ?? new RouteValueDictionary()),
+                    DataTokens = new RouteValueDictionary(implicitRoute.DataTokens ?? new RouteValueDictionary()),
+                    Defaults = new RouteValueDictionary(implicitRoute.Defaults ?? new RouteValueDictionary())
+                };
 
-            explicitRoute.Constraints.Add("format", @"[A-Za-z0-9]+");
+                explicitRoute.Constraints.Add("format", @"[A-Za-z0-9]+");
 
-            return explicitRoute;
+                return explicitRoute;
+            }
+            else
+            {
+                var explicitRoute = new Route(implicitRoute.Url + ".{format}", implicitRoute.RouteHandler)
+                {
+                    Constraints = new RouteValueDictionary(implicitRoute.Constraints ?? new RouteValueDictionary()),
+                    DataTokens = new RouteValueDictionary(implicitRoute.DataTokens ?? new RouteValueDictionary()),
+                    Defaults = new RouteValueDictionary(implicitRoute.Defaults ?? new RouteValueDictionary())
+                };
+
+                explicitRoute.Constraints.Add("format", @"[A-Za-z0-9]+");
+
+                return explicitRoute;
+            }
+            
         }
 
         public void Constrain(string key, object value)

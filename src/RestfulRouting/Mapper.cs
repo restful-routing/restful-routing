@@ -14,6 +14,7 @@ namespace RestfulRouting
         protected string BasePath;
         protected IRouteHandler RouteHandler = new MvcRouteHandler();
         protected RouteValueDictionary Constraints = new RouteValueDictionary();
+        protected List<string> resourcePaths = new List<string>();
 
         public void Root<TController>(Expression<Func<TController, object>> action)
         {
@@ -99,10 +100,14 @@ namespace RestfulRouting
             return controllerName.Substring(0, controllerName.Length - "Controller".Length).ToLowerInvariant();
         }
 
-        protected void RegisterNested(RouteCollection routeCollection)
+        protected void RegisterNested(RouteCollection routeCollection, Action<Mapper> action = null)
         {
             foreach (var mapper in Mappers)
             {
+                if (action != null)
+                {
+                    action(mapper);
+                }
                 mapper.SetBasePath(BasePath);
                 mapper.SetRouteHandler(RouteHandler);
                 mapper.InheritConstraints(Constraints);
@@ -134,6 +139,20 @@ namespace RestfulRouting
             {
                 route.Constraints[constraint.Key] = constraint.Value;
             }
+        }
+
+        public void SetParentResources(List<string> resources)
+        {
+            resourcePaths = resources;
+        }
+
+        public string JoinResources(string with)
+        {
+            var resources = new List<string>();
+            resources.AddRange(resourcePaths);
+            resources.Add(with);
+            //resourcePaths.Add(with);
+            return string.Join("_", resources);
         }
     }
 }

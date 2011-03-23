@@ -59,6 +59,7 @@
     <Compile Include="Mappers\RouteMapper.cs" />
     <Compile Include="Mappers\StandardMapper.cs" />
     <Compile Include="MapRoutesExtension.cs" />
+    <Compile Include="NamedRoute.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="ViewEngines\RestfulRoutingRazorViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingViewEngine.cs" />
