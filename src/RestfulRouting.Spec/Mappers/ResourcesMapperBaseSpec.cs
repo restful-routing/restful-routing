@@ -15,41 +15,41 @@ namespace RestfulRouting.Spec.Mappers
     {
         public ResourcesMapperBaseTester()
         {
-            includedActions = new Dictionary<string, Func<Route>>
+            base.IncludedActions = new Dictionary<string, Func<Route>>
                                   {
-                                      {names.IndexName, SomeRoute},
-                                      {names.CreateName, SomeRoute},
-                                      {names.NewName, SomeRoute},
-                                      {names.EditName, SomeRoute},
-                                      {names.ShowName, SomeRoute},
-                                      {names.UpdateName, SomeRoute},
-                                      {names.DestroyName, SomeRoute}
+                                      {Names.IndexName, SomeRoute},
+                                      {Names.CreateName, SomeRoute},
+                                      {Names.NewName, SomeRoute},
+                                      {Names.EditName, SomeRoute},
+                                      {Names.ShowName, SomeRoute},
+                                      {Names.UpdateName, SomeRoute},
+                                      {Names.DestroyName, SomeRoute}
                                   };
         }
 
         public Route SomeRoute()
         {
-            return GenerateRoute(resourcePath, controllerName, names.IndexName, new[] { "GET" });
+            return GenerateRoute(base.ResourcePath, base.ControllerName, Names.IndexName, new[] { "GET" });
         }
 
         public string ResourceName()
         {
-            return resourceName;
+            return base.ResourceName;
         }
 
         public string ResourcePath()
         {
-            return resourcePath;
+            return base.ResourcePath;
         }
 
         public string ControllerName()
         {
-            return controllerName;
+            return base.ControllerName;
         }
 
         public Dictionary<string, Func<Route>> IncludedActions()
         {
-            return includedActions;
+            return base.IncludedActions;
         }
 
         public void SetBasePathForTest(string path)
@@ -68,7 +68,7 @@ namespace RestfulRouting.Spec.Mappers
 
             AddIncludedActions(routes);
 
-            if (generateFormatRoutes)
+            if (GenerateFormatRoutes)
                 AddFormatRoutes(routes);
 
             foreach (var route in routes)
@@ -78,8 +78,8 @@ namespace RestfulRouting.Spec.Mappers
 
             if (Mappers.Any())
             {
-                var singular = Inflector.Singularize(resourceName);
-                BasePath = Join(resourcePath, "{" + singular + "Id}");
+                var singular = Inflector.Singularize(base.ResourceName);
+                BasePath = Join(base.ResourcePath, "{" + singular + "Id}");
 
                 RegisterNested(routeCollection);
             }

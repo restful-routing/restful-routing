@@ -8,7 +8,6 @@ namespace RestfulRouting.Mappers
 {
     public class StandardMapper : Mapper
     {
-        private readonly IRouteHandler _routeHandler;
         public Route Route;
 
         public StandardMapper Map(string url)
@@ -17,7 +16,7 @@ namespace RestfulRouting.Mappers
                 new RouteValueDictionary(),
                 new RouteValueDictionary(new { httpMethod = new HttpMethodConstraint("GET") }),
                 new RouteValueDictionary(),
-                _routeHandler);
+                RouteHandler);
 
             return this;
         }
@@ -31,7 +30,7 @@ namespace RestfulRouting.Mappers
 
         public StandardMapper To<T>(Expression<Func<T, object>> func)
         {
-            Route.Defaults["controller"] = ControllerName<T>();
+            Route.Defaults["controller"] = GetControllerName<T>();
 
             Route.Defaults["action"] = GetActionName(func);
 

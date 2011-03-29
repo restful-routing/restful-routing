@@ -14,15 +14,15 @@ namespace RestfulRouting.Mappers
 
         public ResourcesMapper(Action<ResourcesMapper<TController>> subMapper = null)
         {
-            includedActions = new Dictionary<string, Func<Route>>
+            IncludedActions = new Dictionary<string, Func<Route>>
                                   {
-                                      {names.IndexName, () => GenerateNamedRoute(JoinResources(resourceName), resourcePath, controllerName, names.IndexName, new[] { "GET" })},
-                                      {names.CreateName, () => GenerateRoute(resourcePath, controllerName, names.CreateName, new[] { "POST" })},
-                                      {names.NewName, () => GenerateNamedRoute("new_" + JoinResources(_singularResourceName), resourcePath + "/" + names.NewName, controllerName, names.NewName, new[] { "GET" })},
-                                      {names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(_singularResourceName), resourcePath + "/{id}/" + names.EditName, controllerName, names.EditName, new[] { "GET" })},
-                                      {names.ShowName, () => GenerateNamedRoute(JoinResources(_singularResourceName), resourcePath + "/{id}", controllerName, names.ShowName, new[] { "GET" })},
-                                      {names.UpdateName, () => GenerateRoute(resourcePath + "/{id}", controllerName, names.UpdateName, new[] { "PUT" })},
-                                      {names.DestroyName, () => GenerateRoute(resourcePath + "/{id}", controllerName, names.DestroyName, new[] { "DELETE" })}
+                                      {Names.IndexName, () => GenerateNamedRoute(JoinResources(ResourceName), ResourcePath, ControllerName, Names.IndexName, new[] { "GET" })},
+                                      {Names.CreateName, () => GenerateRoute(ResourcePath, ControllerName, Names.CreateName, new[] { "POST" })},
+                                      {Names.NewName, () => GenerateNamedRoute("new_" + JoinResources(SingularResourceName), ResourcePath + "/" + Names.NewName, ControllerName, Names.NewName, new[] { "GET" })},
+                                      {Names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(SingularResourceName), ResourcePath + "/{id}/" + Names.EditName, ControllerName, Names.EditName, new[] { "GET" })},
+                                      {Names.ShowName, () => GenerateNamedRoute(JoinResources(SingularResourceName), ResourcePath + "/{id}", ControllerName, Names.ShowName, new[] { "GET" })},
+                                      {Names.UpdateName, () => GenerateRoute(ResourcePath + "/{id}", ControllerName, Names.UpdateName, new[] { "PUT" })},
+                                      {Names.DestroyName, () => GenerateRoute(ResourcePath + "/{id}", ControllerName, Names.DestroyName, new[] { "DELETE" })}
                                   };
             this.subMapper = subMapper;
         }
@@ -44,7 +44,7 @@ namespace RestfulRouting.Mappers
             if (methods.Length == 0)
                 methods = new[] { HttpVerbs.Get };
 
-            return GenerateRoute(resourcePath + "/{id}/" + action, controllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+            return GenerateRoute(ResourcePath + "/{id}/" + action, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
         }
 
         private Route CollectionRoute(string action, params HttpVerbs[] methods)
@@ -52,7 +52,7 @@ namespace RestfulRouting.Mappers
             if (methods.Length == 0)
                 methods = new[] { HttpVerbs.Get };
 
-            return GenerateRoute(resourcePath + "/" + action, controllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+            return GenerateRoute(ResourcePath + "/" + action, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
         }
 
         public override void RegisterRoutes(RouteCollection routeCollection)
@@ -68,7 +68,7 @@ namespace RestfulRouting.Mappers
 
             routes.AddRange(members.Select(member => MemberRoute(member.Key, member.Value)));
 
-            if (generateFormatRoutes)
+            if (GenerateFormatRoutes)
                 AddFormatRoutes(routes);
 
             foreach (var route in routes)
@@ -79,16 +79,16 @@ namespace RestfulRouting.Mappers
 
             if (Mappers.Any())
             {
-                BasePath = Join(resourcePath, "{" + _singularResourceName + "Id}");
+                BasePath = Join(ResourcePath, "{" + SingularResourceName + "Id}");
                 var idConstraint = Constraints["id"];
                 if (idConstraint != null)
                 {
                     Constraints.Remove("id");
-                    Constraints.Add(_singularResourceName + "Id", idConstraint);
+                    Constraints.Add(SingularResourceName + "Id", idConstraint);
                 }
 
-                resourcePaths.Add(_singularResourceName);
-                RegisterNested(routeCollection, mapper => mapper.SetParentResources(resourcePaths));
+                ResourcePaths.Add(SingularResourceName);
+                RegisterNested(routeCollection, mapper => mapper.SetParentResources(ResourcePaths));
             }
         }
     }

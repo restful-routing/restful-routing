@@ -4,7 +4,7 @@ namespace RestfulRouting.Mappers
 {
     public class ConnectMapper<TRouteSet> : Mapper where TRouteSet : RouteSet, new()
     {
-        private readonly string _path;
+        string _path;
 
         public ConnectMapper(string path)
         {

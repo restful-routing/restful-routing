@@ -8,24 +8,26 @@ namespace RestfulRouting.Mappers
 {
     public class ResourcesMapperBase<TController> : Mapper where TController : Controller
     {
-        protected string resourceName;
-        protected string resourcePath;
-        protected string controllerName;
-        protected RouteNames names = new RouteNames();
-        protected Dictionary<string, Func<Route>> includedActions;
-        protected bool generateFormatRoutes;
-        protected string _singularResourceName;
+        protected string ResourceName;
+        protected string ResourcePath;
+        protected string ControllerName;
+        protected RouteNames Names = new RouteNames();
+        protected Dictionary<string, Func<Route>> IncludedActions;
+        protected bool GenerateFormatRoutes;
+        protected string SingularResourceName;
+        protected string PluralResourceName;
 
         public ResourcesMapperBase()
         {
-            controllerName = ControllerName<TController>();
-            As(Inflector.Pluralize(controllerName));
-            _singularResourceName = Inflector.Singularize(resourceName);
+            ControllerName = GetControllerName<TController>();
+            PluralResourceName = Inflector.Pluralize(ControllerName);
+            SingularResourceName = Inflector.Singularize(PluralResourceName);
+            As(PluralResourceName);
         }
 
         public void As(string resourceName)
         {
-            this.resourceName = resourceName;
+            ResourceName = resourceName;
             CalculatePath();
         }
 
@@ -33,7 +35,7 @@ namespace RestfulRouting.Mappers
         {
             foreach (var action in actions)
             {
-                includedActions.Remove(action);
+                IncludedActions.Remove(action);
             }
         }
 
@@ -42,24 +44,24 @@ namespace RestfulRouting.Mappers
             var onlyIncludedActions = new Dictionary<string, Func<Route>>();
             foreach (var action in actions)
             {
-                onlyIncludedActions.Add(action, includedActions[action]);
+                onlyIncludedActions.Add(action, IncludedActions[action]);
             }
-            includedActions = onlyIncludedActions;
+            IncludedActions = onlyIncludedActions;
         }
 
         public void WithFormatRoutes()
         {
-            generateFormatRoutes = true;
+            GenerateFormatRoutes = true;
         }
 
         public void PathNames(Action<RouteNames> action)
         {
-            action(names);
+            action(Names);
         }
 
         private void CalculatePath()
         {
-            resourcePath = Join(BasePath, resourceName);
+            ResourcePath = Join(BasePath, ResourceName);
         }
 
         protected override void SetBasePath(string basePath)
@@ -86,7 +88,7 @@ namespace RestfulRouting.Mappers
 
         protected void AddIncludedActions(List<Route> routes)
         {
-            routes.AddRange(includedActions.Select(x => x.Value.Invoke()).ToArray());
+            routes.AddRange(IncludedActions.Select(x => x.Value.Invoke()).ToArray());
         }
 
         protected void AddFormatRoutes(List<Route> routes)

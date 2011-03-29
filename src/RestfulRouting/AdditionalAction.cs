@@ -10,7 +10,7 @@ namespace RestfulRouting
 
         public AdditionalAction(IDictionary<string, HttpVerbs[]> actions)
         {
-            this._actions = actions;
+            _actions = actions;
         }
 
         public void Get(string action)

@@ -6,10 +6,9 @@ namespace RestfulRouting.Mappers
 {
     public class AreaMapper : Mapper
     {
-        private readonly string _areaName;
-        private readonly string _pathPrefix;
-        private readonly string _ns;
-        private readonly Action<AreaMapper> _subMapper;
+        string _areaName;
+        string _ns;
+        Action<AreaMapper> _subMapper;
 
         public AreaMapper(string areaName, string _namespace = null, Action<AreaMapper> subMapper = null)
         {

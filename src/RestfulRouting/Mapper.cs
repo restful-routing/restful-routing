@@ -14,7 +14,7 @@ namespace RestfulRouting
         protected string BasePath;
         protected IRouteHandler RouteHandler = new MvcRouteHandler();
         protected RouteValueDictionary Constraints = new RouteValueDictionary();
-        protected List<string> resourcePaths = new List<string>();
+        protected List<string> ResourcePaths = new List<string>();
 
         public void Root<TController>(Expression<Func<TController, object>> action)
         {
@@ -93,7 +93,7 @@ namespace RestfulRouting
             return string.Join("/", validParts);
         }
 
-        protected string ControllerName<T>()
+        protected string GetControllerName<T>()
         {
             var controllerName = typeof(T).Name;
 
@@ -143,15 +143,15 @@ namespace RestfulRouting
 
         public void SetParentResources(List<string> resources)
         {
-            resourcePaths = resources;
+            ResourcePaths = resources;
         }
 
         public string JoinResources(string with)
         {
             var resources = new List<string>();
-            resources.AddRange(resourcePaths);
+            resources.AddRange(ResourcePaths);
             resources.Add(with);
-            //resourcePaths.Add(with);
+            //ResourcePaths.Add(with);
             return string.Join("_", resources);
         }
     }

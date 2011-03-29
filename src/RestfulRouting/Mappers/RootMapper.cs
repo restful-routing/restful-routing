@@ -5,7 +5,7 @@ namespace RestfulRouting.Mappers
 {
     public class RootMapper<TController> : StandardMapper
     {
-        private readonly Expression<Func<TController, object>> _action;
+        Expression<Func<TController, object>> _action;
 
         public RootMapper(Expression<Func<TController, object>> action)
         {
