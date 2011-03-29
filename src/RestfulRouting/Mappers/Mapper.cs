@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -119,15 +118,22 @@ namespace RestfulRouting.Mappers
         {
             foreach (var mapper in Mappers)
             {
+                ConfigureNestedMapper(mapper);
+
                 if (action != null)
                 {
                     action(mapper);
                 }
-                mapper.SetBasePath(BasePath);
-                mapper.WithRouteHandler(RouteHandler);
-                mapper.InheritConstraints(Constraints);
+
                 mapper.RegisterRoutes(routeCollection);
             }
+        }
+
+        private void ConfigureNestedMapper(Mapper mapper)
+        {
+            mapper.SetBasePath(BasePath);
+            mapper.WithRouteHandler(RouteHandler);
+            mapper.InheritConstraints(Constraints);
         }
 
         private void InheritConstraints(RouteValueDictionary constraints)
@@ -166,7 +172,6 @@ namespace RestfulRouting.Mappers
             var resources = new List<string>();
             resources.AddRange(ResourcePaths);
             resources.Add(with);
-            //ResourcePaths.Add(with);
             return string.Join("_", resources);
         }
     }
