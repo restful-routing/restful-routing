@@ -44,10 +44,12 @@ mspec :spec do |mspec|
 	mspec.html_output = "build\\specs.html"
 end
 
+desc 'Create the nuget distribution package'
 task :package => :compile do
 	system "nuget pack RestfulRouting.nuspec -o build"
 end
 
+desc 'Release to nuget'
 task :release => :package do
 	version = IO.read("RestfulRouting.nuspec").match(%r{\<version\>(.*)\</version\>})[1]
 	raise("This version has already been committed.") if `git tag`.split(/\n/).include?(version)
