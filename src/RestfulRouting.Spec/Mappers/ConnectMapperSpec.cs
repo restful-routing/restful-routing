@@ -8,7 +8,7 @@ namespace RestfulRouting.Spec.Mappers
 {
     public class TestRouteSet : RouteSet
     {
-        public override void Map(Mapper map)
+        public override void Map(IMapper map)
         {
             map.Map("test").To<PostsController>(x => x.Index());
         }

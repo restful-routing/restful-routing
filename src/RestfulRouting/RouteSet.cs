@@ -5,7 +5,7 @@ namespace RestfulRouting
 {
     public abstract class RouteSet
     {
-        public abstract void Map(Mapper map);
+        public abstract void Map(IMapper map);
 
         public void RegisterRoutes(RouteCollection routes)
         {

@@ -18,7 +18,7 @@ namespace RestfulRouting.Spec
     {
         public class Routes : RouteSet
         {
-            public override void Map(Mapper map)
+            public override void Map(IMapper map)
             {
                 map.Route(new Route("posts/{action}", new RouteValueDictionary(new { controller = "posts" }), new MvcRouteHandler()));
             }
@@ -33,7 +33,7 @@ namespace RestfulRouting.Spec
     {
         public class Routes : RouteSet
         {
-            public override void Map(Mapper map)
+            public override void Map(IMapper map)
             {
                 map.Resources<PostsController>();
             }
@@ -48,7 +48,7 @@ namespace RestfulRouting.Spec
     {
         public class Routes : RouteSet
         {
-            public override void Map(Mapper map)
+            public override void Map(IMapper map)
             {
                 map.Area<PostsController>("test", area => area.Resources<PostsController>());
             }

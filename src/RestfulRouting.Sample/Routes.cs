@@ -1,10 +1,11 @@
-﻿using RestfulRouting.Sample.Controllers;
+﻿using RestfulRouting.Mappers;
+using RestfulRouting.Sample.Controllers;
 
 namespace RestfulRouting.Sample
 {
     public class Routes : RouteSet
     {
-        public override void Map(Mapper map)
+        public override void Map(IMapper map)
         {
             map.Root<RootController>(x => x.Index());
             map.Map("routedebug").To<RouteDebugController>(x => x.Index());
