@@ -10,7 +10,7 @@ namespace RestfulRouting.Spec.Mappers
     {
         Because of = () => new RootMapper<PostsController>(x => x.Index()).RegisterRoutes(routes);
 
-        It maps_to_posts_index = () => "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index());
+        It maps_to_posts_index = () => "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Index()).WithName("root");
     }
 
     public class root_mapper_with_base_path : base_context

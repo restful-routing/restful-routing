@@ -14,7 +14,7 @@ namespace RestfulRouting.Mappers
 
         public override void RegisterRoutes(System.Web.Routing.RouteCollection routeCollection)
         {
-            Map("").To(_action);
+            Map("").To(_action).Named("root");
             base.RegisterRoutes(routeCollection);
         }
     }
