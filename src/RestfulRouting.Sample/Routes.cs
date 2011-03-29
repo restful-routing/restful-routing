@@ -1,6 +1,4 @@
-﻿using RestfulRouting.Mappers;
-using RestfulRouting.RouteDebug;
-using RestfulRouting.Sample.Controllers;
+﻿using RestfulRouting.Sample.Controllers;
 
 namespace RestfulRouting.Sample
 {

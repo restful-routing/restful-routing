@@ -4,8 +4,9 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Linq;
+using RestfulRouting.Mappers;
 
-namespace RestfulRouting.Mappers
+namespace RestfulRouting
 {
     public interface IMapper
     {
