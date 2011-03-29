@@ -56,10 +56,7 @@ task :release => :package do
 	
 	nuspecs = Dir['build/*.nupkg']
 	raise "Could not find nupkg file" unless nuspecs.size == 1
-	api_key_file = "#{ENV["USERPROFILE"]}/.nuget_api_key"
-	api_key = ENV["API_KEY"] || File.exist?(api_key_file) && IO.read(api_key_file)
-	raise "Could not find api_key." unless api_key
-	system "nuget push #{nuspecs.first} #{api_key}"
+	system "nuget push #{nuspecs.first}"
 	
 	system "git tag \"v#{version}\""
 	system "git push origin master"
