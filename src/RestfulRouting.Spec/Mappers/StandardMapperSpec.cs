@@ -8,7 +8,7 @@ namespace RestfulRouting.Spec.Mappers
 {
     public class standard_mapping : base_context
     {
-        Because of = () => new StandardMapper().Map("posts/{year}/{slug}").To<PostsController>(x => x.Post(2009, "")).Named("testName").RegisterRoutes(routes);
+        Because of = () => new StandardMapper().Path("posts/{year}/{slug}").To<PostsController>(x => x.Post(2009, "")).Named("testName").RegisterRoutes(routes);
 
         It should_map_posts_post = () => "~/posts/2009/test".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Post(2009, "test")).WithName("testName");
 
@@ -17,7 +17,7 @@ namespace RestfulRouting.Spec.Mappers
 
     public class standard_mapping_respects_base_path : base_context
     {
-        Because of = () => new ResourcesMapper<PostsController>(map => map.Map("hi").To<CommentsController>(x => x.Index(2))).RegisterRoutes(routes);
+        Because of = () => new ResourcesMapper<PostsController>(map => map.Path("hi").To<CommentsController>(x => x.Index(2))).RegisterRoutes(routes);
 
         // this defaults to mapping under the member now
 

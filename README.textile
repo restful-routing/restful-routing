@@ -7,7 +7,7 @@ Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
   public override void Map(Mapper map)
   {
     map.Root<HomeController>(x => x.Show());
-    map.Map("test/{id}").To<TestController>(x => x.Test()).Constrain("id", @"\d+");
+    map.Path("test/{id}").To<TestController>(x => x.Test()).Constrain("id", @"\d+");
     map.Resource<SessionsController>();
     map.Resources<BlogsController>(blogs =>
     {

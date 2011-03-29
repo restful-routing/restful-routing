@@ -10,7 +10,7 @@ namespace RestfulRouting.Mappers
     {
         public Route Route;
 
-        public StandardMapper Map(string url)
+        public StandardMapper Path(string url)
         {
             Route = new Route(url,
                 new RouteValueDictionary(),

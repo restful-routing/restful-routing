@@ -17,7 +17,7 @@ namespace RestfulRouting.Mappers
         void Area<TController>(string name, string pathPrefix, Action<IAreaMapper> mapper) where TController : Controller;
         void Area(string name, Action<IAreaMapper> mapper);
         void Area(string name, string pathPrefix, Action<IAreaMapper> mapper);
-        StandardMapper Map(string path);
+        StandardMapper Path(string path);
         void Connect<TRouteSet>(string path = "") where TRouteSet : RouteSet, new();
         void WithRouteHandler(IRouteHandler routeHandler);
         void DebugRoute(string path);
@@ -71,9 +71,9 @@ namespace RestfulRouting.Mappers
             AddMapper(new AreaMapper(name, null, mapper));
         }
 
-        public virtual StandardMapper Map(string path)
+        public virtual StandardMapper Path(string path)
         {
-            var mapper = new StandardMapper().Map(path);
+            var mapper = new StandardMapper().Path(path);
             AddMapper(mapper);
             return mapper;
         }

@@ -13,7 +13,7 @@ namespace RestfulRouting.Mappers
 
         public override void RegisterRoutes(System.Web.Routing.RouteCollection routeCollection)
         {
-            Map(_path).To<RouteDebugController>(x => x.Index());
+            Path(_path).To<RouteDebugController>(x => x.Index());
             base.RegisterRoutes(routeCollection);
         }
     }

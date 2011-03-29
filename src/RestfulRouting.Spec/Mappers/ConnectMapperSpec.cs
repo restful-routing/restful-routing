@@ -10,7 +10,7 @@ namespace RestfulRouting.Spec.Mappers
     {
         public override void Map(IMapper map)
         {
-            map.Map("test").To<PostsController>(x => x.Index());
+            map.Path("test").To<PostsController>(x => x.Index());
         }
     }
 
