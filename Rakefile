@@ -49,10 +49,17 @@ task :package => :compile do
 end
 
 task :release => :package do
+	version = IO.read("RestfulRouting.nuspec").match(%r{\<version\>(.*)\</version\>})[1]
+	raise("This version has already been committed.") if `git tag`.split(/\n/).include?(version)
+	
 	nuspecs = Dir['build/*.nupkg']
 	raise "Could not find nupkg file" unless nuspecs.size == 1
 	api_key_file = "#{ENV["USERPROFILE"]}/.nuget_api_key"
 	api_key = ENV["API_KEY"] || File.exist?(api_key_file) && IO.read(api_key_file)
 	raise "Could not find api_key." unless api_key
 	system "nuget push #{nuspecs.first} #{api_key}"
+	
+	system "git tag \"v#{version}\""
+	system "git push origin master"
+	system "git push origin master --tags"
 end
