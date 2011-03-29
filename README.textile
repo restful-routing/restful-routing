@@ -4,22 +4,25 @@ Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
 
 <pre><code>public class Routes : RouteSet
 {
-  public Routes()
+  public override void Map(Mapper map)
   {
-    Resource<SessionsController>();
-    Resources<BlogsController>(() =>
+    map.Root<HomeController>(x => x.Show());
+    map.Map("test/{id}").To<TestController>(x => x.Test()).Constrain("id", @"\d+");
+    map.Resource<SessionsController>();
+    map.Resources<BlogsController>(blogs =>
     {
-      As("weblogs");
-      Only("index", "show");
-      Collection(x => {
-	    x.Get("latest");
-		x.Post("someaction");
-	  );
+      blogs.As("weblogs");
+      blogs.Only("index", "show");
+      blogs.Collection(x => {
+        x.Get("latest");
+        x.Post("someaction");
+      );
+      blogs.Member(x => x.Put("move"));
 
-      Resources<PostsController>(() =>
+      blogs.Resources<PostsController>(posts =>
       {
-        Except("create", "update", "destroy");
-        Resources<CommentsController>(() => Except("destroy"));
+        posts.Except("create", "update", "destroy");
+        posts.Resources<CommentsController>(c => c.Except("destroy"));
       });
     });
   }
@@ -48,7 +51,8 @@ h2. Note on Patches/Pull Requests
 
 h2. Contributors
 
-* "Steve Hodgkiss":http://github.com/stevehodgkiss
+Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions from
+
 * "Cory Deppen":http://github.com/corydeppen
 * "Eddie Cianci":http://github.com/defeated
 * "Troels Thomsen":http://github.com/troethom
