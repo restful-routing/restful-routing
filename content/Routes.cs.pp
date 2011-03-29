@@ -10,6 +10,7 @@ namespace $rootnamespace$
     {
         public override void Map(IMapper map)
         {
+            map.DebugRoute("routedebug");
             /*
              * TODO: Add your routes here.
              * 
