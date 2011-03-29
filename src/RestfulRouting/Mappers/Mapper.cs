@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RestfulRouting.Mappers;
 using System.Linq;
 
-namespace RestfulRouting
+namespace RestfulRouting.Mappers
 {
     public class Mapper
     {
@@ -78,6 +78,7 @@ namespace RestfulRouting
             BasePath = basePath;
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual void RegisterRoutes(RouteCollection routeCollection)
         {
             foreach (var mapper in Mappers)

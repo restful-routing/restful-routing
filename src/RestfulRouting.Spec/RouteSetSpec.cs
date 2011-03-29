@@ -2,6 +2,7 @@
 using System.Web.Routing;
 using System.Web.Mvc;
 using Machine.Specifications;
+using RestfulRouting.Mappers;
 using RestfulRouting.Spec.TestObjects;
 
 namespace RestfulRouting.Spec

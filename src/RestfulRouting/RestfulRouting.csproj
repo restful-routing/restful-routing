@@ -49,7 +49,7 @@
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
-    <Compile Include="Mapper.cs" />
+    <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="Mappers\AreaMapper.cs" />
     <Compile Include="Mappers\ConnectMapper.cs" />
     <Compile Include="Mappers\ResourceMapper.cs" />
