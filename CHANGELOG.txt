@@ -1,7 +1,21 @@
-* Added PathNames method to change the name of predefined actions, i.e. PathNames(x => x.CreateName = "upload")
+== 1.1.0
 
-* Added SetRouteHandler to specify the route handler for the current scope and below.
+* Changed StandardMapper method to `map.Path("test").To<Controller>(x => x.Action())` [Steve Hodgkiss]
 
-* Refactored to use typed actions instead of untyped ones, i.e. more like rails 2 routes. This is a big change.
+* Add `.Named("name")` to StandardMapper [Steve Hodgkiss]
+
+* Added RouteDebug route with `map.DebugRoute("routedebug")` [Steve Hodgkiss]
+
+* Added named routes for Resource, Resources and Root [Steve Hodgkiss]
+
+* Added PathNames method to change the name of predefined actions, i.e. PathNames(x => x.CreateName = "upload") [Steve Hodgkiss]
+
+* Added WithRouteHandler to specify the route handler for the current scope and below. [Steve Hodgkiss]
+
+* Refactored to use typed actions instead of untyped ones, i.e. more like rails 2 routes. This is a big change. [Steve Hodgkiss]
 	The routes are no longer specified in the constructor, their is an abstract Map method that gets called with
 	the Mapper.
+
+== 1.0.2 - Last version to work with .NET 3.5
+
+* Added `WithFormatRoutes` method to generate format routes [Steve Hodgkiss, Khalid Abuhakmeh]
