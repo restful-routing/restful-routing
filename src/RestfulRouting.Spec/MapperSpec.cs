@@ -55,7 +55,7 @@ namespace RestfulRouting.Spec
     {
         Because of = () =>
                          {
-                             mapper.SetRouteHandler(null);
+                             mapper.WithRouteHandler(null);
                              mapper.Map("test").To<PostsController>(x => x.Index());
                              mapper.Resources<PostsController>();
                              mapper.Resource<SessionsController>();

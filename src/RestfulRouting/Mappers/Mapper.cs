@@ -20,7 +20,7 @@ namespace RestfulRouting.Mappers
         void Area(string name, string pathPrefix, Action<IAreaMapper> mapper);
         StandardMapper Map(string path);
         void Connect<TRouteSet>(string path = "") where TRouteSet : RouteSet, new();
-        void SetRouteHandler(IRouteHandler routeHandler);
+        void WithRouteHandler(IRouteHandler routeHandler);
     }
 
     public class Mapper : IMapper
@@ -98,7 +98,7 @@ namespace RestfulRouting.Mappers
         {
             foreach (var mapper in Mappers)
             {
-                mapper.SetRouteHandler(RouteHandler);
+                mapper.WithRouteHandler(RouteHandler);
                 mapper.RegisterRoutes(routeCollection);
             }
         }
@@ -125,7 +125,7 @@ namespace RestfulRouting.Mappers
                     action(mapper);
                 }
                 mapper.SetBasePath(BasePath);
-                mapper.SetRouteHandler(RouteHandler);
+                mapper.WithRouteHandler(RouteHandler);
                 mapper.InheritConstraints(Constraints);
                 mapper.RegisterRoutes(routeCollection);
             }
@@ -142,7 +142,7 @@ namespace RestfulRouting.Mappers
             }
         }
 
-        public void SetRouteHandler(IRouteHandler routeHandler)
+        public void WithRouteHandler(IRouteHandler routeHandler)
         {
             RouteHandler = routeHandler;
         }
