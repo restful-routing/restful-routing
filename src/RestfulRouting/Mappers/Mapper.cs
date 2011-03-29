@@ -93,7 +93,6 @@ namespace RestfulRouting.Mappers
             BasePath = basePath;
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual void RegisterRoutes(RouteCollection routeCollection)
         {
             foreach (var mapper in Mappers)
