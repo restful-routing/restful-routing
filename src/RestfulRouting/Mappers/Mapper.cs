@@ -20,6 +20,7 @@ namespace RestfulRouting.Mappers
         StandardMapper Map(string path);
         void Connect<TRouteSet>(string path = "") where TRouteSet : RouteSet, new();
         void WithRouteHandler(IRouteHandler routeHandler);
+        void DebugRoute(string path);
     }
 
     public class Mapper : IMapper
@@ -80,6 +81,16 @@ namespace RestfulRouting.Mappers
         public virtual void Connect<TRouteSet>(string path = "") where TRouteSet : RouteSet, new()
         {
             AddMapper(new ConnectMapper<TRouteSet>(path));
+        }
+
+        public void WithRouteHandler(IRouteHandler routeHandler)
+        {
+            RouteHandler = routeHandler;
+        }
+
+        public void DebugRoute(string path)
+        {
+            AddMapper(new DebugRouteMapper(path));
         }
 
         private void AddMapper(Mapper mapper)
@@ -145,11 +156,6 @@ namespace RestfulRouting.Mappers
                     Constraints[constraint.Key] = constraint.Value;
                 }
             }
-        }
-
-        public void WithRouteHandler(IRouteHandler routeHandler)
-        {
-            RouteHandler = routeHandler;
         }
 
         protected void ConfigureRoute(Route route)

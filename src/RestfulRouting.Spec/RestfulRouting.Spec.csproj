@@ -64,6 +64,7 @@
     <Compile Include="Mappers\ResourcesMapperBaseSpec.cs" />
     <Compile Include="Mappers\ResourcesMapperSpec.cs" />
     <Compile Include="Mappers\RootMapperSpec.cs" />
+    <Compile Include="Mappers\DebugRouteMapperSpec.cs" />
     <Compile Include="Mappers\RouteMapperSpec.cs" />
     <Compile Include="Mappers\StandardMapperSpec.cs" />
     <Compile Include="RouteSetSpec.cs" />

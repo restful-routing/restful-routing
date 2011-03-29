@@ -49,6 +49,7 @@
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
+    <Compile Include="Mappers\DebugRouteMapper.cs" />
     <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="Mappers\AreaMapper.cs" />
     <Compile Include="Mappers\ConnectMapper.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="MapRoutesExtension.cs" />
     <Compile Include="NamedRoute.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
+    <Compile Include="RouteDebug\RouteDebugController.cs" />
     <Compile Include="ViewEngines\RestfulRoutingRazorViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingWebFormViewEngine.cs" />

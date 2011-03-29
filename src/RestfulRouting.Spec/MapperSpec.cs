@@ -3,6 +3,7 @@ using System.Web.Routing;
 using Machine.Specifications;
 using RestfulRouting.Mappers;
 using RestfulRouting.Spec.TestObjects;
+using System.Linq;
 
 namespace RestfulRouting.Spec
 {
@@ -63,5 +64,16 @@ namespace RestfulRouting.Spec
                          };
 
         It uses_the_specified_route_handler = () => routes.ShouldEachConformTo(x => ((Route)x).RouteHandler == null);
+    }
+
+    public class debug_route : mapper_routeBase
+    {
+        Because of = () =>
+                         {
+                             mapper.DebugRoute("debug");
+                             mapper.RegisterRoutes(routes);
+                         };
+
+        It maps_the_debug_route = () => ((Route)routes.First()).Url.ShouldEqual("debug");
     }
 }
