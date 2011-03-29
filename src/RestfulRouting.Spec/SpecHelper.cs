@@ -11,7 +11,7 @@ namespace RestfulRouting.Spec
             return routeData;
         }
 
-        public static RouteData ShouldBeNamed(this RouteData routeData, string name)
+        public static RouteData WithName(this RouteData routeData, string name)
         {
             ((NamedRoute) routeData.Route).Name.ShouldEqual(name);
             return routeData;

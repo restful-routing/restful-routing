@@ -11,13 +11,13 @@ namespace RestfulRouting.Spec.Mappers
     [Behaviors]
     public class SessionsResource
     {
-        It should_map_get_show = () => "~/session".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.Show()).ShouldBeNamed("session");
+        It should_map_get_show = () => "~/session".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.Show()).WithName("session");
 
-        It should_map_get_new = () => "~/session/new".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.New()).ShouldBeNamed("new_session");
+        It should_map_get_new = () => "~/session/new".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.New()).WithName("new_session");
 
         It should_map_post_create = () => "~/session".WithMethod(HttpVerbs.Post).ShouldMapTo<SessionsController>(x => x.Create());
 
-        It should_map_get_edit = () => "~/session/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.Edit()).ShouldBeNamed("edit_session");
+        It should_map_get_edit = () => "~/session/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<SessionsController>(x => x.Edit()).WithName("edit_session");
 
         It should_map_put_update = () => "~/session".WithMethod(HttpVerbs.Put).ShouldMapTo<SessionsController>(x => x.Update());
 
@@ -40,13 +40,13 @@ namespace RestfulRouting.Spec.Mappers
     [Behaviors]
     public class NestedSessionsAvatarsResource
     {
-        It should_map_get_show = () => "~/session/avatar".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.Show()).ShouldBeNamed("session_avatar");
+        It should_map_get_show = () => "~/session/avatar".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.Show()).WithName("session_avatar");
 
-        It should_map_get_new = () => "~/session/avatar/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.New()).ShouldBeNamed("new_session_avatar");
+        It should_map_get_new = () => "~/session/avatar/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.New()).WithName("new_session_avatar");
 
         It should_map_post_create = () => "~/session/avatar".WithMethod(HttpVerbs.Post).ShouldMapTo<AvatarsController>(x => x.Create());
 
-        It should_map_get_edit = () => "~/session/avatar/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.Edit()).ShouldBeNamed("edit_session_avatar");
+        It should_map_get_edit = () => "~/session/avatar/edit".WithMethod(HttpVerbs.Get).ShouldMapTo<AvatarsController>(x => x.Edit()).WithName("edit_session_avatar");
 
         It should_map_put_update = () => "~/session/avatar".WithMethod(HttpVerbs.Put).ShouldMapTo<AvatarsController>(x => x.Update());
 
