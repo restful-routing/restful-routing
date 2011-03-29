@@ -4,7 +4,11 @@ using System.Web.Routing;
 
 namespace RestfulRouting.Mappers
 {
-    public class AreaMapper : Mapper
+    public interface IAreaMapper : IMapper
+    {
+    }
+
+    public class AreaMapper : Mapper, IAreaMapper
     {
         string _areaName;
         string _ns;

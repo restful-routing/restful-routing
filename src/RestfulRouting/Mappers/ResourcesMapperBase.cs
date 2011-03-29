@@ -6,7 +6,16 @@ using System.Web.Routing;
 
 namespace RestfulRouting.Mappers
 {
-    public class ResourcesMapperBase<TController> : Mapper where TController : Controller
+    public interface IResourcesMapperBase : IMapper
+    {
+        void As(string resourceName);
+        void Except(params string[] actions);
+        void Only(params string[] actions);
+        void WithFormatRoutes();
+        void PathNames(Action<RouteNames> action);
+    }
+
+    public class ResourcesMapperBase<TController> : Mapper, IResourcesMapperBase where TController : Controller
     {
         protected string ResourceName;
         protected string ResourcePath;

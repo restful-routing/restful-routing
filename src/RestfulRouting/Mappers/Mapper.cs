@@ -8,7 +8,22 @@ using System.Linq;
 
 namespace RestfulRouting.Mappers
 {
-    public class Mapper
+    public interface IMapper
+    {
+        void Root<TController>(Expression<Func<TController, object>> action);
+        void Route(RouteBase routeBase);
+        void Resources<TController>(Action<IResourcesMapper<TController>> mapper = null) where TController : Controller;
+        void Resource<TController>(Action<IResourceMapper<TController>> mapper = null) where TController : Controller;
+        void Area<TController>(string name, Action<IAreaMapper> mapper = null) where TController : Controller;
+        void Area<TController>(string name, string pathPrefix, Action<IAreaMapper> mapper) where TController : Controller;
+        void Area(string name, Action<IAreaMapper> mapper);
+        void Area(string name, string pathPrefix, Action<IAreaMapper> mapper);
+        StandardMapper Map(string path);
+        void Connect<TRouteSet>(string path = "") where TRouteSet : RouteSet, new();
+        void SetRouteHandler(IRouteHandler routeHandler);
+    }
+
+    public class Mapper : IMapper
     {
         protected List<Mapper> Mappers = new List<Mapper>();
         protected string BasePath;
@@ -26,32 +41,32 @@ namespace RestfulRouting.Mappers
             AddMapper(new RouteMapper(routeBase));
         }
 
-        public void Resources<TController>(Action<ResourcesMapper<TController>> mapper = null) where TController : Controller
+        public void Resources<TController>(Action<IResourcesMapper<TController>> mapper = null) where TController : Controller
         {
             AddMapper(new ResourcesMapper<TController>(mapper));
         }
 
-        public void Resource<TController>(Action<ResourceMapper<TController>> mapper = null) where TController : Controller
+        public void Resource<TController>(Action<IResourceMapper<TController>> mapper = null) where TController : Controller
         {
             AddMapper(new ResourceMapper<TController>(mapper));
         }
 
-        public void Area<TController>(string name, Action<AreaMapper> mapper = null) where TController : Controller
+        public void Area<TController>(string name, Action<IAreaMapper> mapper = null) where TController : Controller
         {
             AddMapper(new AreaMapper(name, typeof(TController).Namespace, mapper));
         }
 
-        public void Area<TController>(string name, string pathPrefix, Action<AreaMapper> mapper) where TController : Controller
+        public void Area<TController>(string name, string pathPrefix, Action<IAreaMapper> mapper) where TController : Controller
         {
             AddMapper(new AreaMapper(name, typeof(TController).Namespace, mapper));
         }
 
-        public void Area(string name, Action<AreaMapper> mapper)
+        public void Area(string name, Action<IAreaMapper> mapper)
         {
             AddMapper(new AreaMapper(name, null, mapper));
         }
 
-        public void Area(string name, string pathPrefix, Action<AreaMapper> mapper)
+        public void Area(string name, string pathPrefix, Action<IAreaMapper> mapper)
         {
             AddMapper(new AreaMapper(name, null, mapper));
         }

@@ -6,7 +6,14 @@ using System.Linq;
 
 namespace RestfulRouting.Mappers
 {
-    public class ResourcesMapper<TController> : ResourcesMapperBase<TController> where TController : Controller
+    public interface IResourcesMapper<TController> : IResourcesMapperBase where TController : Controller
+    {
+        void Collection(Action<AdditionalAction> action);
+        void Member(Action<AdditionalAction> action);
+        void Constrain(string key, object value);
+    }
+
+    public class ResourcesMapper<TController> : ResourcesMapperBase<TController>, IResourcesMapper<TController> where TController : Controller
     {
         private Action<ResourcesMapper<TController>> subMapper;
         private Dictionary<string, HttpVerbs[]> collections = new Dictionary<string, HttpVerbs[]>();
