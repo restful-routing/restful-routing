@@ -8,9 +8,9 @@ namespace RestfulRouting.Spec.Mappers
 {
     public class standard_mapping : base_context
     {
-        Because of = () => new StandardMapper().Map("posts/{year}/{slug}").To<PostsController>(x => x.Post(2009, "")).RegisterRoutes(routes);
+        Because of = () => new StandardMapper().Map("posts/{year}/{slug}").To<PostsController>(x => x.Post(2009, "")).Named("testName").RegisterRoutes(routes);
 
-        It should_map_posts_post = () => "~/posts/2009/test".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Post(2009, "test"));
+        It should_map_posts_post = () => "~/posts/2009/test".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Post(2009, "test")).WithName("testName");
 
         It should_generate_url = () => OutBoundUrl.Of<PostsController>(x => x.Post(2009, "test")).ShouldMapToUrl("/posts/2009/test");
     }

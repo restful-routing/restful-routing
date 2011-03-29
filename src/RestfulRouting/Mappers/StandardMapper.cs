@@ -65,6 +65,13 @@ namespace RestfulRouting.Mappers
             return this;
         }
 
+        public StandardMapper Named(string name)
+        {
+            Route = new NamedRoute(name, Route.Url, Route.Defaults, Route.Constraints, Route.RouteHandler);
+
+            return this;
+        }
+
         public override void RegisterRoutes(RouteCollection routeCollection)
         {
             Route.Url = Join(BasePath, Route.Url);
