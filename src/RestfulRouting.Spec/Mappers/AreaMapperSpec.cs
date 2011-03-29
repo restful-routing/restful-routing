@@ -9,7 +9,9 @@ namespace RestfulRouting.Spec.Mappers
 {
     public class area_mapper : base_context
     {
-        Because of = () => new AreaMapper("test", typeof(PostsController).Namespace, x => x.Resources<PostsController>()).RegisterRoutes(routes);
+        static AreaMapper areaMapper = new AreaMapper("test", typeof(PostsController).Namespace, x => x.Resources<PostsController>());
+
+        Because of = () => areaMapper.RegisterRoutes(routes);
 
         static Func<RouteBase, RouteValueDictionary> DataTokens = (RouteBase x) => ((Route)x).DataTokens;
 
@@ -18,5 +20,7 @@ namespace RestfulRouting.Spec.Mappers
         It sets_the_area = () => routes.ShouldEachConformTo(x => DataTokens(x)["area"].ToString() == "test");
 
         It sets_namespace_fallback = () => routes.ShouldEachConformTo(x => (bool)DataTokens(x)["UseNamespaceFallback"] == false);
+
+        It adds_to_the_resource_path = () => areaMapper.JoinResources("posts").ShouldEqual("test_posts");
     }
 }
