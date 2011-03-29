@@ -8,30 +8,30 @@ namespace $rootnamespace$
 {
     public class Routes : RouteSet
     {
-        public Routes()
+        public override void Map(IMapper map)
         {
             /*
              * TODO: Add your routes here.
              * 
-            Root<HomeController>(x => x.Index());
+            map.Root<HomeController>(x => x.Index());
             
-            Resources<BlogsController>(() =>
+            map.Resources<BlogsController>(blogs =>
             {
-                As("weblogs");
-                Only("index", "show");
-                Collection("latest", HttpVerbs.Get);
+                blogs.As("weblogs");
+                blogs.Only("index", "show");
+                blogs.Collection(x => x.Get("latest"));
 
-                Resources<PostsController>(() =>
+                blogs.Resources<PostsController>(posts =>
                 {
-                    Except("create", "update", "destroy");
-                    Resources<CommentsController>(() => Except("destroy"));
+                    posts.Except("create", "update", "destroy");
+                    posts.Resources<CommentsController>(c => c.Except("destroy"));
                 });
             });
 
-            Area<Controllers.Admin.BlogsController>("admin", () =>
+            map.Area<Controllers.Admin.BlogsController>("admin", admin =>
             {
-                Resources<Controllers.Admin.BlogsController>();
-                Resources<Controllers.Admin.PostsController>();
+                admin.Resources<Controllers.Admin.BlogsController>();
+                admin.Resources<Controllers.Admin.PostsController>();
             });
              */
         }
