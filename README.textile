@@ -4,39 +4,39 @@ Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
 
 <pre><code>public class Routes : RouteSet
 {
-  public override void Map(Mapper map)
-  {
-    map.Root<HomeController>(x => x.Show());
-    map.Path("test/{id}").To<TestController>(x => x.Test()).Constrain("id", @"\d+");
-    map.Resource<SessionsController>();
-    map.Resources<BlogsController>(blogs =>
-    {
-      blogs.As("weblogs");
-      blogs.Only("index", "show");
-      blogs.Collection(x => {
-        x.Get("latest");
-        x.Post("someaction");
-      );
-      blogs.Member(x => x.Put("move"));
+	public override void Map(Mapper map)
+	{
+		map.Root<HomeController>(x => x.Show());
+		map.Path("test/{id}").To<TestController>(x => x.Test()).Constrain("id", @"\d+");
+		map.Resource<SessionsController>();
+		map.Resources<BlogsController>(blogs =>
+		{
+			blogs.As("weblogs");
+			blogs.Only("index", "show");
+			blogs.Collection(x => {
+				x.Get("latest");
+				x.Post("someaction");
+			);
+			blogs.Member(x => x.Put("move"));
 
-      blogs.Resources<PostsController>(posts =>
-      {
-        posts.Except("create", "update", "destroy");
-        posts.Resources<CommentsController>(c => c.Except("destroy"));
-      });
-    });
-  }
+			blogs.Resources<PostsController>(posts =>
+			{
+				posts.Except("create", "update", "destroy");
+				posts.Resources<CommentsController>(c => c.Except("destroy"));
+			});
+		});
+	}
 }
 
 public class MvcApplication : System.Web.HttpApplication
 {
-  protected void Application_Start()
-  {
-    ViewEngines.Engines.Clear();
-    ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
-    
-    RouteTable.Routes.MapRoutes<Routes>();
-    }
+	protected void Application_Start()
+	{
+		ViewEngines.Engines.Clear();
+		ViewEngines.Engines.Add(new RestfulRoutingViewEngine());
+		
+		RouteTable.Routes.MapRoutes<Routes>();
+	}
 }</code></pre>
 
 "Read more":http://stevehodgkiss.github.com/restful-routing/
