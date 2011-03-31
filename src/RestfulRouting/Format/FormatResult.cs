@@ -41,6 +41,8 @@ namespace RestfulRouting.Format
                     {
                         if (formatCollection.Default != null)
                             return formatCollection.Default;
+                        if (formatCollection["html"] != null && acceptTypes.Length == 1 && acceptTypes.First() == "*/*")
+                            return formatCollection["html"].Invoke();
                         return new HttpStatusCodeResult(406);
                     }
                 }
