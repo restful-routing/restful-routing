@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RazorEngine;
 
 namespace RestfulRouting.RouteDebug
 {
@@ -9,7 +13,13 @@ namespace RestfulRouting.RouteDebug
     {
         public class RouteDebugViewModel
         {
+            public string DebugPath { get; set; }
             public IList<RouteInfo> RouteInfos { get; set; }
+
+            public string GetPath(string name)
+            {
+                return DebugPath + name;
+            }
         }
 
         public class RouteInfo
@@ -21,7 +31,6 @@ namespace RestfulRouting.RouteDebug
             public string Namespaces { get; set; }
             public string Name { get; set; }
         }
-
 
         public ActionResult Index()
         {
@@ -63,87 +72,68 @@ namespace RestfulRouting.RouteDebug
                 });
             }
 
-            return Content(GetOutput(model));
+            var debugPath = (from p in model.RouteInfos
+                             where p.Endpoint == "routedebug#resources"
+                             select p.Path.Replace("{name}", string.Empty)).FirstOrDefault();
+            model.DebugPath = debugPath;
+
+            var template = GetTemplate();
+            return Content(Razor.Parse(template, model));
+        }
+        public ActionResult Resources(string name)
+        {
+            try
+            {
+                var content = GetContent(name);
+                var contentType = "text/html";
+
+                var extension = Path.GetExtension(name).ToLowerInvariant();
+
+                switch (extension) {
+                    case ".css":
+                        contentType = "text/css";
+                        break;
+                    case ".jpg":
+                        contentType = "image/jpeg";
+                        break;
+                    case ".png":
+                        contentType = "image/png";
+                        break;
+                    case ".js":
+                        contentType = "text/javascript";
+                        break;
+                    default:
+                        break;
+                }
+
+                if (string.IsNullOrWhiteSpace(content) || extension == ".cshtml")
+                    return HttpNotFound();
+
+                return Content(content, contentType, Encoding.UTF8);
+            }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
 
-        static string GetOutput(RouteDebugViewModel model)
+        private string GetTemplate()
         {
-            var output = @"<!DOCTYPE HTML>
-<html lang='en-GB'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Restful Routing</title>
-    <style>
-      * { margin: 0; padding: 0; }
-      body {
-        font: 16px Helvetica,Arial,sans-serif;
-      }
-    #container {
-      background: #fff;
-      padding: 50px;
-    }
-    h1 {
-      font-size: 48px;
-    }
-    h1, h2 {
-      margin: 0 0 6px 0;
-      text-transform: uppercase;
-    }
-    p {
-      margin: 0 0 20px 0;
-    }
-    p, h1, h2, h3, li { line-height: 1.6em; }
-    a {
-      color: #0E718F;
-    }
-    a:hover {
-      text-decoration: none;
-      color: #fff;
-      background-color: #0E718F;
-    }
-    td, th {
-      padding: 2px 4px;
-      border-bottom: #666;
-      text-align: left;
-    }
-    </style>
-</head>
-<body>
-  <div id='container'>
-    <h1>Routes</h1>
-    <table>
-      <thead>
-        <tr>
-            <th>Name</th>
-            <th>HttpMethods</th>
-            <th>Area</th>
-            <th>Path</th>
-            <th>Endpoint</th>
-            <th>Namespaces</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{table}}
-      </tbody>
-    </table>
-  </div>
-</body>
-</html>";
-            var rows = new List<string>();
-            foreach (var routeInfo in model.RouteInfos)
-            {
-                rows.Add(string.Format(@"<tr>
-          <td>{0}</td>
-          <td>{1}</td>
-          <td>{2}</td>
-          <td><a href='{3}' target='_blank'>{3}</a></td>
-          <td>{4}</td>
-          <td>{5}</td>
-        </tr>", routeInfo.Name, routeInfo.HttpMethod, routeInfo.Area, routeInfo.Path, routeInfo.Endpoint, routeInfo.Namespaces));
-
+            using (var reader = new StreamReader(GetType().Assembly.GetManifestResourceStream("RestfulRouting.RouteDebug.Content.Index.cshtml"))) {
+                return reader.ReadToEnd();
             }
-            output = output.Replace("{{table}}", string.Join("", rows));
-            return output;
+        }
+        private string GetContent(string name) {
+            try {
+                using (var reader = new StreamReader(GetType().Assembly.GetManifestResourceStream(string.Format("RestfulRouting.RouteDebug.Content.{0}", name))))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                return string.Empty;
+            }
         }
     }
 }
