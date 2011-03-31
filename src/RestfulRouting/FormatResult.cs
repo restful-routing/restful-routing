@@ -41,33 +41,33 @@ namespace RestfulRouting
                 return new HttpNotFoundResult();
             }
 
-            return formatCollection[format];
+            return formatCollection[format].Invoke();
         }
     }
 
-    public class FormatCollection : Dictionary<string, ActionResult>
+    public class FormatCollection : Dictionary<string, Func<ActionResult>>
     {
         public ActionResult Default { get; set; }
 
-        public ActionResult Html
+        public Func<ActionResult> Html
         {
             get { return this["html"]; }
             set { this["html"] = value; }
         }
 
-        public ActionResult Xml
+        public Func<ActionResult> Xml
         {
             get { return this["xml"]; }
             set { this["xml"] = value; }
         }
 
-        public ActionResult Json
+        public Func<ActionResult> Json
         {
             get { return this["json"]; }
             set { this["json"] = value; }
         }
 
-        public ActionResult Js
+        public Func<ActionResult> Js
         {
             get { return this["js"]; }
             set { this["js"] = value; }

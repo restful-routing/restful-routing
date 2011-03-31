@@ -19,8 +19,8 @@ namespace RestfulRouting.Sample.Controllers
             // return View(SampleData.Blogs());
             return RespondTo(format =>
                                  {
-                                     format.Html = View(SampleData.Blogs());
-                                     format.Xml = Content("Not exactly");
+                                     format.Html = () => View(SampleData.Blogs());
+                                     format.Xml = () => Content("Not exactly");
                                  });
         }
 

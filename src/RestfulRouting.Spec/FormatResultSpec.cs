@@ -24,9 +24,9 @@ namespace RestfulRouting.Spec
 
     public class format_result_with_matching_format : format_result_base
     {
-        Establish context = () => _formatCollection["html"] = new ContentResult();
+        Establish context = () => _formatCollection["html"] = () => new ContentResult();
 
-        It returns_the_associated_action_result = () => _result.ShouldEqual(_formatCollection["html"]);
+        It returns_the_associated_action_result = () => _result.ShouldBeOfType<ContentResult>();
     }
 
     public class format_result_with_unknown_format : format_result_base
@@ -46,10 +46,10 @@ namespace RestfulRouting.Spec
         Establish context = () =>
                                 {
                                     _acceptTypes = new[] {"application/json"};
-                                    _formatCollection.Json = new JsonResult();
+                                    _formatCollection.Json = () => new JsonResult();
                                 };
 
         // pending
-        It returns_json = () => _result.ShouldEqual(_formatCollection.Json);
+        It returns_json = () => _result.ShouldBeOfType<JsonResult>();
     }
 }
