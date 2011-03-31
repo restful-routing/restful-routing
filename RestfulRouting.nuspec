@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>RestfulRouting</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <authors>Steve Hodgkiss</authors>
     <owners>Steve Hodgkiss</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -17,5 +17,6 @@
   <files>
     <file src="build/RestfulRouting.dll" target="lib" />
     <file src="content/*" target="content" />
+	<file src="content/Controllers/*" target="content/Controllers" />
   </files>
 </package>
