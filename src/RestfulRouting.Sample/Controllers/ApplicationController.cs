@@ -4,7 +4,7 @@ using RestfulRouting.Format;
 
 namespace RestfulRouting.Sample.Controllers
 {
-    public class ApplicationController : Controller
+    public abstract class ApplicationController : Controller
     {
         protected ActionResult RespondTo(Action<FormatCollection> format)
         {
