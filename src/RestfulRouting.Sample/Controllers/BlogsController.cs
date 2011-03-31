@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using RestfulRouting.Sample.Infrastructure;
 using RestfulRouting.Sample.Models;
 
@@ -6,9 +9,19 @@ namespace RestfulRouting.Sample.Controllers
 {
     public class BlogsController : Controller
     {
+        protected ActionResult RespondTo(Action<FormatCollection> format)
+        {
+            return new FormatResult(format);
+        }
+
         public ActionResult Index()
         {
-            return View(SampleData.Blogs());
+            // return View(SampleData.Blogs());
+            return RespondTo(format =>
+                                 {
+                                     format.Html = View(SampleData.Blogs());
+                                     format.Xml = Content("Not exactly");
+                                 });
         }
 
         public ActionResult New()
@@ -59,4 +72,6 @@ namespace RestfulRouting.Sample.Controllers
             return View(SampleData.Blog(id));
         }
     }
+
+    
 }
