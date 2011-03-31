@@ -139,5 +139,7 @@ namespace RestfulRouting.Spec.Format
                                                              ByFormat("json"),
                                                              ByFormat("pdf")
                                                          });
+
+        It parses_all = () => _mimeTypes.Parse("*/*").ShouldEqual(new List<MimeType> { ByFormat("all") });
     }
 }
