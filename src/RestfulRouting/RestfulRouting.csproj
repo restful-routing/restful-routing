@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Format\AcceptList.cs" />
     <Compile Include="AdditionalAction.cs" />
+    <Compile Include="Format\FormatCollection.cs" />
     <Compile Include="Format\FormatResult.cs" />
     <Compile Include="Format\AcceptType.cs" />
     <Compile Include="Format\MimeTypeList.cs" />
