@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Format\AcceptList.cs" />
     <Compile Include="AdditionalAction.cs" />
-    <Compile Include="FormatResult.cs" />
+    <Compile Include="Format\FormatResult.cs" />
+    <Compile Include="Format\AcceptType.cs" />
+    <Compile Include="Format\MimeTypeList.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
     <Compile Include="Mappers\DebugRouteMapper.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Mappers\RouteMapper.cs" />
     <Compile Include="Mappers\StandardMapper.cs" />
     <Compile Include="MapRoutesExtension.cs" />
+    <Compile Include="Format\MimeType.cs" />
     <Compile Include="NamedRoute.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="RouteDebug\RouteDebugController.cs" />

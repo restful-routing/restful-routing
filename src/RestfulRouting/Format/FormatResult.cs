@@ -1,12 +1,19 @@
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Linq;
 
-namespace RestfulRouting
+namespace RestfulRouting.Format
 {
     public class FormatResult : ActionResult
     {
+        public static MimeTypeList MimeTypes;
+        static FormatResult()
+        {
+            MimeTypes = new MimeTypeList();
+            MimeTypes.InitializeDefaults();
+        }
+
         Action<FormatCollection> _format;
         FormatCollection _formatCollection = new FormatCollection();
 
@@ -24,10 +31,23 @@ namespace RestfulRouting
 
         public static ActionResult GetResult(FormatCollection formatCollection, RouteValueDictionary routeValues, string[] acceptTypes)
         {
-            var format = "html"; // use html if no format extension is specified
+            var format = "html"; // default to html if no format extension is specified
             if (routeValues["format"] == null)
             {
-                // lookup in accept types => format dictionary
+                if (acceptTypes.Any())
+                {
+                    format = GetFormat(formatCollection, acceptTypes);
+                    if (string.IsNullOrEmpty(format))
+                    {
+                        if (formatCollection.Default != null)
+                            return formatCollection.Default;
+                        return new HttpStatusCodeResult(406);
+                    }
+                }
+                else if (!formatCollection.Any())
+                {
+                    return new HttpStatusCodeResult(406);
+                }
             }
             else
             {
@@ -43,34 +63,18 @@ namespace RestfulRouting
 
             return formatCollection[format].Invoke();
         }
-    }
 
-    public class FormatCollection : Dictionary<string, Func<ActionResult>>
-    {
-        public ActionResult Default { get; set; }
-
-        public Func<ActionResult> Html
+        public static string GetFormat(FormatCollection formatCollection, string[] acceptTypes)
         {
-            get { return this["html"]; }
-            set { this["html"] = value; }
-        }
-
-        public Func<ActionResult> Xml
-        {
-            get { return this["xml"]; }
-            set { this["xml"] = value; }
-        }
-
-        public Func<ActionResult> Json
-        {
-            get { return this["json"]; }
-            set { this["json"] = value; }
-        }
-
-        public Func<ActionResult> Js
-        {
-            get { return this["js"]; }
-            set { this["js"] = value; }
+            foreach (var mimeType in MimeTypes.Parse(acceptTypes))
+            {
+                foreach (var key in formatCollection.Keys)
+                {
+                    if (mimeType.Format == key)
+                        return key;
+                }
+            }
+            return null;
         }
     }
 }

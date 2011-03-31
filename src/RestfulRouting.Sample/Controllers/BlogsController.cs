@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using RestfulRouting.Format;
 using RestfulRouting.Sample.Infrastructure;
 using RestfulRouting.Sample.Models;
 
