@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalAction.cs" />
+    <Compile Include="FormatResult.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
     <Compile Include="Mappers\DebugRouteMapper.cs" />
