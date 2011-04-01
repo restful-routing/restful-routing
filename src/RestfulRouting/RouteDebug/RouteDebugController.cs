@@ -24,6 +24,7 @@ namespace RestfulRouting.RouteDebug
 
         public class RouteInfo
         {
+            public int Position { get; set; }
             public string HttpMethod { get; set; }
             public string Path { get; set; }
             public string Endpoint { get; set; }
@@ -35,6 +36,7 @@ namespace RestfulRouting.RouteDebug
         public ActionResult Index()
         {
             var model = new RouteDebugViewModel { RouteInfos = new List<RouteInfo>() };
+            int position = 1;
             foreach (var route in RouteTable.Routes.Select(x => x as Route).Where(x => x != null))
             {
                 var httpMethodConstraint = route.Constraints["httpMethod"] as HttpMethodConstraint;
@@ -63,6 +65,7 @@ namespace RestfulRouting.RouteDebug
 
                 model.RouteInfos.Add(new RouteInfo
                 {
+                    Position = position,
                     HttpMethod = string.Join(" ", allowedMethods.ToArray()),
                     Path = route.Url,
                     Endpoint = defaults["controller"] + "#" + defaults["action"],
@@ -70,6 +73,7 @@ namespace RestfulRouting.RouteDebug
                     Namespaces = string.Join(" ", namespaces.ToArray()),
                     Name = routeName
                 });
+                position++;
             }
 
             var debugPath = (from p in model.RouteInfos
@@ -101,6 +105,12 @@ namespace RestfulRouting.RouteDebug
                         break;
                     case ".js":
                         contentType = "text/javascript";
+                        break;
+                    case ".ttf":
+                        contentType = "application/x-font-ttf";
+                        break;
+                    case ".woff":
+                        contentType = "application/x-woff";
                         break;
                     default:
                         break;
