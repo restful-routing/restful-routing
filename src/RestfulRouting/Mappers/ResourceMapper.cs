@@ -71,7 +71,7 @@ namespace RestfulRouting.Mappers
             {
                 BasePath = ResourcePath;
 
-                ResourcePaths.Add(SingularResourceName);
+                AddResourcePath(SingularResourceName);
                 RegisterNested(routeCollection, mapper => mapper.SetParentResources(ResourcePaths));
             }
         }

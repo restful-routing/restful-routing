@@ -99,6 +99,12 @@ namespace RestfulRouting
             Mappers.Add(mapper);
         }
 
+        protected void AddResourcePath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+                ResourcePaths.Add(path);
+        }
+
         protected virtual void SetBasePath(string basePath)
         {
             BasePath = basePath;

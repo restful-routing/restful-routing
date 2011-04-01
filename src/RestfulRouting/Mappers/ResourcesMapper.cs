@@ -94,7 +94,7 @@ namespace RestfulRouting.Mappers
                     Constraints.Add(SingularResourceName + "Id", idConstraint);
                 }
 
-                ResourcePaths.Add(SingularResourceName);
+                AddResourcePath(SingularResourceName);
                 RegisterNested(routeCollection, mapper => mapper.SetParentResources(ResourcePaths));
             }
         }
