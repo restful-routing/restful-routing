@@ -12,6 +12,7 @@
     <tags>routing</tags>
     <dependencies>
       <dependency id="WebActivator" version="1.0.0.0" />
+      <dependency id="RazorEngine" version="2.1" />
     </dependencies>
   </metadata>
   <files>

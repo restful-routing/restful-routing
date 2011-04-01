@@ -31,8 +31,8 @@ namespace RestfulRouting.Mappers
             var routes = new RouteCollection();
 
             BasePath = Join(BasePath, _areaName);
-            ResourcePaths.Add(_areaName);
-            RegisterNested(routes);
+            AddResourcePath(_areaName);
+            RegisterNested(routes, mapper => mapper.SetParentResources(ResourcePaths));
 
             foreach (var route in routes.Select(x => (Route)x))
             {
