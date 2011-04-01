@@ -133,6 +133,7 @@ namespace RestfulRouting.RouteDebug
                 return reader.ReadToEnd();
             }
         }
+
         private string GetContent(string name) {
             try {
                 using (var reader = new StreamReader(GetType().Assembly.GetManifestResourceStream(string.Format("RestfulRouting.RouteDebug.Content.{0}", name))))
