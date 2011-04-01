@@ -20,7 +20,7 @@ namespace RestfulRouting.Sample.Controllers
             return RespondTo(format =>
                                  {
                                      format.Html = () => View(SampleData.Blogs());
-                                     format.Xml = () => Content("Not exactly");
+                                     format.Xml = () => View(SampleData.Blogs());
                                  });
         }
 

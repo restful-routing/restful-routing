@@ -64,6 +64,7 @@
     <Compile Include="NamedRoute.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="RouteDebug\RouteDebugController.cs" />
+    <Compile Include="ViewEngines\RestfulRoutingFormatRazorViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingRazorViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingViewEngine.cs" />
     <Compile Include="ViewEngines\RestfulRoutingWebFormViewEngine.cs" />

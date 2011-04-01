@@ -37,6 +37,9 @@
     <Reference Include="MvcContrib.TestHelper">
       <HintPath>..\..\tools\mvccontrib.testhelper\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\tools\rhinomocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />

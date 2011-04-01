@@ -19,7 +19,59 @@ namespace RestfulRouting
         {
             _format(_formatCollection);
             var result = GetResult(_formatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes);
+            TrySetContentType(context);            
             result.ExecuteResult(context);
+        }
+
+        /// <summary>
+        /// Tries to set the content type of the response.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public static void TrySetContentType(ControllerContext context)
+        {
+            try
+            {
+                if (context.RouteData.Values.ContainsKey("format"))
+                {
+                    string format = context.RouteData.Values["format"].ToString();
+                    var response = context.HttpContext.Response;
+
+                    switch (format)
+                    {
+                        case "xml":
+                            response.ContentType = "text/xml";
+                            break;
+                        case "json":
+                            response.ContentType = "application/json";
+                            break;
+                        case "js":
+                            response.ContentType = "application/javascript";
+                            break;
+                        case "css":
+                            response.ContentType = "text/css";
+                            break;
+                        case "html":
+                            response.ContentType = "text/html";
+                            break;
+                        case "csv":
+                            response.ContentType = "text/csv";
+                            break;
+                        case "txt" :
+                            response.ContentType = "text/plain";
+                            break;
+                        case "cmd":
+                            response.ContentType = "text/cmd";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+            }
+            catch (Exception e)
+            {
+                // fail gracefully
+            }
         }
 
         public static ActionResult GetResult(FormatCollection formatCollection, RouteValueDictionary routeValues, string[] acceptTypes)
@@ -40,7 +92,7 @@ namespace RestfulRouting
                     return formatCollection.Default;
                 return new HttpNotFoundResult();
             }
-
+            
             return formatCollection[format].Invoke();
         }
     }

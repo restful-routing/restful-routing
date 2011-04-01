@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+<?xml version="1.0" encoding="UTF-8" ?>
+<blogs>
+    @foreach (var blog in Model) {
+    <blog>
+        <id>@blog.Id</id>
+        <author>@blog.Author</author>
+    </blog>
+    }
+</blogs>

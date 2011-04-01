@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using RestfulRouting.ViewEngines;
 
 namespace RestfulRouting.Sample
 {
@@ -14,8 +15,9 @@ namespace RestfulRouting.Sample
         {
             AreaRegistration.RegisterAllAreas();
 
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new RestfulRoutingWebFormViewEngine());
+            System.Web.Mvc.ViewEngines.Engines.Clear();
+            System.Web.Mvc.ViewEngines.Engines.Add(new RestfulRoutingFormatRazorViewEngine());
+            System.Web.Mvc.ViewEngines.Engines.Add(new RestfulRoutingWebFormViewEngine());
 
             RegisterRoutes(RouteTable.Routes);
             //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);

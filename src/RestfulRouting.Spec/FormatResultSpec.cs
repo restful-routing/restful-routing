@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
@@ -17,7 +18,7 @@ namespace RestfulRouting.Spec
         Because of = () => _result = FormatResult.GetResult(_formatCollection, _routeValues, _acceptTypes);
 
         protected static FormatCollection _formatCollection;
-        protected static ActionResult _result;
+        protected static ActionResult _result;       
         protected static RouteValueDictionary _routeValues;
         protected static string[] _acceptTypes;
     }
@@ -41,7 +42,7 @@ namespace RestfulRouting.Spec
         It returns_the_default_result = () => _result.ShouldEqual(_formatCollection.Default);
     }
 
-    public class format_result_with_no_format_and_accept_types_application_xml : format_result_base
+    public class format_result_with_no_format_and_accept_types_application_json : format_result_base
     {
         Establish context = () =>
                                 {
@@ -50,6 +51,6 @@ namespace RestfulRouting.Spec
                                 };
 
         // pending
-        It returns_json = () => _result.ShouldBeOfType<JsonResult>();
+        It returns_not_found = () => _result.ShouldBeOfType<HttpNotFoundResult>();
     }
 }
