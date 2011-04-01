@@ -85,6 +85,9 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <None Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
