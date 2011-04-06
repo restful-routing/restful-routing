@@ -10,5 +10,10 @@ namespace RestfulRouting.Sample.Controllers
         {
             return new FormatResult(format);
         }
+
+        protected ActionResult FormatView(object model, string contentType)
+        {
+            return new FormatView(model, contentType);
+        }
     }
 }

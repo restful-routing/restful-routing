@@ -9,10 +9,10 @@ namespace RestfulRouting.ViewEngines
         public override ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
         {
             ViewEngineResult result = null;
-
-            if (controllerContext.RouteData.Values.ContainsKey("format"))
+            
+            if (controllerContext.HttpContext.Items.Contains("format"))
             {
-                var format = controllerContext.RouteData.Values["format"];
+                var format = controllerContext.HttpContext.Items["format"];
                 var view = viewName + "." + format;
 
                 // we don't want to add a format to the master if there is no master being requested

@@ -27,4 +27,22 @@
             <% } %>
         </tbody>
     </table>
+
+    <script>
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/xml")
+            }
+        });
+
+        $.ajax({
+            url: "/blogs",
+            dataType: "xml",
+            method: "GET",
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                console.log(textStatus);
+            }
+        });
+    </script>
 </asp:Content>

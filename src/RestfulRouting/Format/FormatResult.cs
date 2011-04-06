@@ -36,6 +36,7 @@ namespace RestfulRouting.Format
         {
             var format = GetFormat(formatCollection, routeValues, acceptTypes);
             SetContentType(response, format);
+            HttpContext.Current.Items["format"] = format;
             return GetActionResult(formatCollection, format);
         }
 
