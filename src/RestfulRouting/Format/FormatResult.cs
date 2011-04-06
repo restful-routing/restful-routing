@@ -30,6 +30,12 @@ namespace RestfulRouting.Format
             var result = GetResult(_formatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes, context.HttpContext.Response);
             
             result.ExecuteResult(context);
+
+            // WIP, this class needs restructuring
+            var format = context.HttpContext.Items["format"] as string;
+            var mimeType = MimeTypes.LookupByFormat(format);
+            if (mimeType != null)
+                context.HttpContext.Response.ContentType = mimeType.Type;
         }
 
         public static ActionResult GetResult(FormatCollection formatCollection, RouteValueDictionary routeValues, string[] acceptTypes, HttpResponseBase response)
