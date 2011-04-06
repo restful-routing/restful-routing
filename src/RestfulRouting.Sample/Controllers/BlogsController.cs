@@ -13,9 +13,10 @@ namespace RestfulRouting.Sample.Controllers
             return RespondTo(format =>
                                  {
                                      format.Html = () => View(SampleData.Blogs());
-                                     format.Xml = () => FormatView(SampleData.Blogs(), "application/xml");
+                                     format.Xml = () => View(SampleData.Blogs());
                                      format.Json = () => Json(SampleData.Blogs(), JsonRequestBehavior.AllowGet);
                                      format.Csv = () => Content("hmmm,maybe", "text/csv");
+                                     format.Js = () => View();
                                  });
         }
 

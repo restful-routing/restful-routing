@@ -58,7 +58,6 @@
     <Compile Include="Format\FormatCollection.cs" />
     <Compile Include="Format\FormatResult.cs" />
     <Compile Include="Format\AcceptType.cs" />
-    <Compile Include="Format\FormatView.cs" />
     <Compile Include="Format\MimeTypeList.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
