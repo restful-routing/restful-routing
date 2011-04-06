@@ -34,11 +34,11 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\tools\mspec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\tools\moq\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="MvcContrib.TestHelper">
       <HintPath>..\..\tools\mvccontrib.testhelper\MvcContrib.TestHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\..\tools\rhinomocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,8 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Format\AcceptListSpec.cs" />
     <Compile Include="AdditionalActionSpec.cs" />
-    <Compile Include="FormatResultSpec.cs" />
+    <Compile Include="Format\FormatResultSpec.cs" />
+    <Compile Include="Format\MimeTypeSpec.cs" />
     <Compile Include="InflectorSpec.cs" />
     <Compile Include="MapperSpec.cs" />
     <Compile Include="Mappers\AreaMapperSpec.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Mappers\DebugRouteMapperSpec.cs" />
     <Compile Include="Mappers\RouteMapperSpec.cs" />
     <Compile Include="Mappers\StandardMapperSpec.cs" />
+    <Compile Include="Format\MimeTypeListSpec.cs" />
     <Compile Include="RouteSetSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecHelper.cs" />

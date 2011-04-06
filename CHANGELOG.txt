@@ -1,3 +1,11 @@
+== 1.1.1
+
+* Added ApplicationController to the package which provides a RespondTo wrapper around FormatResult.
+
+* Added Mime type parser so FormatResult can respond to the accept header as well as the format route parameter.
+
+* Added FormatResult which behaves like respond_to do |format| in rails. This handles mapping the request via the format (/blogs/1.xml).
+
 == 1.1.0
 
 * Changed StandardMapper method to `map.Path("test").To<Controller>(x => x.Action())` [Steve Hodgkiss]

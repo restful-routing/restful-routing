@@ -5,6 +5,7 @@
 <head runat="server">
     <title>Restful Routing</title>
     <link href="<%= ResolveUrl("~/stylesheets/screen.css") %>" rel="stylesheet" type="text/css" />
+    <script src="<%= Url.Content("~/Scripts/jquery-1.4.4.min.js") %>" type="text/javascript"></script>
 </head>
 
 <body>

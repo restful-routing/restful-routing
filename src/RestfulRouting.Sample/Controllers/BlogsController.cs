@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using RestfulRouting.Sample.Infrastructure;
 using RestfulRouting.Sample.Models;
+using System.Linq;
 
 namespace RestfulRouting.Sample.Controllers
 {
-    public class BlogsController : Controller
+    public class BlogsController : ApplicationController
     {
-        protected ActionResult RespondTo(Action<FormatCollection> format)
-        {
-            return new FormatResult(format);
-        }
-
         public ActionResult Index()
         {
-            // return View(SampleData.Blogs());
             return RespondTo(format =>
                                  {
                                      format.Html = () => View(SampleData.Blogs());
                                      format.Xml = () => View(SampleData.Blogs());
+                                     format.Json = () => Json(SampleData.Blogs(), JsonRequestBehavior.AllowGet);
+                                     format.Csv = () => Content("hmmm,maybe", "text/csv");
                                  });
         }
 

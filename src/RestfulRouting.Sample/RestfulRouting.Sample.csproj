@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Admin\BlogsController.cs" />
     <Compile Include="Controllers\Admin\PostsController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
@@ -86,6 +87,9 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Blogs\Index.xml.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

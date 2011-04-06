@@ -1,26 +1,37 @@
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
+using Moq;
+using RestfulRouting.Format;
 using It = Machine.Specifications.It;
 
-namespace RestfulRouting.Spec
+namespace RestfulRouting.Spec.Format
 {
-    public class format_result_base
+    public abstract class format_result_base
     {
         private Establish context = () =>
                                         {
                                             _formatCollection = new FormatCollection();
                                             _routeValues = new RouteValueDictionary(new {format = "html"});
                                             _acceptTypes = new string[] {};
+                                            _httpResponseBaseMock = new Mock<HttpResponseBase>();
+                                            //_httpResponseBaseMock.Setup(x => x.ContentType)
                                         };
 
-        Because of = () => _result = FormatResult.GetResult(_formatCollection, _routeValues, _acceptTypes);
+        Because of = () => _result = FormatResult.GetResult(_formatCollection, _routeValues, _acceptTypes, _httpResponseBaseMock.Object);
 
         protected static FormatCollection _formatCollection;
         protected static ActionResult _result;       
         protected static RouteValueDictionary _routeValues;
+        protected static Mock<HttpResponseBase> _httpResponseBaseMock;
         protected static string[] _acceptTypes;
+        protected static It ShouldReturn406 = () =>
+                                            {
+                                                _result.ShouldBeOfType<HttpStatusCodeResult>();
+                                                ((HttpStatusCodeResult) _result).StatusCode.ShouldEqual(406);
+                                            };
     }
 
     public class format_result_with_matching_format : format_result_base
@@ -32,7 +43,7 @@ namespace RestfulRouting.Spec
 
     public class format_result_with_unknown_format : format_result_base
     {
-        It returns_not_found_result = () => _result.ShouldBeOfType<HttpNotFoundResult>();
+        It returns_not_found_result = ShouldReturn406;
     }
 
     public class format_result_with_default_result_and_unknown_format : format_result_base
@@ -48,9 +59,17 @@ namespace RestfulRouting.Spec
                                 {
                                     _acceptTypes = new[] {"application/json"};
                                     _formatCollection.Json = () => new JsonResult();
+                                    _routeValues = new RouteValueDictionary(new { });
                                 };
 
         // pending
-        It returns_not_found = () => _result.ShouldBeOfType<HttpNotFoundResult>();
+        It returns_json = () => _result.ShouldBeOfType<JsonResult>();
+    }
+
+    public class format_result_with_no_format_and_no_accept_types : format_result_base
+    {
+        Establish context = () => _routeValues = new RouteValueDictionary(new { });
+
+        It returns_406_not_acceptable = ShouldReturn406;
     }
 }
