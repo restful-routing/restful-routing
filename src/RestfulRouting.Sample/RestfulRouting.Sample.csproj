@@ -86,6 +86,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Views\Blogs\Index.xml.cshtml" />
+    <Content Include="Views\Blogs\Index.js.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />

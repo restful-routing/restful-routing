@@ -28,21 +28,43 @@
         </tbody>
     </table>
 
+    <a id="script">Request script</a>
+
+    <a id="json">Request json</a>
+
     <script>
         $.ajaxSetup({
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Accept", "application/xml")
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("Accept", settings.accepts.script)
             }
         });
 
-        $.ajax({
-            url: "/blogs",
-            dataType: "xml",
-            method: "GET",
-            success: function (data, textStatus, jqXHR) {
-                console.log(data);
-                console.log(textStatus);
-            }
+        $("#script").click(function () {
+            $.ajax({
+                url: "/blogs",
+                dataType: "script",
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    console.log(textStatus);
+                }
+            });
         });
+        $("#json").click(function () {
+            $.ajax({
+                url: "/blogs",
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("Accept", "application/json")
+                },
+                dataType: "json",
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    console.log(textStatus);
+                }
+            });
+        });
+        
+        
     </script>
 </asp:Content>
