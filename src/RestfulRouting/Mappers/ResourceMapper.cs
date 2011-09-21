@@ -14,7 +14,7 @@ namespace RestfulRouting.Mappers
     public class ResourceMapper<TController> : ResourcesMapperBase<TController>, IResourceMapper<TController> where TController : Controller
     {
         Action<ResourceMapper<TController>> _subMapper;
-        Dictionary<string, HttpVerbs[]> _members = new Dictionary<string, HttpVerbs[]>();
+        Dictionary<string, HttpVerbs[]> _members = new Dictionary<string, HttpVerbs[]>(StringComparer.OrdinalIgnoreCase);
 
         public ResourceMapper(Action<ResourceMapper<TController>> subMapper = null)
         {

@@ -5,6 +5,8 @@ namespace RestfulRouting
 {
     public abstract class RouteSet
     {
+        public static bool UseLowercase = true;
+
         public abstract void Map(IMapper map);
 
         public void RegisterRoutes(RouteCollection routes)

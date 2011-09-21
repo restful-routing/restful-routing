@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Machine.Specifications;
+using System;
 
 namespace RestfulRouting.Spec
 {
@@ -11,7 +12,7 @@ namespace RestfulRouting.Spec
 
         Establish context = () =>
         {
-            _actionsAndMethods = new Dictionary<string, HttpVerbs[]>();
+            _actionsAndMethods = new Dictionary<string, HttpVerbs[]>(StringComparer.OrdinalIgnoreCase);
             AdditionalAction = new AdditionalAction(_actionsAndMethods);
         };
     }
