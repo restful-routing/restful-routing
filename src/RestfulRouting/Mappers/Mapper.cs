@@ -130,7 +130,7 @@ namespace RestfulRouting
             var controllerName = typeof(T).Name;
 
             string name = controllerName.Substring(0, controllerName.Length - "Controller".Length);
-            return RouteSet.UseLowercase ? name.ToLowerInvariant() : name;
+            return RouteSet.RouteToLowercase ? name.ToLowerInvariant() : name;
         }
 
         protected void RegisterNested(RouteCollection routeCollection, Action<Mapper> action = null)
@@ -186,7 +186,7 @@ namespace RestfulRouting
             var resources = new List<string>();
             resources.AddRange(ResourcePaths);
             resources.Add(with);
-            return string.Join("_", resources);
+            return string.Join("_", resources.Select(r => r.ToLowerInvariant()));
         }
     }
 }
