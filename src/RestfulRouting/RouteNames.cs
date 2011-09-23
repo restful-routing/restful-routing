@@ -9,14 +9,14 @@
 
         private void InitializeDefaults()
         {
-            IndexName = RouteSet.RouteToLowercase ? "index" : "Index";
-            ShowName = RouteSet.RouteToLowercase ? "show" : "Show";
-            NewName = RouteSet.RouteToLowercase ? "new" : "New";
-            CreateName = RouteSet.RouteToLowercase ? "create" : "Create";
-            EditName = RouteSet.RouteToLowercase ? "edit" : "Edit";
-            UpdateName = RouteSet.RouteToLowercase ? "update" : "Update";
-            DeleteName = RouteSet.RouteToLowercase ? "delete" : "Delete";
-            DestroyName = RouteSet.RouteToLowercase ? "destroy" : "Destroy";
+            IndexName = "Index";
+            ShowName = "Show";
+            NewName = "New";
+            CreateName = "Create";
+            EditName = "Edit";
+            UpdateName = "Update";
+            DeleteName = "Delete";
+            DestroyName = "Destroy";
         }
 
         public string IndexName { get; set; }

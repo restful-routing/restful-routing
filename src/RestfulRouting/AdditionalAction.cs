@@ -40,7 +40,7 @@ namespace RestfulRouting
 
         private void Route(string action, HttpVerbs verb)
         {
-            var actionName = RouteSet.RouteToLowercase ? action.ToLowerInvariant() : action;
+            var actionName = RouteSet.LowercaseActions ? action.ToLowerInvariant() : action;
             if (!_actions.ContainsKey(action))
                 _actions[actionName] = new[] { verb };
             else

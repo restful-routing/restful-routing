@@ -25,7 +25,7 @@ namespace RestfulRouting.Mappers
         {
             var body = ((MethodCallExpression)actionExpression.Body);
             var actionName = body.Method.Name;
-            return RouteSet.RouteToLowercase ? actionName.ToLowerInvariant() : actionName;
+            return RouteSet.LowercaseDefaults ? actionName.ToLowerInvariant() : actionName;
         }
 
         public StandardMapper To<T>(Expression<Func<T, object>> func)

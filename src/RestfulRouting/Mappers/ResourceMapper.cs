@@ -19,15 +19,19 @@ namespace RestfulRouting.Mappers
         public ResourceMapper(Action<ResourceMapper<TController>> subMapper = null)
         {
             As(SingularResourceName);
-            IncludedActions = new Dictionary<string, Func<Route>>
+            IncludedActions = new Dictionary<string, Func<Route>>(StringComparer.OrdinalIgnoreCase)
                                   {
                                       {Names.ShowName, () => GenerateNamedRoute(JoinResources(ResourceName), ResourcePath, ControllerName, Names.ShowName, new[] { "GET" })},
                                       {Names.UpdateName, () => GenerateRoute(ResourcePath, ControllerName, Names.UpdateName, new[] { "PUT" })},
-                                      {Names.NewName, () => GenerateNamedRoute("new_" + JoinResources(ResourceName), ResourcePath + "/" + Names.NewName, ControllerName, Names.NewName, new[] { "GET" })},
-                                      {Names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(ResourceName), ResourcePath + "/" + Names.EditName, ControllerName, Names.EditName, new[] { "GET" })},
+                                      {Names.NewName, () => GenerateNamedRoute("new_" + JoinResources(ResourceName), ResourcePath + "/" + (RouteSet.LowercaseUrls ? Names.NewName.ToLowerInvariant() : Names.NewName), ControllerName, Names.NewName, new[] { "GET" })},
+                                      {Names.EditName, () => GenerateNamedRoute("edit_" + JoinResources(ResourceName), ResourcePath + "/" + (RouteSet.LowercaseUrls ? Names.EditName.ToLowerInvariant() : Names.EditName), ControllerName, Names.EditName, new[] { "GET" })},
                                       {Names.DestroyName, () => GenerateRoute(ResourcePath, ControllerName, Names.DestroyName, new[] { "DELETE" })},
                                       {Names.CreateName, () => GenerateRoute(ResourcePath, ControllerName, Names.CreateName, new[] { "POST" })}
                                   };
+            if (RouteSet.MapDelete)
+            {
+                IncludedActions.Add(Names.DeleteName, () => GenerateNamedRoute("delete_" + JoinResources(ResourceName), ResourcePath + "/" + (RouteSet.LowercaseUrls ? Names.DeleteName.ToLowerInvariant() : Names.DeleteName), ControllerName, Names.DeleteName, new[] { "GET" }));
+            }
             _subMapper = subMapper;
         }
 
