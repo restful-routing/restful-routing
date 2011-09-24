@@ -14,7 +14,7 @@ namespace RestfulRouting.Mappers
     public class ResourceMapper<TController> : ResourcesMapperBase<TController>, IResourceMapper<TController> where TController : Controller
     {
         Action<ResourceMapper<TController>> _subMapper;
-        Dictionary<string, HttpVerbs[]> _members = new Dictionary<string, HttpVerbs[]>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, KeyValuePair<string, HttpVerbs[]>> _members = new Dictionary<string, KeyValuePair<string, HttpVerbs[]>>(StringComparer.OrdinalIgnoreCase);
 
         public ResourceMapper(Action<ResourceMapper<TController>> subMapper = null)
         {
@@ -41,12 +41,12 @@ namespace RestfulRouting.Mappers
             action(additionalAction);
         }
 
-        private Route MemberRoute(string action, params HttpVerbs[] methods)
+        private Route MemberRoute(string action, string resource, params HttpVerbs[] methods)
         {
             if (methods.Length == 0)
                 methods = new[] { HttpVerbs.Get };
 
-            return GenerateRoute(ResourcePath + "/" + action, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+            return GenerateRoute(ResourcePath + "/" + resource, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
         }
 
         public override void RegisterRoutes(RouteCollection routeCollection)
@@ -60,7 +60,7 @@ namespace RestfulRouting.Mappers
 
             AddIncludedActions(routes);
 
-            routes.AddRange(_members.Select(member => MemberRoute(member.Key, member.Value)));
+            routes.AddRange(_members.Select(member => MemberRoute(member.Key, member.Value.Key, member.Value.Value)));
 
             if (GenerateFormatRoutes)
                 AddFormatRoutes(routes);

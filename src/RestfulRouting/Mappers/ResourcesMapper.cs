@@ -16,8 +16,8 @@ namespace RestfulRouting.Mappers
     public class ResourcesMapper<TController> : ResourcesMapperBase<TController>, IResourcesMapper<TController> where TController : Controller
     {
         private Action<ResourcesMapper<TController>> subMapper;
-        private Dictionary<string, HttpVerbs[]> collections = new Dictionary<string, HttpVerbs[]>(StringComparer.OrdinalIgnoreCase);
-        private Dictionary<string, HttpVerbs[]> members = new Dictionary<string, HttpVerbs[]>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, KeyValuePair<string, HttpVerbs[]>> collections = new Dictionary<string, KeyValuePair<string, HttpVerbs[]>>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, KeyValuePair<string, HttpVerbs[]>> members = new Dictionary<string, KeyValuePair<string, HttpVerbs[]>>(StringComparer.OrdinalIgnoreCase);
 
         public ResourcesMapper(Action<ResourcesMapper<TController>> subMapper = null)
         {
@@ -50,20 +50,20 @@ namespace RestfulRouting.Mappers
             action(additionalAction);
         }
 
-        private Route MemberRoute(string action, params HttpVerbs[] methods)
+        private Route MemberRoute(string action, string resource, params HttpVerbs[] methods)
         {
             if (methods.Length == 0)
                 methods = new[] { HttpVerbs.Get };
 
-            return GenerateRoute(ResourcePath + "/{id}/" + action, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+            return GenerateRoute(ResourcePath + "/{id}/" + resource, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
         }
 
-        private Route CollectionRoute(string action, params HttpVerbs[] methods)
+        private Route CollectionRoute(string action, string resource, params HttpVerbs[] methods)
         {
             if (methods.Length == 0)
                 methods = new[] { HttpVerbs.Get };
 
-            return GenerateRoute(ResourcePath + "/" + action, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
+            return GenerateRoute(ResourcePath + "/" + resource, ControllerName, action, methods.Select(x => x.ToString().ToUpperInvariant()).ToArray());
         }
 
         public override void RegisterRoutes(RouteCollection routeCollection)
@@ -73,11 +73,11 @@ namespace RestfulRouting.Mappers
                 subMapper.Invoke(this);
             }
 
-            var routes = collections.Select(collection => CollectionRoute(collection.Key, collection.Value)).ToList();
+            var routes = collections.Select(collection => CollectionRoute(collection.Key, collection.Value.Key, collection.Value.Value)).ToList();
 
             AddIncludedActions(routes);
 
-            routes.AddRange(members.Select(member => MemberRoute(member.Key, member.Value)));
+            routes.AddRange(members.Select(member => MemberRoute(member.Key, member.Value.Key, member.Value.Value)));
 
             if (GenerateFormatRoutes)
                 AddFormatRoutes(routes);
