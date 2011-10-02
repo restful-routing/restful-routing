@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionsSpec.cs" />
     <Compile Include="Format\AcceptListSpec.cs" />
     <Compile Include="AdditionalActionSpec.cs" />
     <Compile Include="Format\FormatResultSpec.cs" />

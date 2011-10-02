@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
+using RestfulRouting.Exceptions;
 using RestfulRouting.Mappers;
 using RestfulRouting.Spec.TestObjects;
 using MvcContrib.TestHelper;
@@ -89,6 +90,7 @@ namespace RestfulRouting.Spec.Mappers
     public class resources_mapper_base : base_context
     {
         protected static ResourcesMapperBaseTester<PostsController> tester;
+        protected static Exception Exception;
 
         Establish context = () => tester = new ResourcesMapperBaseTester<PostsController>();
     }
@@ -176,5 +178,17 @@ namespace RestfulRouting.Spec.Mappers
                          };
 
          It takes_path_names_into_account = () => "~/posts".WithMethod(HttpVerbs.Get).ShouldMapTo<PostsController>(x => x.Latest());
+    }
+
+    public class incorrect_action_in_only: resources_mapper_base
+    {
+        Because of = () =>
+                        {
+                            Exception = Catch.Exception(() => tester.Only("wrong")); 
+                        };
+
+        It should_have_an_exception = () => Exception.ShouldNotBeNull();
+        It should_be_a_resources_method_exception = () => Exception.ShouldBeOfType<InvalidRestfulMethodException>();
+        It should_have_a_descriptive_message = () => Exception.Message.ShouldBe("the controller 'posts' only has methods index, create, new, edit, show, update, destroy.");
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RestfulRouting.Exceptions;
 
 namespace RestfulRouting.Mappers
 {
@@ -50,12 +51,19 @@ namespace RestfulRouting.Mappers
 
         public void Only(params string[] actions)
         {
-            var onlyIncludedActions = new Dictionary<string, Func<Route>>(StringComparer.OrdinalIgnoreCase);
-            foreach (var action in actions)
+            try
             {
-                onlyIncludedActions.Add(action, IncludedActions[action]);
+                var onlyIncludedActions = new Dictionary<string, Func<Route>>(StringComparer.OrdinalIgnoreCase);
+                foreach (var action in actions)
+                {
+                    onlyIncludedActions.Add(action, IncludedActions[action]);
+                }
+                IncludedActions = onlyIncludedActions;
             }
-            IncludedActions = onlyIncludedActions;
+            catch (KeyNotFoundException exception)
+            {
+                throw new InvalidRestfulMethodException(GetControllerName<TController>(), IncludedActions.Keys.ToArray(), exception );
+            }
         }
 
         public void WithFormatRoutes()
