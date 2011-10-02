@@ -2,6 +2,12 @@ h1. Restful Routing for ASP .NET MVC
 
 Inspired by the "rails routing api":http://guides.rubyonrails.org/routing.html.
 
+Available via "NuGet":http://nuget.org/List/Packages/RestfulRouting.
+
+<pre><code> PM> Install-Package RestfulRouting </code></pre>
+
+Basic usage:
+
 <pre><code>public class Routes : RouteSet
 {
 	public override void Map(Mapper map)
