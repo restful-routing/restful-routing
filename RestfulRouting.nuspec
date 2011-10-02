@@ -16,8 +16,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="build/RestfulRouting.dll" target="lib" />
-    <file src="content/*" target="content" />
-	<file src="content/Controllers/*" target="content/Controllers" />
+    <file src="build\RestfulRouting.dll" target="lib" />
+    <file src="content\*" target="content" />
+    <file src="content\Controllers\*" target="content\Controllers" />
   </files>
 </package>
