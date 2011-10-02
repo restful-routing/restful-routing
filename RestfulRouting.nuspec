@@ -2,14 +2,14 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>RestfulRouting</id>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <authors>Steve Hodgkiss</authors>
-    <owners>Steve Hodgkiss</owners>
+    <owners>Steve Hodgkiss, Khalid Abuhakmeh</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>http://stevehodgkiss.github.com/restful-routing/</projectUrl>
     <licenseUrl>https://github.com/stevehodgkiss/restful-routing/blob/master/MIT-LICENSE.txt</licenseUrl>
     <description>RestfulRouting is a routing library for ASP.NET MVC based on the Rails 3 routing DSL.</description>
-    <tags>routing</tags>
+    <tags>routing, rest, asp.net mvc</tags>
     <dependencies>
       <dependency id="WebActivator" version="1.0.0.0" />
       <dependency id="RazorEngine" version="2.1" />
