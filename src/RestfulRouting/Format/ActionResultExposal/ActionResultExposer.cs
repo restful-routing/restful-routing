@@ -3,6 +3,9 @@ using RestfulRouting.Exceptions;
 
 namespace RestfulRouting.Format.ActionResultExposal
 {
+    /// <summary>
+    /// Used for unit testing purposes. Allows to execute required format action.
+    /// </summary>
     public class ActionResultExposer
     {
         readonly FormatCollection formatCollection;
