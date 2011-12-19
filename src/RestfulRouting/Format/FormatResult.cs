@@ -80,6 +80,17 @@ namespace RestfulRouting.Format
             return null;
         }
 
+        /// <summary>
+        /// Exposes the action result for unit testing.
+        /// </summary>
+        /// <returns>
+        /// ActionResultExposer intance to call required actions on.
+        /// </returns>
+        /// <example>
+        ///     FormatResult formatResult = 
+        ///         new FormatResult(format => format.Json = () => new JsonResult());
+        ///     JsonResult jsonResult = (JsonResult)formatResult.EposeActionResult().Json();
+        /// </example>
         public ActionResultExposer ExposeActionResult()
         {
             _format(_formatCollection);
