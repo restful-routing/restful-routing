@@ -59,7 +59,7 @@
     <Compile Include="ActionsSpec.cs" />
     <Compile Include="Format\AcceptListSpec.cs" />
     <Compile Include="AdditionalActionSpec.cs" />
-    <Compile Include="Format\ResultExposal\ExposeActionResultSpec.cs" />
+    <Compile Include="Format\ResultExposal\When_ExposeActionResult_method_called_on_format_result.cs" />
     <Compile Include="Format\FormatResultSpec.cs" />
     <Compile Include="Format\MimeTypeSpec.cs" />
     <Compile Include="Format\ResultExposal\When_format_collection_has_no_appropriate_action_registered.cs" />
