@@ -2,6 +2,7 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Linq;
+using RestfulRouting.Format.ActionResultExposal;
 
 namespace RestfulRouting.Format
 {
@@ -15,7 +16,7 @@ namespace RestfulRouting.Format
         }
 
         Action<FormatCollection> _format;
-        internal FormatCollection FormatCollection = new FormatCollection();
+        FormatCollection _formatCollection = new FormatCollection();
 
         public FormatResult(Action<FormatCollection> format)
         {
@@ -24,8 +25,8 @@ namespace RestfulRouting.Format
 
         public override void ExecuteResult(ControllerContext context)
         {
-            _format(this.FormatCollection);
-            var result = GetResult(this.FormatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes);
+            _format(this._formatCollection);
+            var result = GetResult(this._formatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes);
             result.ExecuteResult(context);
         }
 
@@ -77,6 +78,12 @@ namespace RestfulRouting.Format
                 }
             }
             return null;
+        }
+
+        public ActionResultExposer ExposeActionResult()
+        {
+            _format(_formatCollection);
+            return new ActionResultExposer(_formatCollection);
         }
     }
 }

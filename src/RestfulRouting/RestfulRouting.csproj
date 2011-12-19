@@ -62,8 +62,7 @@
     <Compile Include="Format\FormatResult.cs" />
     <Compile Include="Format\AcceptType.cs" />
     <Compile Include="Format\MimeTypeList.cs" />
-    <Compile Include="Format\ResultExposal\ActionResultExposer.cs" />
-    <Compile Include="Format\ResultExposal\FormatResultExtensions.cs" />
+    <Compile Include="Format\ActionResultExposal\ActionResultExposer.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Inflector.cs" />
     <Compile Include="Mappers\DebugRouteMapper.cs" />

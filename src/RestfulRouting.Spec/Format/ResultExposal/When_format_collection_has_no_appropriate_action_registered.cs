@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using Machine.Specifications;
 using RestfulRouting.Exceptions;
 using RestfulRouting.Format;
-using RestfulRouting.Format.ResultExposal;
+using RestfulRouting.Format.ActionResultExposal;
 
 namespace RestfulRouting.Spec.Format.ResultExposal
 {
