@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using RestfulRouting.Exceptions;
 
 namespace RestfulRouting.Format.ResultExposal
 {
@@ -13,7 +14,14 @@ namespace RestfulRouting.Format.ResultExposal
 
         public ActionResult Html()
         {
-            throw new System.NotImplementedException();
+            if (!this.formatCollection.ContainsKey("html"))
+            {
+                string message = string.Format("Format you are trying to get is not registered. Requested format is {0}. Registered formats are {1}",
+                    "html", string.Join(", ", this.formatCollection.Keys));
+                throw new NotRegisteredFormatException(message);
+            }
+
+            return this.formatCollection["html"].Invoke();
         }
 
         public ActionResult Json()

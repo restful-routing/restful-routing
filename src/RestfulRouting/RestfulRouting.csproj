@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="Exceptions\InvalidRestfulMethodException.cs" />
+    <Compile Include="Exceptions\NotRegisteredFormatException.cs" />
     <Compile Include="Format\AcceptList.cs" />
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="Format\FormatCollection.cs" />
