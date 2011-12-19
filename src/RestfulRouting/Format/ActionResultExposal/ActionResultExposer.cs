@@ -27,6 +27,16 @@ namespace RestfulRouting.Format.ActionResultExposal
             return ExecuteAction(FormatCollection.JsKey);
         }
 
+        public ActionResult Xml()
+        {
+            return ExecuteAction(FormatCollection.XmlKey);
+        }
+
+        public ActionResult Csv()
+        {
+            return ExecuteAction(FormatCollection.CsvKey);
+        }
+
         private ActionResult ExecuteAction(string key)
         {
             if (!this.formatCollection.ContainsKey(key))
@@ -37,16 +47,6 @@ namespace RestfulRouting.Format.ActionResultExposal
             }
 
             return this.formatCollection[key]();
-        }
-
-        public ActionResult Xml()
-        {
-            return ExecuteAction(FormatCollection.XmlKey);
-        }
-
-        public ActionResult Csv()
-        {
-            return ExecuteAction(FormatCollection.CsvKey);
         }
     }
 }

@@ -15,8 +15,9 @@ namespace RestfulRouting.Spec.Format.ResultExposal
         static Exception exception;
 
         Establish context = () => {
-            var formats = new FormatCollection();
-            formats.Json = () => new JsonResult();
+            var formats = new FormatCollection {
+                Json = () => new JsonResult()
+            };
             exposer = new ActionResultExposer(formats);
         };
 
