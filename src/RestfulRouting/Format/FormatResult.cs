@@ -89,9 +89,9 @@ namespace RestfulRouting.Format
         /// <example>
         ///     FormatResult formatResult = 
         ///         new FormatResult(format => format.Json = () => new JsonResult());
-        ///     JsonResult jsonResult = (JsonResult)formatResult.EposeActionResult().Json();
+        ///     JsonResult jsonResult = (JsonResult)formatResult.EposeResult().Json();
         /// </example>
-        public ActionResultExposer ExposeActionResult()
+        public ActionResultExposer ExposeResult()
         {
             _format(_formatCollection);
             return new ActionResultExposer(_formatCollection);

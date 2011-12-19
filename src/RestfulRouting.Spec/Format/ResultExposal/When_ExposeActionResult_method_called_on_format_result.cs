@@ -25,11 +25,11 @@ namespace RestfulRouting.Spec.Format.ResultExposal
         };
 
         Because of = () => {
-            returnedHtmlActionResult = formatResult.ExposeActionResult().Html();
-            returnedJsonActionResult = formatResult.ExposeActionResult().Json();
-            returnedJsActionResult = formatResult.ExposeActionResult().Js();
-            returnedXmlActionResult = formatResult.ExposeActionResult().Xml();
-            returnedCsvResult = formatResult.ExposeActionResult().Csv();
+            returnedHtmlActionResult = formatResult.ExposeResult().Html();
+            returnedJsonActionResult = formatResult.ExposeResult().Json();
+            returnedJsActionResult = formatResult.ExposeResult().Js();
+            returnedXmlActionResult = formatResult.ExposeResult().Xml();
+            returnedCsvResult = formatResult.ExposeResult().Csv();
         };
 
         It should_return_associated_with_json_result = () => returnedHtmlActionResult.ShouldBeOfType<ViewResult>();
