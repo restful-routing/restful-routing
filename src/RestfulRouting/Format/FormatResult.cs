@@ -15,7 +15,7 @@ namespace RestfulRouting.Format
         }
 
         Action<FormatCollection> _format;
-        FormatCollection _formatCollection = new FormatCollection();
+        internal FormatCollection FormatCollection = new FormatCollection();
 
         public FormatResult(Action<FormatCollection> format)
         {
@@ -24,8 +24,8 @@ namespace RestfulRouting.Format
 
         public override void ExecuteResult(ControllerContext context)
         {
-            _format(_formatCollection);
-            var result = GetResult(_formatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes);
+            _format(this.FormatCollection);
+            var result = GetResult(this.FormatCollection, context.RouteData.Values, context.HttpContext.Request.AcceptTypes);
             result.ExecuteResult(context);
         }
 
