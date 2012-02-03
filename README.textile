@@ -66,6 +66,11 @@ Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions f
 
 h2. Latest Release
 
+1.2.2
+* Fixes ordering issue with Only (thanks Tommysqueak)
+* Fixes StandardMapper to use RestfulHttpMethodConstraint (thanks Tommysqueak)
+* Fixed version number on dll to match version number of Restful Routing
+
 1.2.0
 * Addition of ExposeResult in FormatResult (thanks SlyNet)
 
