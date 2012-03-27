@@ -1,6 +1,6 @@
 *{margin:0;padding:0}
 body{font:12px Helvetica,Arial,sans-serif;background-color:#E9EDEE;color:#333}
-#header h1{font-family:KoolBeansRegular;font-size:100px;color:#104ba9;text-align:center;text-shadow:#333 2px 2px 2px;text-transform:lowercase;margin:0;padding:0}
+#header h1{font-family:Arial;font-size:65px;color:#104ba9;text-align:center;margin:0;padding:0}
 #header h2{font-size:32px;text-align:center;font-weight:700}
 #header p{text-align:center;font-size:18px;font-weight:700}
 #container{width:90%;margin:0 auto}

@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RazorEngine">
-      <HintPath>..\..\lib\razorengine\RazorEngine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -91,17 +88,7 @@
     <EmbeddedResource Include="RouteDebug\Content\jquery.dataTables.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RouteDebug\Content\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="RouteDebug\Content\style.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RouteDebug\Content\koolbean.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RouteDebug\Content\koolbean.svg" />
-    <EmbeddedResource Include="RouteDebug\Content\koolbean.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
