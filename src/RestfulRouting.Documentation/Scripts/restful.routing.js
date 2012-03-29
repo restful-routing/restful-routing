@@ -1,0 +1,3 @@
+﻿$(function () {
+    window.prettyPrint() && prettyPrint();
+});
