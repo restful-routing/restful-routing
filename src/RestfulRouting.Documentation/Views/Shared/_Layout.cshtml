@@ -22,15 +22,19 @@
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
               <a class="brand" href=".@Url.Action("index", "home")">Restful Routing</a>
               <div class="nav-collapse">
                 <ul class="nav">
-                  <li class=""></li>
+                    <li class="">@Html.ActionLink("Quick Start", "show", "quickstart")</li>
+                    <li class="">@Html.ActionLink("RouteSet", "show", "routeset")</li>
+                   <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapping <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Resource &amp; Resources</a></li>
+                        <li><a href="#">Areas</a></li>
+                        <li><a href="#">Extras</a></li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -38,6 +42,9 @@
         </div>
         <div class="container">
             @RenderBody()
+            <footer class="footer">
+                <p class="pull-right"><a href="#">Back to top</a></p>
+            </footer>
         </div>
     </body>
 </html>

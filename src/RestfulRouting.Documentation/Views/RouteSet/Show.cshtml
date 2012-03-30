@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "RouteSet";
+}
+<section class="page-header">
+    <h1 class="">RouteSet<small> is where it all starts</small></h1>
+</section>
+<h2>The Basics</h2>
+<p><strong>A RoutSet is a collection of route mappings. It can define routes in your application, or it can connect to other RouteSets.</strong></p>
+<p>All routes are defined inside the Map method of a class which inherits from RouteSet. You may have noticed a RouteSet on the Quick Start page. If not, here it is again:</p>
+<pre class="prettyprint linenums">
+public class Routes : RouteSet
+{
+    public override void Map(IMapper map)
+    {
+        map.DebugRoute("routedebug");
+        map.Root&lt;HomeController&gt;(x => x.Index());
+    }
+}
+</pre>
+
+<p>The IMapper class that is passed into the method Map gives you an interface to, what else, map your routes to the RouteTables dictionary at the heart of every ASP.Net MVC application. If you installed through Nuget, you will have noticed a RouteSet already created for you. Take a look at this code:</p>
+
+<pre class="prettyprint linenums">
+public static void Start()
+{
+    var routes = RouteTable.Routes;
+    routes.MapRoutes<Routes>();
+}
+</pre>
+<p>
+    <strong>Note: This code just needs to be called at application start. We prefer WebActivator, but you can call it in Global.asax if you would like. MapRoutes is an extension method from RestfulRouting.</strong>
+</p>
+
+<h2>Connecting RouteSets</h2>
+<p>Sometimes you want to logically seperate your RouteSets. Instead of grouping all routes in a single RouteSet, we provide the ability to connect RouteSets. You must select one RoutSet to be the root of your RouteSets, but after that you may connect them any way you would like. Let's look at an example.</p>
+
+<pre class="prettyprint linenums">
+public class Routes : RouteSet
+{
+    public override void Map(IMapper map)
+    {
+        map.DebugRoute("routedebug");
+        map.Connect&lt;One&gt;();
+        map.Connect&lt;Two&gt;();
+    }
+}
+
+public class One : RouteSet
+{
+    public override void Map(IMapper map)
+    {
+        map.Resource&lt;OneController&gt;();
+    }
+}
+
+public class Two : RouteSet
+{
+    public override void Map(IMapper map)
+    {
+        map.Resources&lt;TwosController&gt;();
+    }
+}
+</pre>

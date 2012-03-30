@@ -4,6 +4,34 @@
     background-color: white;
 }
 
+#feature {
+}
+    #feature h1, #feature .lead {
+        text-align: center;
+    }
+    #feature pre {
+        text-align: left;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+#sub-header {
+    text-align: center;
+}
+
+.footer {
+    margin-top: 45px;
+    padding: 35px 0 36px;
+    border-top: 1px solid #E5E5E5;
+}
+
+.download-info {
+    text-align: center;
+}
+    .download-info a {
+        padding: 16px;
+        font-size: 16px;
+    }
 
 
 /* pretiffy */
