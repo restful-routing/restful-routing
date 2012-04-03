@@ -37,25 +37,25 @@ namespace RestfulRouting.Documentation
             /*
              * TODO: Add your routes here.
              * 
-            map.Root<HomeController>(x => x.Index());
+            map.Root&lt;HomeController&gt;(x =&gt; x.Index());
             
-            map.Resources<BlogsController>(blogs =>
+            map.Resources&lt;BlogsController&gt;(blogs =&gt;
             {
                 blogs.As("weblogs");
                 blogs.Only("index", "show");
-                blogs.Collection(x => x.Get("latest"));
+                blogs.Collection(x =&gt; x.Get("latest"));
 
-                blogs.Resources<PostsController>(posts =>
+                blogs.Resources&lt;PostsController&gt;(posts =&gt;
                 {
                     posts.Except("create", "update", "destroy");
-                    posts.Resources<CommentsController>(c => c.Except("destroy"));
+                    posts.Resources&lt;CommentsController&gt;(c =&gt; c.Except("destroy"));
                 });
             });
 
-            map.Area<Controllers.Admin.BlogsController>("admin", admin =>
+            map.Area&lt;Controllers.Admin.BlogsController&gt;("admin", admin =&gt;
             {
-                admin.Resources<Controllers.Admin.BlogsController>();
-                admin.Resources<Controllers.Admin.PostsController>();
+                admin.Resources&lt;Controllers.Admin.BlogsController&gt;();
+                admin.Resources&lt;Controllers.Admin.PostsController&gt;();
             });
              */
         }
@@ -63,7 +63,7 @@ namespace RestfulRouting.Documentation
         public static void Start()
         {
             var routes = RouteTable.Routes;
-            routes.MapRoutes<Routes>();
+            routes.MapRoutes&lt;Routes&gt;();
         }
     }
 }

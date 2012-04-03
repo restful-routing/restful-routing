@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Extras";
+}
+<section class="page-header">
+    <h1>Extras <small>with some special sauce</small></h1>
+</section>
+@Html.Flash()
+
+<h2>Member and Collection Routes</h2>
+<p>Use the Member and Collection methods inside of resources to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head (Patch coming soon). When inside a resource, you will only have access to the Member method.</p>
+<pre class="prettyprint linenums">
+area.Resources&lt;ResourcesController&gt;(resources => {
+    resources.Collection(r => r.Get("many"));
+    resources.Member(r => r.Get("lonely"));
+});
+area.Resource&lt;ExtrasController&gt;(extras => {
+    // using member, notice collection is unavailable
+    extras.Member(e => e.Get("member"));
+});
+</pre>
+<p>
+    <a class="btn" href="@Url.Action("member", "extras")">Member on a Resource</a>
+    <a class="btn" href="@Url.Action("lonely", "resources", new { id = 1 })">Member on Resources</a>
+    <a class="btn" href="@Url.Action("many", "resources")">Collection on Resources</a>
+</p>
+
+<h2>Standard Mappings</h2>
+<p>Sometimes our conventions just don't work for you. We may be rigid, but we don't rule with an iron fist. Two additional methods are provided so you can add custom routes to the route set if you need to. Path is a chainable method that allows you to add standard mappings. Route is a method that will allow you to add a custom route to the route set.</p>
+<pre class="prettyprint linenums">
+area.Resource&lt;ExtrasController&gt;(extras => {
+    // Use path
+    extras.Path("using_path").To&lt;ExtrasController&gt;(e => e.UsingPath()).GetOnly();
+    // Using route
+    extras.Route(new Route("mappings/extras/with_route",
+        new RouteValueDictionary(new { controller = "extras", action = "usingroute", area="mappings" }),
+        new MvcRouteHandler()));
+});
+</pre>
+<p>
+    <a class="btn" href="@Url.Action("usingpath", "extras")">Path</a>
+    <a class="btn" href="@Url.Action("usingroute", "extras")">Route</a>
+</p>
+
+<h2>View Engines</h2>
+<p>Restful Routing comes with two view engines: RestfulRoutingRazorViewEngine and RestfulRoutingWebFormViewEngine. Let's look at the one of these view engines.</p>
+<pre class="prettyprint linenums">
+    public class RestfulRoutingRazorViewEngine : RazorViewEngine
+    {
+        public RestfulRoutingRazorViewEngine()
+        {
+            AreaMasterLocationFormats = new[] {
+                                                  "~/Views/{2}/{1}/{0}.cshtml",
+                                                  "~/Views/{2}/{1}/{0}.vbhtml",
+                                                  "~/Views/{2}/Shared/{0}.vbhtml",
+                                                  "~/Views/{2}/Shared/{0}.cshtml",
+                                              };
+
+            AreaViewLocationFormats = new[] {
+                                                "~/Views/{2}/{1}/{0}.cshtml",
+                                                "~/Views/{2}/{1}/{0}.vbhtml",
+                                                "~/Views/{2}/Shared/{0}.cshtml",
+                                                "~/Views/{2}/Shared/{0}.vbhtml",
+                                            };
+
+            AreaPartialViewLocationFormats = AreaViewLocationFormats;
+        }
+    }
+</pre>
+<p>These view engines change the way that ASP.Net MVC will look for views. This is what a default ASP.Net MVC folder structure might look like.</p>
+<pre class="linenums previous">
+    Views
+        |-  Home            // home controller
+        |-  Profiles        // profiles controller
+    Areas
+        |- Administration  // administration area
+            |-Controllers  // area controllers
+            |-Models       // models for areas
+            |-Views
+                |-Users        // users views in adminstration area
+                |-Products     // products views in administration area
+                |-Shared       // area shared views
+    etc...
+</pre>
+<p>And after using a Restful Routing view engine.</p>
+<pre class="linenums previous">
+    Controllers
+        |- Administration   // controllers for administration
+    Models
+        |-Administration    // models for administration
+    Views
+        |-  Home            // home controller
+        |-  Profiles        // profiles controller
+        |-  Administration  // administration area
+            |- Users        // users controller in adminstration area
+            |- Products     // products controller in administration area
+    etc...
+</pre>
+<p>Using our view engines is completely optional, but can help reduce the folders necessary to create areas in your code.</p>
+<h2>Format Result</h2>
+<p>Wouldn't it be cool if you could tell what type a user was asking for based on an extension in the request? Well you can using the FormatResult provided in our library. You may have noticed that we provided a base controller when you installed from Nuget. This sites application controller looks like this:</p>
+<pre class="prettyprint linenums">
+namespace RestfulRouting.Documentation.Controllers
+{
+    public abstract class ApplicationController : Controller {
+        protected ActionResult RespondTo(Action&lt;FormatCollection&gt; format) {
+            return new FormatResult(format);
+        }
+    }
+}
+</pre>
+<p>There are two things you need to do before utilizing FormatResult: Register a resource/resources with format routes and use the RespondTo method.</p>
+<pre class="prettyprint linenums">
+// enable format routes
+extras.WithFormatRoutes();
+</pre>
+<p>We provide a set of known types out of the box to make using our fluent interface a little nicer, but we support any file extension you can think of. To generate these format routes just specify the format as follows.</p>
+<pre class="prettyprint linenums">
+@@Url.Action("usingpath", "extras", new { format = "json" })   // generate json url
+@@Url.Action("usingroute", "extras", new { format = "xml" }})  // generate xml url
+</pre>
+Want to test it out?
+<pre id="format-testarea" class="prettyprint">
+</pre>
+
+<script type="text/javascript">
+    $(function () {
+        $('#json').on('click', function (evt) {
+            evt.preventDefault();
+            var url = $(this).attr('href');
+            $.get(url, function (result) {
+                $("#format-testarea").html(JSON.stringify(result));
+            });
+        });
+
+        $('#xml, #yml').on('click', function (evt) {
+            evt.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "xml",
+                complete: function (data) {
+                    $("#format-testarea").html(htmlEscape(data.responseText));
+                }
+            });
+        });
+    });
+
+    function htmlEscape(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+</script>
+
+<p id="format-buttons">
+    <a id="json" class="btn" href="@Url.Action("awesome", "extras", new { format = "json" })">Json</a>
+    <a id="xml" class="btn" href="@Url.Action("awesome", "extras", new { format = "xml" })">Xml</a>
+        <a id="xml" class="btn" href="@Url.Action("awesome", "extras", new { format = "yml" })">Yaml</a>
+</p>
+
+<p>Awesome right?! We promise, there is no monkey business happening here. This is the real deal. Although we recommend you read the following section of Quirks if you plan on using format routes.</p>
+
+<p>A suggestion from experience. This is helpful if you are building single page applications, but there is a point where this feature doesn't scale. Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
+
+<h2>Quirks</h2>
+<p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request. Let me show you.</p>
+
+<pre class="prettyprint linenums">
+/mappings/resources/1       // My request to a resource. { id: 1, area: mappings, controller: resources }
+    
+@@Url.Action("index", new { controller = "resources", area = "mappings", id = 1 }  // this is equivalent
+@@Url.Action("index")                                                              // to this route, MVC carries over old values
+</pre>
+
+<p>understanding this can help you debug lots of issues not just with Restful Routing, but with ASP.NET MVC in general.</p>

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace RestfulRouting.Documentation.Controllers
 {
-    public class QuickStartController : Controller
+    public class QuickStartController : ApplicationController
     {
         public ActionResult Show()
         {

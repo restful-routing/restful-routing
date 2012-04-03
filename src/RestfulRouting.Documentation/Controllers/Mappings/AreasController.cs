@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RestfulRouting.Documentation.Controllers
+namespace RestfulRouting.Documentation.Controllers.Mappings
 {
-    public class RouteSetController : ApplicationController
+    public class AreasController : ApplicationController
     {
         public ActionResult Show()
         {

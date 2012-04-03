@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Show";
+}
+<section class="page-header">
+    <h1>Areas <small>grouping Resource &amp; Resources controllers</small></h1>
+</section>
+
+<p>
+    Unlike areas in the default ASP.Net MVC configuration. Areas are handled by namespace in Restful Routing. Usually there is a correlation between folders and namespaces, so for most developers this isn't a big difference from what they already do.
+</p>
+<p>Let's look at how this website uses areas.</p>
+<pre class="prettyprint">
+ map.Area&lt;AreasController&gt;("mappings", area =&gt; {
+        area.Resource&lt;ResourceController&gt;();
+        area.Resources&lt;ResourcesController&gt;(resources =&gt; {
+            // we are nesting a resource inside of another resource
+            resources.Resources&lt;OtherResourcesController&gt;(other =&gt; other.Only("index"));
+        });
+        area.Resource&lt;AreasController&gt;();
+        area.Resource&lt;ExtrasController&gt;();
+    });
+</pre>
+
+<p>The controller provided to the Area method is used to determine the namespace for the grouped controllers. The "mappings" string is used to determine the name of the area, along with the url part.</p>
+
+<p> Remember you will need to provide the area when generating urls if you are not within that context to begin with.</p>
+
+<pre class="prettyprint">
+    @@Url.Action("index", "resources", new { area = "mappings" })
+</pre>
+
+<p>To exit out of an area, you can set the area to an empty string </p>
+
+<pre class="prettyprint">
+    @@Url.Action("show", "quickstart", new { area = "" })
+</pre>
+
+<p><strong>All rules with a Resource and Resources still apply when dealing with Areas.</strong></p>

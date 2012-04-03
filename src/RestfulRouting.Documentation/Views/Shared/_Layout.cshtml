@@ -20,25 +20,26 @@
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              <a class="brand" href=".@Url.Action("index", "home")">Restful Routing</a>
-              <div class="nav-collapse">
-                <ul class="nav">
-                    <li class="">@Html.ActionLink("Quick Start", "show", "quickstart")</li>
-                    <li class="">@Html.ActionLink("RouteSet", "show", "routeset")</li>
-                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapping <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Resource &amp; Resources</a></li>
-                        <li><a href="#">Areas</a></li>
-                        <li><a href="#">Extras</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="@Url.Action("index", "home", new { area = "" }, null)">Restful Routing</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="">@Html.ActionLink("Quick Start", "show", "quickstart", new { area = "" }, null)</li>
+                            <li class="">@Html.ActionLink("RouteSet", "show", "routeset", new { area = "" }, null)</li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapping <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("show", "resource", new { area = "mappings" }, null)">Resource</a></li>
+                                    <li><a href="@Url.Action("index", "resources", new { area = "mappings" }, null)">Resources</a></li>
+                                    <li><a href="@Url.Action("show", "areas", new { area = "mappings" }, null)">Areas</a></li>
+                                    <li><a href="@Url.Action("show", "extras", new { area = "mappings" }, null)">Extras</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
         <div class="container">
             @RenderBody()

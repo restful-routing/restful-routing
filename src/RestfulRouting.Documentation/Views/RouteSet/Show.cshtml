@@ -24,7 +24,7 @@ public class Routes : RouteSet
 public static void Start()
 {
     var routes = RouteTable.Routes;
-    routes.MapRoutes<Routes>();
+    routes.MapRoutes&lt;Routes&gt;();
 }
 </pre>
 <p>
@@ -61,3 +61,39 @@ public class Two : RouteSet
     }
 }
 </pre>
+
+<h2>Optional Configuration</h2>
+<p>First off, let's start by saying that 90% (a number pulled out of thin air) will never need to change the default configuration of a RoutSet. If you fall within that other 10%, then this is your section.</p>
+<p>A RouteSet provides settings that can modify the behavior of route registration. These properties can be found within the context of a RouteSet. They are listed below.</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Setting</th>
+            <th>Default</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>LowercaseUrls</td>
+            <td>true</td>
+            <td>register your urls in lowercase invariant culture.</td>
+        </tr>
+        <tr>
+            <td>LowercaseDefaults</td>
+            <td>true</td>
+            <td>register your actions when registered normally in lowercase invariant culture.</td>
+        </tr>
+        <tr>
+            <td>LowercaseActions</td>
+            <td>true</td>
+            <td>register your actions when registered with Route in lowercase invariant culture.</td>
+        </tr>
+        <tr>
+            <td>MapDelete</td>
+            <td>false</td>
+            <td>register an additional action of Delete [GET]. Usually let's you display a delete confirmation page before removing a resource.</td>
+        </tr>
+    </tbody>
+</table>
+

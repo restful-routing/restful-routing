@@ -51,14 +51,14 @@ namespace RestfulRouting.Mappers
 
         public void Only(params string[] actions)
         {
-        	if (actions.Any(action => !IncludedActions.ContainsKey(action)))
-        		throw new InvalidRestfulMethodException(GetControllerName<TController>(), IncludedActions.Keys.ToArray());
+            if (actions.Any(action => !IncludedActions.ContainsKey(action)))
+                throw new InvalidRestfulMethodException(GetControllerName<TController>(), IncludedActions.Keys.ToArray());
 
-        	IncludedActions = IncludedActions.Where(a => actions.Contains(a.Key, StringComparer.OrdinalIgnoreCase))
-															.ToDictionary(k => k.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
+            IncludedActions = IncludedActions.Where(a => actions.Contains(a.Key, StringComparer.OrdinalIgnoreCase))
+                .ToDictionary(k => k.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
         }
 
-    	public void WithFormatRoutes()
+        public void WithFormatRoutes()
         {
             GenerateFormatRoutes = true;
         }

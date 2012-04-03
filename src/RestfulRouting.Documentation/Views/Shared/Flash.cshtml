@@ -1,0 +1,5 @@
+﻿@model MvcFlash.Core.Models.FlashContext
+<div id="@Model.Message.Type-@Model.Index" class="alert alert-@Model.Message.Type">
+    <a class="close" data-dismiss="alert">×</a>
+    @Model.Message.Text
+</div>
