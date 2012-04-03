@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting", "RestfulRo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Spec", "RestfulRouting.Spec\RestfulRouting.Spec.csproj", "{C02C90C0-D6AA-4F40-88D2-15D1F7F2B03D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Sample", "RestfulRouting.Sample\RestfulRouting.Sample.csproj", "{AC9526B0-1E2E-46E1-AF68-AA77D07C5A1F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulRouting.Documentation", "RestfulRouting.Documentation\RestfulRouting.Documentation.csproj", "{D42885F6-3B33-42D7-83CC-5B35E0B7D7C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{780A14E4-2733-4311-8ECB-17A118404811}"
@@ -29,10 +27,6 @@ Global
 		{C02C90C0-D6AA-4F40-88D2-15D1F7F2B03D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C02C90C0-D6AA-4F40-88D2-15D1F7F2B03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C02C90C0-D6AA-4F40-88D2-15D1F7F2B03D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC9526B0-1E2E-46E1-AF68-AA77D07C5A1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC9526B0-1E2E-46E1-AF68-AA77D07C5A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC9526B0-1E2E-46E1-AF68-AA77D07C5A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC9526B0-1E2E-46E1-AF68-AA77D07C5A1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D42885F6-3B33-42D7-83CC-5B35E0B7D7C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D42885F6-3B33-42D7-83CC-5B35E0B7D7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D42885F6-3B33-42D7-83CC-5B35E0B7D7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
