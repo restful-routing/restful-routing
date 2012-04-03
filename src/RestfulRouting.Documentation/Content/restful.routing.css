@@ -35,11 +35,63 @@
     text-align: center;
 }
 
+#sponsors {
+    
+}
+
+    #sponsors #resharper {
+        position: relative;
+        background: #7D255B url(http://www.jetbrains.com/resharper/features/rs/rs1/rs468x60_violet.gif) no-repeat 10px 50%;
+        border: solid 1px #7D255B;
+        margin: 0 auto;
+        padding: 0;
+        text-decoration: none;
+        text-indent: 0;
+        letter-spacing: -0.001em;
+        width: 466px;
+        height: 58px;
+    }
+        #sponsors #resharper span {
+            margin: 7px 0 0 67px;
+            padding: 0;
+            float: left;
+            font-size: 12px;
+            cursor: pointer;
+            background-image: none;
+            border: 0;
+            color: #E9D5E1;
+            font-family: trebuchet ms, arial, sans-serif;
+            font-weight: normal;
+        }
+
+        #sponsors #resharper a {
+            position: absolute;
+            left: 0;
+            width: 281px;
+            margin: 0;
+            padding: 18px 0 14px 185px;
+            line-height: 13px;
+            font-size: 13px;
+            cursor: pointer;
+            background-image: none;
+            border: none;
+            display: block;
+            color: #E9D5E1;
+            font-family: trebuchet ms, arial, sans-serif;
+            font-weight: normal;
+            text-decoration: none;
+        }
+
 .footer {
     margin-top: 45px;
     padding: 35px 0 36px;
     border-top: 1px solid #E5E5E5;
 }
+
+    .footer p {
+        margin-bottom: 0;
+        color: #555;
+    }
 
 .download-info {
     text-align: center;

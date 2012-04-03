@@ -23,6 +23,11 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="brand" href="@Url.Action("index", "home", new { area = "" }, null)">Restful Routing</a>
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </a>
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="">@Html.ActionLink("Quick Start", "show", "quickstart", new { area = "" }, null)</li>
@@ -36,6 +41,7 @@
                                     <li><a href="@Url.Action("show", "extras", new { area = "mappings" }, null)">Extras</a></li>
                                 </ul>
                             </li>
+                            <li class="">@Html.ActionLink("Route Debugger", "show", "routedebugger", new { area = "" }, null)</li>
                         </ul>
                     </div>
                 </div>
@@ -45,6 +51,8 @@
             @RenderBody()
             <footer class="footer">
                 <p class="pull-right"><a href="#">Back to top</a></p>
+                <p>Developed using ASP.Net MVC, RestfulRouting, MvcFlash, and <a href="http://twitter.github.com/bootstrap/">Bootstrap</a></p>
+                <p>Restful Routing licensed under the MIT License. Documentation (this site) licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
             </footer>
         </div>
     </body>

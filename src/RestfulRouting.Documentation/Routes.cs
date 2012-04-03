@@ -8,7 +8,9 @@ using RestfulRouting.Documentation.Controllers.Mappings;
 namespace RestfulRouting.Documentation {
     public class Routes : RouteSet {
         public override void Map(IMapper map) {
+            // register the route debugger
             map.DebugRoute("routedebug");
+            // register the root of the site
             map.Root<HomeController>(x => x.Index());
             map.Resource<QuickStartController>(quickstart => quickstart.Only("show"));
 
@@ -42,6 +44,9 @@ namespace RestfulRouting.Documentation {
                     extras.WithFormatRoutes();
                 });
             });
+
+            // Not the route debuger, just a controller
+            map.Resource<RouteDebuggerController>(debug => debug.Only("show"));
 
 
         }

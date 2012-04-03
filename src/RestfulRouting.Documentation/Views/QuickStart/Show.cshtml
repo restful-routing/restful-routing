@@ -69,6 +69,11 @@ namespace RestfulRouting.Documentation
 }
 </pre>
 
+<p><strong>Make sure you set the root.</strong></p>
+<pre class="prettyprint linenums">
+map.Root&lt;Homecontroller&gt;(x => x.Index());
+</pre>
+
 <p>In addition to Routes.cs you will also get ApplicationController. Using this base controller is optional, but it does have the code necessary to do formatted routes.</p>
 
 <pre class="prettyprint linenums">

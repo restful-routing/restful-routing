@@ -79,6 +79,7 @@
     <Compile Include="Controllers\Mappings\ResourceController.cs" />
     <Compile Include="Controllers\QuickStartController.cs" />
     <Compile Include="Controllers\Mappings\ResourcesController.cs" />
+    <Compile Include="Controllers\RouteDebuggerController.cs" />
     <Compile Include="Controllers\RouteSetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -147,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Mappings\Extras\Awesome.yml.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RouteDebugger\Show.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

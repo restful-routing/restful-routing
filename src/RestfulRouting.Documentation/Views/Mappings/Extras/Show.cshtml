@@ -6,6 +6,12 @@
 </section>
 @Html.Flash()
 
+<h2>Root</h2>
+<p>You need a default route which is located at "/". You can use the Root method in your RouteSet. This should only be called once.</p>
+<pre class="prettyprint linenums">
+map.Root&lt;Homecontroller&gt;(x => x.Index());
+</pre>
+
 <h2>Member and Collection Routes</h2>
 <p>Use the Member and Collection methods inside of resources to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head (Patch coming soon). When inside a resource, you will only have access to the Member method.</p>
 <pre class="prettyprint linenums">
