@@ -16,15 +16,15 @@
 @Html.Flash()
 <section id="basics">
     <h2>Basics</h2>
-    <p>Resources are entities within your domain that can be preceived as many by you and your users. Imagine building a store application, you might want to expose your product catalog so that users may search and purchase products. In this case, your products would be considered resources. The url that is generated would also reflect that there are many products to be offered.</p>
+    <p>Resources represent collections withing your domain. Imagine building a store application, you might want to expose your catalog so that customers may search and purchase products. Products would be considered resources. The url that is generated would also reflect that there are many products to be offered.</p>
     <pre class="prettyprint">
     http://localhost/products
     </pre>
-    <p>Notice the pluralization of products. If you are starting a e-commerce site, you would most likely sell more than one thing at a time. To register a resource controller is as simple as a single line.</p>
+    <p>Notice the pluralization of products. If you are starting an e-commerce site, you would most likely sell more than one product at a time.</p>
     <pre class="prettyprint">
     map.Resources&lt;ProductsController&gt;();
     </pre>
-    <p>Actually this page is powered by a Resources controller, and here are the actions. All the buttons will redirect back to this page. We are also passing an arbitrary id of "1" just so the route requirments are met.</p>
+    <p>This page is powered using a Resources controller. The action buttons will redirect back to this page. We are also passing an arbitrary id of "1" just so the route requirments are met.</p>
     <div >
         @Html.ActionLink("Index", "index", new { flash = true }, new { @class = "btn"})
         @Html.ActionLink("Show", "show", new { id = 1 }, new { @class = "btn"})
@@ -46,7 +46,7 @@
 </section>
 <section id="actions">
     <h2>Actions and Http Methods</h2>
-    <p>When you register resources, you get a set of actions and methods registered for you automatically. You don't have to do anything other than register your controller and implement the actions.</p>
+    <p>When registering resources, a set of actions and methods are registered automatically. Register your controller and implement the actions.</p>
     <p><strong>Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.</strong></p>
     <table class="table table-bordered table-striped table-condensed">
         <thead>
@@ -153,7 +153,7 @@
             <tr>
                 <td>DESTROY</td>
                 <td>DELETE</td>
-                <td>products#delete</td>
+                <td>products#destroy</td>
                 <td>id</td>
                 <td>/products/1</td>
             </tr>
@@ -162,8 +162,8 @@
 </section>
 <section id="naming">
         <h2>Naming</h2>
-        <p>Sometimes you name your controller something, but wish to have the url reflect something entirely else. This is simple to do.</p>
-        <pre class="prettyprint">map.Resource&lt;ProductsController&gt;(products =&gt; products.As("amazing-items"));</pre>
+        <p>Sometimes you name your controller one thing, but wish to have the resources url reflect something entirely else. This is simple to do.</p>
+        <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.As("amazing-items"));</pre>
         <p>The new url will for products#index will be changed.</p>
         <pre class="prettyprint">http://localhost/amazing-items</pre>
         <p>Additionally, you can change the default <strong>action</strong> names of a resource by using the PathNames method. This isn't recommended, but we like to give you options.</p>
@@ -186,9 +186,9 @@
 
 <section id="tweaks">
     <h2>Tweaking Actions</h2>
-    <p>Resources, sometimes you might not need all the methods we provide. You may remove actions using the follwing methods:</p>
+    <p>Sometimes you might not need all the methods we provide. You may remove actions using the follwing methods:</p>
     <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.Only("show", "edit", "update"));</pre>
-    <p>Inversely we could exclude the actions we no longer need.</p>
+    <p>Inversely, exclude the actions we no longer need.</p>
     <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.Except("new", "create", "destroy"));</pre>
 </section>
 
@@ -253,7 +253,7 @@
             <tr>
                 <td>DESTROY</td>
                 <td>DELETE</td>
-                <td>reviews#delete</td>
+                <td>reviews#destroy</td>
                 <td>productId, id</td>
                 <td>/products/1/reviews/1</td>
             </tr>

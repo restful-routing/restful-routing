@@ -3,24 +3,25 @@
 }
 
 <header id="overview">
-    <h1>Resource <small> is thinking in singles</small></h1>
+    <h1>Resource <small> are you a member?</small></h1>
     <div class="subnav">
         <ul class="nav nav-pills">
             <li><a href="#basics">Basics</a></li>
             <li><a href="#actions">Actions and Http Methods</a></li>
             <li><a href="#naming">Naming</a></li>
             <li><a href="#tweaks">Tweaking Actions</a></li>
+            <li><a href="#nest">Nesting a Resource</a></li>
         </ul>
     </div>
 </header>
 @Html.Flash()
 <section id="basics">
     <h2>Basics</h2>
-    <p>Restful Routing has a concept of a resource. A resource is an entity or idea within your domain that can be expressed singularly. This can vary depending on the application you are building, but a good example of a resource is a profile page for an authenticated user. You normally would not pass the user id to this page because you implicitly do that through a form of authentication. Take a look at the following url.</p>
+    <p>A resource is a member withing your domain.A good example of a resource is a profile for an authenticated user. You normally would not pass the user id to this page because you implicitly do that through authentication. Take a look at the following url.</p>
     <pre class="prettyprint">http://localhost/profile</pre>
     <p>The url assumes that the application knows what a profile is and how to present it. Now how would the registration look in a RouteSet?</p>
     <pre class="prettyprint">map.Resource&lt;ProfileController&gt;();</pre>
-    <p> Actually this page is powered by a Resource controller, and here are the actions. All the buttons will redirect back to this page.</p>
+    <p> The above is a theoretical example, but would you guess that this page is powered by a Resource controller, and here are the actions. All the buttons will redirect back to this page.</p>
     <div >
         @Html.ActionLink("Show", "show", new { flash = true }, new { @class = "btn"})
         @Html.ActionLink("New", "new", null, new { @class = "btn"})
@@ -37,12 +38,11 @@
             @Html.HttpMethodOverride(HttpVerbs.Delete)
         </form>
     </div>
-    
 </section>
 
 <section id="actions">
     <h2>Actions and Http Methods</h2>
-    <p>When you register a resource, you get a set of actions and methods registered for you automatically. You don't have to do anything other than register your controller and implement the actions.</p>
+    <p>When registering a resource, a set of actions and methods are registered automatically. Register your controller and implement the actions.</p>
     <p><strong>Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.</strong></p>
     <table class="table table-bordered table-striped table-condensed">
         <thead>
@@ -133,7 +133,7 @@
 
 <section id="naming">
     <h2>Naming</h2>
-    <p>Sometimes you name your controller something, but wish to have the url reflect something entirely else. This is simple to do.</p>
+    <p>Sometimes you name your controller one thing, but wish to have the resource url reflect something entirely else. This is simple to do.</p>
     <pre class="prettyprint">map.Resource&lt;ProfileController&gt;(profile =&gt; profile.As("my-secret-identity"));</pre>
     <p>The new url will for profile#show will be changed.</p>
     <pre class="prettyprint">http://localhost/my-secret-identity</pre>
@@ -157,15 +157,71 @@
 
 <section id="tweaks">
     <h2>Tweaking Actions</h2>
-    <p>A Resource is a strange beast, because sometimes you might not need all the methods we provide. Imagine the following examples:</p>
+    <p>A Resource is a strange beast. Sometimes you might not need all the methods we provide. Imagine the following examples:</p>
     <ul>
         <li>As a user, I should not be able to create a profile, because it is created implicitly when we registered.</li>
         <li>As a user, I should be able to edit my current profile.</li>
         <li>As a user, I should not be able to delete my profile</li>
         <li>As a user, I should be able to see my profile</li>
     </ul>
-    <p>After reviewing our situation we realize that we only need to register the following actions: Show, Edit, Update. To limit our resource to those actions we would use the following code in our RouteSet.</p>
+    <p>After review, we only need to register the following actions: Show, Edit, Update. To limit our resource to those actions, we would use the following code in our RouteSet.</p>
     <pre class="prettyprint">map.Resource&lt;ProfileController&gt;(profile =&gt; profile.Only("show", "edit", "update"));</pre>
     <p>Inversely we could exclude the actions we no longer need.</p>
     <pre class="prettyprint">map.Resource&lt;ProfileController&gt;(profile =&gt; profile.Except("new", "create", "destroy"));</pre>
+</section>
+
+<section id="nest">
+    <h2>Nesting a Resource within a Resource</h2>
+    <p>A Resource sometimes depend on another resource. When nesting a resource, you have a one to one relationship between the parent resource to its dependent resource.</p>
+    <pre class="prettyprint">map.Resource&lt;ProfileController&gt;(profile =&gt; profile.Resource&lt;CreditCardController&gt;() );</pre>
+    <p>The resulting routes, excluding the profile routes, would look like the following:</p>
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Http Method</th>
+                <th>Result (controller#action)</th>
+                <th>Url</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>SHOW</td>
+                <td>GET</td>
+                <td>creditcard#show</td>
+                <td>/profile/creditcard</td>
+            </tr>
+            <tr>
+                <td>NEW</td>
+                <td>GET</td>
+                <td>creditcard#new</td>
+                <td>/profile/creditcard/new</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>POST</td>
+                <td>creditcard#create</td>
+                <td>/profile/creditcard</td>
+            </tr>
+            <tr>
+                <td>EDIT</td>
+                <td>GET</td>
+                <td>creditcard#edit</td>
+                <td>/profile/creditcard/edit</td>
+            </tr>
+            <tr>
+                <td>UPDATE</td>
+                <td>PUT</td>
+                <td>creditcard#update</td>
+                <td>/profile/creditcard</td>
+            </tr>
+            <tr>
+                <td>DESTROY</td>
+                <td>DELETE</td>
+                <td>creditcard#destroy</td>
+                <td>/profile/creditcard</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>Note: You may also nest a resource within resources and vice versa.</strong></p>
 </section>

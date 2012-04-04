@@ -18,13 +18,13 @@
 
 <section id="root">
     <h2>Root</h2>
-    <p>You need a default route which is located at "/". You can use the Root method in your RouteSet. This should only be called once.</p>
+    <p>Every application needs a default page, and registering a root page has never been easier.</p>
     <pre class="prettyprint linenums">map.Root&lt;Homecontroller&gt;(x => x.Index());</pre>
 </section>
 
 <section id="member">
 <h2>Member and Collection Routes</h2>
-<p>Use the Member and Collection methods inside of resources to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head (Patch coming soon). When inside a resource, you will only have access to the Member method.</p>
+<p>Use the Member and Collection methods inside of resources to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head (Patch coming soon). When within the context of a resource, you will only have access to the Member method.</p>
 <pre class="prettyprint linenums">
 area.Resources&lt;ResourcesController&gt;(resources => {
     resources.Collection(r => r.Get("many"));
@@ -44,7 +44,8 @@ area.Resource&lt;ExtrasController&gt;(extras => {
 
 <section id="standard">
 <h2>Standard Mappings</h2>
-<p>Sometimes our conventions just don't work for you. We may be rigid, but we don't rule with an iron fist. Two additional methods are provided so you can add custom routes to the route set if you need to. Path is a chainable method that allows you to add standard mappings. Route is a method that will allow you to add a custom route to the route set.</p>
+<p>Sometimes our conventions just don't work for you. We may be opinionated, but we do not rule with an iron fist.</p>
+<p>Two additional methods are provided so you may add custom routes: Path is a mix of traditional ASP.Net MVC routing syntax with our interface wrapper. Route is a very traditional way of adding a custom route.</p>
 <pre class="prettyprint linenums">
 area.Resource&lt;ExtrasController&gt;(extras => {
     // Use path
@@ -70,18 +71,18 @@ area.Resource&lt;ExtrasController&gt;(extras => {
         public RestfulRoutingRazorViewEngine()
         {
             AreaMasterLocationFormats = new[] {
-                                                  "~/Views/{2}/{1}/{0}.cshtml",
-                                                  "~/Views/{2}/{1}/{0}.vbhtml",
-                                                  "~/Views/{2}/Shared/{0}.vbhtml",
-                                                  "~/Views/{2}/Shared/{0}.cshtml",
-                                              };
+                "~/Views/{2}/{1}/{0}.cshtml",
+                "~/Views/{2}/{1}/{0}.vbhtml",
+                "~/Views/{2}/Shared/{0}.vbhtml",
+                "~/Views/{2}/Shared/{0}.cshtml",
+            };
 
             AreaViewLocationFormats = new[] {
-                                                "~/Views/{2}/{1}/{0}.cshtml",
-                                                "~/Views/{2}/{1}/{0}.vbhtml",
-                                                "~/Views/{2}/Shared/{0}.cshtml",
-                                                "~/Views/{2}/Shared/{0}.vbhtml",
-                                            };
+                "~/Views/{2}/{1}/{0}.cshtml",
+                "~/Views/{2}/{1}/{0}.vbhtml",
+                "~/Views/{2}/Shared/{0}.cshtml",
+                "~/Views/{2}/Shared/{0}.vbhtml",
+            };
 
             AreaPartialViewLocationFormats = AreaViewLocationFormats;
         }
@@ -120,7 +121,7 @@ area.Resource&lt;ExtrasController&gt;(extras => {
 </section>
 <section id="format">
 <h2>Format Result</h2>
-<p>Wouldn't it be cool if you could tell what type a user was asking for based on an extension in the request? Well you can using the FormatResult provided in our library. You may have noticed that we provided a base controller when you installed from Nuget. This sites application controller looks like this:</p>
+<p>This is a feature that allows you to use implicit format extensions on a resource and resources. There are two core methods to this feature: RespondTo, WithFormatRoutes.</p>
 <pre class="prettyprint linenums">
 namespace RestfulRouting.Documentation.Controllers
 {
@@ -131,12 +132,41 @@ namespace RestfulRouting.Documentation.Controllers
     }
 }
 </pre>
-<p>There are two things you need to do before utilizing FormatResult: Register a resource/resources with format routes and use the RespondTo method.</p>
 <pre class="prettyprint linenums">
 // enable format routes
 extras.WithFormatRoutes();
 </pre>
 <p>We provide a set of known types out of the box to make using our fluent interface a little nicer, but we support any file extension you can think of. To generate these format routes just specify the format as follows.</p>
+<pre class="prettyprint linenums">
+public ActionResult Awesome() {
+    var model = new Awesome {
+        date = DateTime.UtcNow.ToShortDateString(),
+        id = "awesomwe_id",
+        message = "hey you are seeing this in message"
+    };
+    
+    // contrived example
+    return RespondTo(format => {
+        format.Default = RedirectToAction("show");
+        format.Json = () => {
+            model.id = "awesome_json";
+            return Json(model, JsonRequestBehavior.AllowGet);
+        };
+        format.Xml = () => {
+            model.id = "awesome_xml";
+            return Xml(model);
+        };
+        format["yml"] = () => {
+            model.id = "awesome_yml";
+            return View("awesome.yml", model);
+        };
+        format.Html = () => {
+            Flash.Success("Nothing to see here");
+            return RedirectToAction("show");
+        };
+    });
+}
+</pre>
 <pre class="prettyprint linenums">
 @@Url.Action("usingpath", "extras", new { format = "json" })   // generate json url
 @@Url.Action("usingroute", "extras", new { format = "xml" }})  // generate xml url
@@ -187,11 +217,11 @@ Want to test it out?
 
 <p>Awesome right?! We promise, there is no monkey business happening here. This is the real deal. Although we recommend you read the following section of Quirks if you plan on using format routes.</p>
 
-<p>A suggestion from experience. This is helpful if you are building single page applications, but there is a point where this feature doesn't scale. Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
+<p>This is helpful if you are building single page applications Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
 </section> 
 <section id="quirks">
 <h2>Quirks</h2>
-<p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request. Let me show you.</p>
+<p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request.</p>
 
 <pre class="prettyprint linenums">
 /mappings/resources/1       // My request to a resource. { id: 1, area: mappings, controller: resources }
@@ -200,5 +230,5 @@ Want to test it out?
 @@Url.Action("index")                                                              // to this route, MVC carries over old values
 </pre>
 
-<p>understanding this can help you debug lots of issues not just with Restful Routing, but with ASP.NET MVC in general.</p>
+<p>Understanding this quirk can help you debug lots of issues, not just with Restful Routing, but with ASP.NET MVC in general.</p>
 </section>

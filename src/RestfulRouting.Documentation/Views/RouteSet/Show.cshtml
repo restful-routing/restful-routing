@@ -14,8 +14,8 @@
 
 <section id="basics">
 <h2>The Basics</h2>
-<p><strong>A RoutSet is a collection of route mappings. It can define routes in your application, or it can connect to other RouteSets.</strong></p>
-<p>All routes are defined inside the Map method of a class which inherits from RouteSet. You may have noticed a RouteSet on the Quick Start page. If not, here it is again:</p>
+<p><strong>A RoutSet is a collection of route mappings. It nor only define routes in your application, but can connect to other RouteSets.</strong></p>
+<p>All routes are defined inside the Map method of a RouteSet.</p>
 <pre class="prettyprint linenums">
 public class Routes : RouteSet
 {
@@ -27,7 +27,7 @@ public class Routes : RouteSet
 }
 </pre>
 
-<p>The IMapper class that is passed into the method Map gives you an interface to, what else, map your routes to the RouteTables dictionary at the heart of every ASP.Net MVC application. If you installed through Nuget, you will have noticed a RouteSet already created for you. Take a look at this code:</p>
+<p>The IMapper instance passed into Map presents a way to map your routes to the RouteTables dictionary at the heart of every ASP.Net MVC application. If you installed through Nuget, you will have noticed a RouteSet already created for you.</p>
 
 <pre class="prettyprint linenums">
 public static void Start()
@@ -42,7 +42,7 @@ public static void Start()
 </section> 
 <section id="connect">
 <h2>Connecting RouteSets</h2>
-<p>Sometimes you want to logically seperate your RouteSets. Instead of grouping all routes in a single RouteSet, we provide the ability to connect RouteSets. You must select one RoutSet to be the root of your RouteSets, but after that you may connect them any way you would like. Let's look at an example.</p>
+<p>Sometimes you want to logically seperate your RouteSets. Instead of grouping all routes in a single RouteSet, we provide the ability to connect RouteSets. You must select one RoutSet to be the root of your RouteSets, after which you may connect other RouteSets any way you would like.</p>
 
 <pre class="prettyprint linenums">
 public class Routes : RouteSet
@@ -74,8 +74,7 @@ public class Two : RouteSet
 </section> 
 <section id="optional">
 <h2>Optional Configuration</h2>
-<p>First off, let's start by saying that 90% (a number pulled out of thin air) will never need to change the default configuration of a RoutSet. If you fall within that other 10%, then this is your section.</p>
-<p>A RouteSet provides settings that can modify the behavior of route registration. These properties can be found within the context of a RouteSet. They are listed below.</p>
+<p>A RouteSet provides settings that can modify the behavior of route registration. These properties can be found within the context of a RouteSet. Most developers will not want to touch these features.</p>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -107,5 +106,4 @@ public class Two : RouteSet
         </tr>
     </tbody>
 </table>
-
 </section>

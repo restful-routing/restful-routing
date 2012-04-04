@@ -6,7 +6,7 @@
 </section>
 
 <p>
-    Unlike areas in the default ASP.Net MVC configuration. Areas are handled by namespace in Restful Routing. Usually there is a correlation between folders and namespaces, so for most developers this isn't a big difference from what they already do.
+ Areas are handled by namespace in Restful Routing. Usually there is a correlation between folders and namespaces, so for most developers this isn't a big difference from what they already do.
 </p>
 <p>Let's look at how this website uses areas.</p>
 <pre class="prettyprint">
@@ -23,7 +23,7 @@
 
 <p>The controller provided to the Area method is used to determine the namespace for the grouped controllers. The "mappings" string is used to determine the name of the area, along with the url part.</p>
 
-<p> Remember you will need to provide the area when generating urls if you are not within that context to begin with.</p>
+<p>Remember you will need to provide the area when generating urls.</p>
 
 <pre class="prettyprint">
     @@Url.Action("index", "resources", new { area = "mappings" })

@@ -6,10 +6,9 @@
 </section>
 
 <h2>Basics</h2>
-<p>Once your application begins to grow there will be lots of routes. So many, that you might get confused on how to qualify them. That is where the Restful Routing RouteDebugger comes in to play. To register the route debugger, you specify it in the RouteSet; you may specify any name you would like.</p>
+<p>Restful Routing comes with a powerful route debugger aimed at helping you understand your route mappings. You can enable and disable the route debugger purely by adding the following line to your RouteSet.</p>
 <pre class="prettyprint linenums">
 map.DebugRoute("routedebug");  // easy right?
 </pre>
 <p><strong>Make sure to unregister the route debugger when deploying to your production environment. There is no performance hit, but you might not want to expose sensitive routes. </strong></p>
-<p>Check it out below (yes, I'm using an iframe, please don't report that as an issue)</p>
 <iframe src="@Url.Action("index", "routedebug")" style="width: 100%; height: 800px"></iframe>
