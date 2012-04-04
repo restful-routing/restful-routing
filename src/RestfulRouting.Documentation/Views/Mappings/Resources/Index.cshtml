@@ -1,261 +1,263 @@
 ﻿@{
     ViewBag.Title = "Resources";
 }
-<section class="page-header">
+<header id="overview">
     <h1>Resources <small>think in plurals: bananas, products, users, etc...</small></h1>
-</section>
+    <div class="subnav">
+        <ul class="nav nav-pills">
+            <li><a href="#basics">Basics</a></li>
+            <li><a href="#actions">Actions and Http Methods</a></li>
+            <li><a href="#naming">Naming</a></li>
+            <li><a href="#tweaks">Tweaking Actions</a></li>
+            <li><a href="#nest">Nesting Resources</a></li>
+        </ul>
+    </div>
+</header>
 @Html.Flash()
-<h2>Basics</h2>
-<p>Resources are entities within your domain that can be preceived as many by you and your users. Imagine building a store application, you might want to expose your product catalog so that users may search and purchase products. In this case, your products would be considered resources. The url that is generated would also reflect that there are many products to be offered.</p>
-<pre class="prettyprint">
-http://localhost/products
-</pre>
-<p>Notice the pluralization of products. If you are starting a e-commerce site, you would most likely sell more than one thing at a time. To register a resource controller is as simple as a single line.</p>
-<pre class="prettyprint">
-map.Resources&lt;ProductsController&gt;();
-</pre>
-<p>Actually this page is powered by a Resources controller, and here are the actions. All the buttons will redirect back to this page. We are also passing an arbitrary id of "1" just so the route requirments are met.</p>
-<div >
-    @Html.ActionLink("Index", "index", new { flash = true }, new { @class = "btn"})
-    @Html.ActionLink("Show", "show", new { id = 1 }, new { @class = "btn"})
-    @Html.ActionLink("New", "new", null, new { @class = "btn"})
-    <form action="@Url.Action("create")" method="POST" style="display:inline-block">
-        <input type="submit" class="btn" value="Create"/>
-        <input type="hidden" id="create_id" name="id" value="1"/>
-    </form>
-    @Html.ActionLink("Edit", "edit", new { id = 1 }, new { @class = "btn"})
-    <form action="@Url.Action("update", new { id = 1 })" method="POST" style="display:inline-block">
-        <input type="submit" class="btn" value="Update"/>
-        @Html.HttpMethodOverride(HttpVerbs.Put)
-    </form>
-    <form action="@Url.Action("Destroy", new { id = 1})" method="POST" style="display:inline-block">
-        <input type="submit" class="btn" value="Destroy"/>
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-    </form>
-</div>
+<section id="basics">
+    <h2>Basics</h2>
+    <p>Resources are entities within your domain that can be preceived as many by you and your users. Imagine building a store application, you might want to expose your product catalog so that users may search and purchase products. In this case, your products would be considered resources. The url that is generated would also reflect that there are many products to be offered.</p>
+    <pre class="prettyprint">
+    http://localhost/products
+    </pre>
+    <p>Notice the pluralization of products. If you are starting a e-commerce site, you would most likely sell more than one thing at a time. To register a resource controller is as simple as a single line.</p>
+    <pre class="prettyprint">
+    map.Resources&lt;ProductsController&gt;();
+    </pre>
+    <p>Actually this page is powered by a Resources controller, and here are the actions. All the buttons will redirect back to this page. We are also passing an arbitrary id of "1" just so the route requirments are met.</p>
+    <div >
+        @Html.ActionLink("Index", "index", new { flash = true }, new { @class = "btn"})
+        @Html.ActionLink("Show", "show", new { id = 1 }, new { @class = "btn"})
+        @Html.ActionLink("New", "new", null, new { @class = "btn"})
+        <form action="@Url.Action("create")" method="POST" style="display:inline-block">
+            <input type="submit" class="btn" value="Create"/>
+            <input type="hidden" id="create_id" name="id" value="1"/>
+        </form>
+        @Html.ActionLink("Edit", "edit", new { id = 1 }, new { @class = "btn"})
+        <form action="@Url.Action("update", new { id = 1 })" method="POST" style="display:inline-block">
+            <input type="submit" class="btn" value="Update"/>
+            @Html.HttpMethodOverride(HttpVerbs.Put)
+        </form>
+        <form action="@Url.Action("Destroy", new { id = 1})" method="POST" style="display:inline-block">
+            <input type="submit" class="btn" value="Destroy"/>
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+        </form>
+    </div>
+</section>
+<section id="actions">
+    <h2>Actions and Http Methods</h2>
+    <p>When you register resources, you get a set of actions and methods registered for you automatically. You don't have to do anything other than register your controller and implement the actions.</p>
+    <p><strong>Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.</strong></p>
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Http Method</th>
+                <td>Required Parameters</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>INDEX</td>
+                <td>GET</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>SHOW</td>
+                <td>GET</td>
+                <td>id</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>POST</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>NEW</td>
+                <td>GET</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Edit</td>
+                <td>GET</td>
+                <td>id</td>
+            </tr>
+            <tr>
+                <td>Update</td>
+                <td>PUT</td>
+                <td>id</td>
+            </tr>
+            <tr>
+                <td>Destroy</td>
+                <td>DELETE</td>
+                <td>id</td>
+            </tr>
+        </tbody>
+    </table>
 
-<h2>Actions and Http Methods</h2>
-<p>When you register resources, you get a set of actions and methods registered for you automatically. You don't have to do anything other than register your controller and implement the actions.</p>
-<p><strong>Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.</strong></p>
-<table class="table table-bordered table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Http Method</th>
-            <td>Required Parameters</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>INDEX</td>
-            <td>GET</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>SHOW</td>
-            <td>GET</td>
-            <td>id</td>
-        </tr>
-        <tr>
-            <td>CREATE</td>
-            <td>POST</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>NEW</td>
-            <td>GET</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Edit</td>
-            <td>GET</td>
-            <td>id</td>
-        </tr>
-        <tr>
-            <td>Update</td>
-            <td>PUT</td>
-            <td>id</td>
-        </tr>
-        <tr>
-            <td>Destroy</td>
-            <td>DELETE</td>
-            <td>id</td>
-        </tr>
-    </tbody>
-</table>
+    <p>For our example with the ProductsController, you would get the following output:</p>
 
-<p>For our example with the ProductsController, you would get the following output:</p>
-
-<table class="table table-bordered table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Http Method</th>
-            <th>Result (controller#action)</th>
-            <th>Required Parameters</th>
-            <th>Url</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>INDEX</td>
-            <td>GET</td>
-            <td>products#show</td>
-            <td></td>
-            <td>/products</td>
-        </tr>
-        <tr>
-            <td>SHOW</td>
-            <td>GET</td>
-            <td>products#show</td>
-            <td>id</td>
-            <td>/products/1</td>
-        </tr>
-        <tr>
-            <td>NEW</td>
-            <td>GET</td>
-            <td>products#new</td>
-            <td></td>
-            <td>/products/new</td>
-        </tr>
-        <tr>
-            <td>CREATE</td>
-            <td>POST</td>
-            <td>products#create</td>
-            <td></td>
-            <td>/products</td>
-        </tr>
-        <tr>
-            <td>EDIT</td>
-            <td>GET</td>
-            <td>products#edit</td>
-            <td>id</td>
-            <td>/products/1/edit</td>
-        </tr>
-        <tr>
-            <td>UPDATE</td>
-            <td>PUT</td>
-            <td>profile#update</td>
-            <td>id</td>
-            <td>/products/1</td>
-        </tr>
-        <tr>
-            <td>DESTROY</td>
-            <td>DELETE</td>
-            <td>products#delete</td>
-            <td>id</td>
-            <td>/products/1</td>
-        </tr>
-    </tbody>
-</table>
-
-<h2>Naming</h2>
-<p>Sometimes you name your controller something, but wish to have the url reflect something entirely else. This is simple to do.</p>
-<pre class="prettyprint">
-    map.Resource&lt;ProductsController&gt;(products =&gt; products.As("amazing-items"));
-</pre>
-<p>The new url will for products#index will be changed.</p>
-<pre class="prettyprint">
-    http://localhost/amazing-items
-</pre>
-<p>Additionally, you can change the default <strong>action</strong> names of a resource by using the PathNames method. This isn't recommended, but we like to give you options.</p>
-<pre class="prettyprint linenums">
-    resources.PathNames(p => {
-        p.CreateName = "creating";
-        p.DeleteName = "deleting";
-        p.DestroyName = "destroying";
-        p.EditName = "editing";
-        p.NewName = "newing";
-    });
-</pre>
-<pre class="prettyprint linenums">
-    public class ResourcesController: ApplicationController {
-        public ActionResult Creating() {
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Http Method</th>
+                <th>Result (controller#action)</th>
+                <th>Required Parameters</th>
+                <th>Url</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>INDEX</td>
+                <td>GET</td>
+                <td>products#show</td>
+                <td></td>
+                <td>/products</td>
+            </tr>
+            <tr>
+                <td>SHOW</td>
+                <td>GET</td>
+                <td>products#show</td>
+                <td>id</td>
+                <td>/products/1</td>
+            </tr>
+            <tr>
+                <td>NEW</td>
+                <td>GET</td>
+                <td>products#new</td>
+                <td></td>
+                <td>/products/new</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>POST</td>
+                <td>products#create</td>
+                <td></td>
+                <td>/products</td>
+            </tr>
+            <tr>
+                <td>EDIT</td>
+                <td>GET</td>
+                <td>products#edit</td>
+                <td>id</td>
+                <td>/products/1/edit</td>
+            </tr>
+            <tr>
+                <td>UPDATE</td>
+                <td>PUT</td>
+                <td>profile#update</td>
+                <td>id</td>
+                <td>/products/1</td>
+            </tr>
+            <tr>
+                <td>DESTROY</td>
+                <td>DELETE</td>
+                <td>products#delete</td>
+                <td>id</td>
+                <td>/products/1</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section id="naming">
+        <h2>Naming</h2>
+        <p>Sometimes you name your controller something, but wish to have the url reflect something entirely else. This is simple to do.</p>
+        <pre class="prettyprint">map.Resource&lt;ProductsController&gt;(products =&gt; products.As("amazing-items"));</pre>
+        <p>The new url will for products#index will be changed.</p>
+        <pre class="prettyprint">http://localhost/amazing-items</pre>
+        <p>Additionally, you can change the default <strong>action</strong> names of a resource by using the PathNames method. This isn't recommended, but we like to give you options.</p>
+        <pre class="prettyprint linenums">
+        resources.PathNames(p => {
+            p.CreateName = "creating";
+            p.DeleteName = "deleting";
+            p.DestroyName = "destroying";
+            p.EditName = "editing";
+            p.NewName = "newing";
+        });</pre>
+        <pre class="prettyprint linenums">
+        public class ResourcesController: ApplicationController {
+            public ActionResult Creating() {
+                ...
+            }
             ...
-        }
-        ...
-    }
-</pre>
+        }</pre>
+</section>
 
-<h2>Tweaking Actions</h2>
-<p>Resources, sometimes you might not need all the methods we provide. You may remove actions using the follwing methods:</p>
+<section id="tweaks">
+    <h2>Tweaking Actions</h2>
+    <p>Resources, sometimes you might not need all the methods we provide. You may remove actions using the follwing methods:</p>
+    <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.Only("show", "edit", "update"));</pre>
+    <p>Inversely we could exclude the actions we no longer need.</p>
+    <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.Except("new", "create", "destroy"));</pre>
+</section>
 
-<pre class="prettyprint">
-    map.Resources&lt;ProductsController&gt;(products =&gt; products.Only("show", "edit", "update"));
-</pre>
-
-<p>Inversely we could exclude the actions we no longer need.</p>
-
-<pre class="prettyprint">
-    map.Resources&lt;ProductsController&gt;(products =&gt; products.Except("new", "create", "destroy"));
-</pre>
-
-<h2>Nesting Resources within Resources</h2>
-<p>Resources sometimes depend on other resources. When nesting resources, you have a one to many relationship between the parent resource to its dependent resources. Think about a product that has reviews.To accomplish this you would register the two resources like so.</p>
-<pre class="prettyprint">
-    map.Resources&lt;ProductsController&gt;(products =&gt; products.Resources&lt;ReviewsController&gt;() );
-</pre>
-<p>The resulting routes, excluding the product routes, would look like the following:</p>
-<table class="table table-bordered table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Http Method</th>
-            <th>Result (controller#action)</th>
-            <th>Required Parameters</th>
-            <th>Url</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>INDEX</td>
-            <td>GET</td>
-            <td>reviews#show</td>
-            <td>productId</td>
-            <td>/products/1/reviews</td>
-        </tr>
-        <tr>
-            <td>SHOW</td>
-            <td>GET</td>
-            <td>reviews#show</td>
-            <td>productId, id</td>
-            <td>/products/1/reviews/1</td>
-        </tr>
-        <tr>
-            <td>NEW</td>
-            <td>GET</td>
-            <td>reviews#new</td>
-            <td>productId</td>
-            <td>/products/1/reviews/new</td>
-        </tr>
-        <tr>
-            <td>CREATE</td>
-            <td>POST</td>
-            <td>reviews#create</td>
-            <td>productId</td>
-            <td>/products/1/reviews</td>
-        </tr>
-        <tr>
-            <td>EDIT</td>
-            <td>GET</td>
-            <td>reviews#edit</td>
-            <td>productId, id</td>
-            <td>/products/1/reviews/1/edit</td>
-        </tr>
-        <tr>
-            <td>UPDATE</td>
-            <td>PUT</td>
-            <td>reviews#update</td>
-            <td>productId, id</td>
-            <td>/products/1/reviews/1</td>
-        </tr>
-        <tr>
-            <td>DESTROY</td>
-            <td>DELETE</td>
-            <td>reviews#delete</td>
-            <td>productId, id</td>
-            <td>/products/1/reviews/1</td>
-        </tr>
-    </tbody>
-</table>
-<p><strong>Note: You may also nest a resource within resources and vice versa.</strong> Want to test a nested resource? <a class="btn" href="@Url.Action("index", "otherresources", new { resourceId = 1 })">Click Me!</a></p>
+<section id="nest">
+    <h2>Nesting Resources within Resources</h2>
+    <p>Resources sometimes depend on other resources. When nesting resources, you have a one to many relationship between the parent resource to its dependent resources. Think about a product that has reviews.To accomplish this you would register the two resources like so.</p>
+    <pre class="prettyprint">map.Resources&lt;ProductsController&gt;(products =&gt; products.Resources&lt;ReviewsController&gt;() );</pre>
+    <p>The resulting routes, excluding the product routes, would look like the following:</p>
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Http Method</th>
+                <th>Result (controller#action)</th>
+                <th>Required Parameters</th>
+                <th>Url</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>INDEX</td>
+                <td>GET</td>
+                <td>reviews#show</td>
+                <td>productId</td>
+                <td>/products/1/reviews</td>
+            </tr>
+            <tr>
+                <td>SHOW</td>
+                <td>GET</td>
+                <td>reviews#show</td>
+                <td>productId, id</td>
+                <td>/products/1/reviews/1</td>
+            </tr>
+            <tr>
+                <td>NEW</td>
+                <td>GET</td>
+                <td>reviews#new</td>
+                <td>productId</td>
+                <td>/products/1/reviews/new</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>POST</td>
+                <td>reviews#create</td>
+                <td>productId</td>
+                <td>/products/1/reviews</td>
+            </tr>
+            <tr>
+                <td>EDIT</td>
+                <td>GET</td>
+                <td>reviews#edit</td>
+                <td>productId, id</td>
+                <td>/products/1/reviews/1/edit</td>
+            </tr>
+            <tr>
+                <td>UPDATE</td>
+                <td>PUT</td>
+                <td>reviews#update</td>
+                <td>productId, id</td>
+                <td>/products/1/reviews/1</td>
+            </tr>
+            <tr>
+                <td>DESTROY</td>
+                <td>DELETE</td>
+                <td>reviews#delete</td>
+                <td>productId, id</td>
+                <td>/products/1/reviews/1</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>Note: You may also nest a resource within resources and vice versa.</strong> Want to test a nested resource? <a class="btn" href="@Url.Action("index", "otherresources", new { resourceId = 1 })">Click Me!</a></p>
+</section>
