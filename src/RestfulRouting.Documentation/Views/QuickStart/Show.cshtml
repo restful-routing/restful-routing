@@ -5,21 +5,21 @@
     <h1>Quick Start <small>for Restful Routing in your ASP.Net MVC projects</small></h1>
 </header>
 
-<p>You may have not noticed, but you are already on your way to using Restful Routing. To get started follow the steps below in order and you should have a working ASP.Net MVC application powered by Restful Routing.</p>
+<p>You may have not noticed, but you are already on your way to using Restful Routing. To get started follow the steps below in order, and you should have a working ASP.Net MVC application powered by Restful Routing.</p>
 
 <h2>Step 1. Installing Restful Routing</h2>
-<p>To get started, we'll assume you are starting with an existing ASP.Net MVC project and understand how to get to that point. If not, please comeback here after you have. We will also assume you have Nuget installed in your version of Visual Studio.</p>
+<p>To get started, we will assume you are starting with an existing ASP.Net MVC project and understand how to get to that point. We will also assume you have Nuget installed in your version of Visual Studio.</p>
 <p>Open up the Package Manager Console and type the following:</p>
 <pre class="prettyprint well">PM> Install-Package RestfulRouting</pre>
 <p>If you do not wish to use the Package Manager Console, you can right click your web project and select the "Manage Nuget Packages" context menu item. Search for <strong>RestfulRouting</strong> and install the package.</p>
-<p>If you've reached this far, then you are almost there. Continue to step 2.</p>
+<p>If you've reached this far, then you are almost there.</p>
 
 <h2>Step 2. Configuring Restful Routing</h2>
-<p>You may have noticed a couple of changes to your project, namely two files were added: Routes.cs and ApplicationController.</p>
+<p>A couple of changes should have happened to your project, namely two files were added: Routes.cs and ApplicationController.</p>
 
-<p>Routes.cs should look like this. Notice how we have a little help already included for you. Not everyone is writing a blog application, so feel free to erase the commented code after you have looked over it.</p>
+<p>Routes.cs should look like the section below. We have a little help already included for you in this file. Not everyone is writing a blog application, so feel free to erase the commented code after you have looked over it.</p>
 
-<p><strong>Note the dependency on WebActivator, this will ensure the routes are registred when your application starts. Learn more about WebActivator.</strong></p>
+<p><strong>Note the dependency on WebActivator, this will ensure the routes are registred when your application starts.</strong></p>
 <pre class="prettyprint linenums">
 using System.Web.Routing;
 using RestfulRouting.Documentation.Controllers;
@@ -74,7 +74,7 @@ namespace RestfulRouting.Documentation
 map.Root&lt;Homecontroller&gt;(x => x.Index());
 </pre>
 
-<p>In addition to Routes.cs you will also get ApplicationController. Using this base controller is optional, but it does have the code necessary to do formatted routes.</p>
+<p>In addition to Routes.cs you will also get ApplicationController. Using this base controller is optional, but it does have the code necessary to utilize Format Results.</p>
 
 <pre class="prettyprint linenums">
 using System;
@@ -85,7 +85,7 @@ namespace RestfulRouting.Documentation.Controllers
 {
     public abstract class ApplicationController : Controller
     {
-        protected ActionResult RespondTo(Action<FormatCollection> format)
+        protected ActionResult RespondTo(Action&lt;FormatCollection&gt; format)
         {
             return new FormatResult(format);
         }
@@ -94,7 +94,7 @@ namespace RestfulRouting.Documentation.Controllers
 </pre>
 
 <h2>Optional Step 3. View Engine Configuration</h2>
-<p>ASP.Net MVC depends on view engines to locate your views. While the default view engine is ok, we found that the folder structure to not be satisfactory. If you would like to utilized our view engines, then change your Global.asax file to look like the following. Read more about the view engine folder structure.</p>
+<p>ASP.Net MVC depends on view engines to locate your views. While the default view engine is ok, we found that the folder structure to be a bit verbose. If you would like to utilized our view engines, then change your Global.asax file to look like the following. <a href="@Url.Action("show", "extras", new { area = "mappings" })"> Read more about the view engine folder structure in the Extras section of this site</a>.</p>
 <pre class="prettyprint linenums">
 using System.Web.Mvc;
 
@@ -112,5 +112,4 @@ namespace RestfulRouting.Documentation
 </pre>
 
 <h2>There You Have It. Code! Code! Code!</h2>
-<p>Well, maybe this isn't enough. If you want to learn more about how and what is happening in the registration of your routes continue to the routeset page.</p>
-<a href="@Url.Action("show", "routeset")"></a>
+<p>If you want to learn more about how and what is happening in the registration of your routes continue reading.</p>
