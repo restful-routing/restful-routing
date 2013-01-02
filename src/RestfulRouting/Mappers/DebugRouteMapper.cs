@@ -17,10 +17,6 @@ namespace RestfulRouting.Mappers
             Path(_path).To<RouteDebugController>(x => x.Index());
 
             base.RegisterRoutes(routeCollection);
-
-            Path(Join(_path, "resources/{name}")).To<RouteDebugController>(x => x.Resources(null));
-            
-            base.RegisterRoutes(routeCollection);
         }
     }
 }
