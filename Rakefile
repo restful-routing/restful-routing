@@ -46,7 +46,7 @@ end
 
 desc 'Create the nuget distribution package'
 task :package => :compile do
-	system "nuget pack RestfulRouting.nuspec -o build"
+	system "src\\.nuget\\nuget.exe pack RestfulRouting.nuspec -o build"
 end
 
 desc 'Release to nuget'
