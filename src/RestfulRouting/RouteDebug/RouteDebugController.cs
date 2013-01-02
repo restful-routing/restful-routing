@@ -61,7 +61,7 @@ namespace RestfulRouting.RouteDebug
                 model.RouteInfos.Add(new RouteInfo
                 {
                     Position = position,
-                    HttpMethod = string.Join(" ", allowedMethods.ToArray()),
+                    HttpMethod = string.Join(", ", allowedMethods.ToArray()),
                     Path = route.Url,
                     Endpoint = defaults["controller"] + "#" + defaults["action"],
                     Area = route.DataTokens["area"] as string,

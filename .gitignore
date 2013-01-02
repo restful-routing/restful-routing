@@ -12,3 +12,5 @@ specs.html
 src/packages
 RestfulRouting.Documentation.Publish.xml
 *.ncrunchsolution
+.DS_Store
+*.ncrunchproject
