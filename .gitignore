@@ -14,3 +14,4 @@ RestfulRouting.Documentation.Publish.xml
 *.ncrunchsolution
 .DS_Store
 *.ncrunchproject
+src/_NCrunch_RestfulRouting/*
