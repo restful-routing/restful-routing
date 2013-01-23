@@ -72,6 +72,12 @@ namespace RestfulRouting.Mappers
             return this;
         }
 
+        public StandardMapper WithNamespace<T>()
+        {
+            this.Namespaces = new[] { typeof(T).Namespace };
+            return this;
+        }
+
         public override void RegisterRoutes(RouteCollection routeCollection)
         {
             Route.Url = Join(BasePath, Route.Url);

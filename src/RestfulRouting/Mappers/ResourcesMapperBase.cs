@@ -84,6 +84,7 @@ namespace RestfulRouting.Mappers
             return new NamedRoute(name, path,
                              new RouteValueDictionary(new { controller, action }),
                              new RouteValueDictionary(new { httpMethod = new RestfulHttpMethodConstraint(httpMethods) }),
+                             new RouteValueDictionary(new { Namespaces = new[] { typeof(TController).Namespace} }),
                              RouteHandler);
         }
 
@@ -92,6 +93,7 @@ namespace RestfulRouting.Mappers
             return new Route(path,
                              new RouteValueDictionary(new { controller, action }),
                              new RouteValueDictionary(new { httpMethod = new RestfulHttpMethodConstraint(httpMethods) }),
+                             new RouteValueDictionary(new { Namespaces = new [] { typeof(TController).Namespace } }),
                              RouteHandler);
         }
 

@@ -44,7 +44,7 @@ namespace RestfulRouting.RouteDebug
 
                 var namespaces = new string[] { };
                 if (route.DataTokens != null && route.DataTokens["namespaces"] != null)
-                    namespaces = route.DataTokens["namespaces"] as string[];
+                    namespaces = (route.DataTokens["namespaces"] ?? new string[0]) as string[];
                 var defaults = new RouteValueDictionary();
                 if (route.Defaults != null)
                     defaults = route.Defaults;
@@ -65,7 +65,7 @@ namespace RestfulRouting.RouteDebug
                     Path = route.Url,
                     Endpoint = defaults["controller"] + "#" + defaults["action"],
                     Area = route.DataTokens["area"] as string,
-                    Namespaces = string.Join(" ", namespaces.ToArray()),
+                    Namespaces = string.Join(" ", (namespaces).ToArray()),
                     Name = routeName
                 });
                 position++;
