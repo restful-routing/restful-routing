@@ -16,5 +16,10 @@ namespace RestfulRouting.Spec
             ((NamedRoute) routeData.Route).Name.ShouldEqual(name);
             return routeData;
         }
+
+        public static T As<T>(this object value) where T : class
+        {
+            return value as T;
+        }
     }
 }

@@ -14,12 +14,7 @@ namespace RestfulRouting.Mappers
 
         public override void RegisterRoutes(RouteCollection routeCollection)
         {
-            Path(_path).To<RouteDebugController>(x => x.Index());
-
-            base.RegisterRoutes(routeCollection);
-
-            Path(Join(_path, "resources/{name}")).To<RouteDebugController>(x => x.Resources(null));
-            
+            Path(_path).To<RouteDebugController>(x => x.Index()).WithNamespace<RouteDebugController>();
             base.RegisterRoutes(routeCollection);
         }
     }

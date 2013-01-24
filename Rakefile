@@ -12,7 +12,7 @@ end
 
 desc 'generates assembly info'
 assemblyinfo :assemblyinfo do |asm|
-	asm.version = "1.3.0"
+	asm.version = "1.3.2"
 	asm.product_name = "RestfulRouting"
 	asm.title = "RestfulRouting"
 	asm.description = "RestfulRouting is a routing library for ASP.NET MVC based on the Rails 3 routing DSL."
@@ -46,7 +46,7 @@ end
 
 desc 'Create the nuget distribution package'
 task :package => :compile do
-	system "nuget pack RestfulRouting.nuspec -o build"
+	system "src\\.nuget\\nuget.exe pack RestfulRouting.nuspec -o build"
 end
 
 desc 'Release to nuget'

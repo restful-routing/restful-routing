@@ -65,8 +65,16 @@ Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions f
 * "Eddie Cianci":http://github.com/defeated
 * "Troels Thomsen":http://github.com/troethom
 * "Khalid Abuhakmeh":http://github.com/khalidabuhakmeh
+* "Nathan Wood":http://github.com/woodnathan
 
 h2. Latest Release
+
+1.3.2
+* All routes now get namespaces, by default. This will save a lot of headaches, and the ability to reuse controller names not in the same namespace.
+
+1.3.1
+* Switched route debugger over to use Twitter Bootsrap from CDN sources
+* Merged in namespace additions from woodnathan
 
 1.3.0
 * Removed dependency on RazorEngine so we can start moving to ASP.Net MVC 4.
