@@ -25,49 +25,72 @@ namespace RestfulRouting.RouteDebug
             public string Area { get; set; }
             public string Namespaces { get; set; }
             public string Name { get; set; }
+            public bool IsUnknown { get; set; }
         }
 
         public ActionResult Index()
         {
             var model = new RouteDebugViewModel { RouteInfos = new List<RouteInfo>() };
             int position = 1;
-            foreach (var route in RouteTable.Routes.Select(x => x as Route).Where(x => x != null))
+            foreach (var routeBase in RouteTable.Routes)
             {
-				// issue: #33 Fix
-                var httpMethodConstraint = (route.Constraints ?? new RouteValueDictionary())["httpMethod"] as HttpMethodConstraint;
-
-                ICollection<string> allowedMethods = new string[] { };
-                if (httpMethodConstraint != null)
+                var route = routeBase as Route;
+                if (route != null)
                 {
-                    allowedMethods = httpMethodConstraint.AllowedMethods;
+                    // issue: #33 Fix
+                    var httpMethodConstraint =
+                        (route.Constraints ?? new RouteValueDictionary())["httpMethod"] as HttpMethodConstraint;
+
+                    ICollection<string> allowedMethods = new string[] { };
+                    if (httpMethodConstraint != null)
+                    {
+                        allowedMethods = httpMethodConstraint.AllowedMethods;
+                    }
+
+                    var namespaces = new string[] { };
+                    if (route.DataTokens != null && route.DataTokens["namespaces"] != null)
+                        namespaces = (route.DataTokens["namespaces"] ?? new string[0]) as string[];
+                    var defaults = new RouteValueDictionary();
+                    if (route.Defaults != null)
+                        defaults = route.Defaults;
+                    if (route.DataTokens == null)
+                        route.DataTokens = new RouteValueDictionary();
+
+                    var namedRoute = route as NamedRoute;
+                    var routeName = "";
+                    if (namedRoute != null)
+                    {
+                        routeName = namedRoute.Name;
+                    }
+
+                    model.RouteInfos.Add(new RouteInfo
+                    {
+                        Position = position,
+                        HttpMethod = string.Join(", ", allowedMethods.ToArray()),
+                        Path = route.Url,
+                        Endpoint = defaults["controller"] + "#" + defaults["action"],
+                        Area = route.DataTokens["area"] as string,
+                        Namespaces = string.Join(" ", (namespaces).ToArray()),
+                        Name = routeName
+                    });
+                }
+                else
+                {
+                    const string unknown = "???";
+                    var type = routeBase.GetType();
+                    model.RouteInfos.Add(new RouteInfo
+                    {
+                        Position = position,
+                        HttpMethod = "*",
+                        Path = type.FullName,
+                        Endpoint = unknown,
+                        Area = unknown,
+                        Namespaces = type.Namespace,
+                        Name = type.Name + " (external)",
+                        IsUnknown = true
+                    });
                 }
 
-                var namespaces = new string[] { };
-                if (route.DataTokens != null && route.DataTokens["namespaces"] != null)
-                    namespaces = (route.DataTokens["namespaces"] ?? new string[0]) as string[];
-                var defaults = new RouteValueDictionary();
-                if (route.Defaults != null)
-                    defaults = route.Defaults;
-                if (route.DataTokens == null)
-                    route.DataTokens = new RouteValueDictionary();
-
-                var namedRoute = route as NamedRoute;
-                var routeName = "";
-                if (namedRoute != null)
-                {
-                    routeName = namedRoute.Name;
-                }
-
-                model.RouteInfos.Add(new RouteInfo
-                {
-                    Position = position,
-                    HttpMethod = string.Join(", ", allowedMethods.ToArray()),
-                    Path = route.Url,
-                    Endpoint = defaults["controller"] + "#" + defaults["action"],
-                    Area = route.DataTokens["area"] as string,
-                    Namespaces = string.Join(" ", (namespaces).ToArray()),
-                    Name = routeName
-                });
                 position++;
             }
 
@@ -75,16 +98,16 @@ namespace RestfulRouting.RouteDebug
                              where p.Endpoint.Equals("routedebug#resources", StringComparison.InvariantCultureIgnoreCase)
                              select p.Path.Replace("{name}", string.Empty)).FirstOrDefault();
             model.DebugPath = debugPath;
-     
+
             return Content(Debugger(model));
         }
 
-        public string Debugger(RouteDebugViewModel model) 
+        public string Debugger(RouteDebugViewModel model)
         {
             var routeInfos = new StringBuilder();
-            foreach (var routeinfo in model.RouteInfos) 
+            foreach (var routeinfo in model.RouteInfos)
             {
-                routeInfos.AppendLine("<tr>");
+                routeInfos.AppendLine(routeinfo.IsUnknown ? "<tr class='unknown'>" : "<tr>");
                 routeInfos.AppendFormat("<td>{0}</td>", routeinfo.Position);
                 routeInfos.AppendFormat("<td>{0}</td>", routeinfo.Endpoint);
                 routeInfos.AppendFormat("<td>{0}</td>", routeinfo.HttpMethod);
@@ -99,8 +122,8 @@ namespace RestfulRouting.RouteDebug
         }
 
 
-const string HtmlPage =
-    @"<!DOCTYPE html>
+        const string HtmlPage =
+            @"<!DOCTYPE html>
     <html lang=""en"">
       <head>
         <meta charset=""utf-8"">
@@ -297,6 +320,11 @@ const string HtmlPage =
 
             table.dataTable td { 
                 word-wrap: break-word; 
+            }
+
+            table.dataTable tr.unknown td {
+                background-color:#fcf8e3 !important;
+                color: #c09853 !important;
             }
         </style>
 

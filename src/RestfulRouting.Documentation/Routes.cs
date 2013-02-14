@@ -53,6 +53,7 @@ namespace RestfulRouting.Documentation {
 
         public static void Start() {
             var routes = RouteTable.Routes;
+            RouteTable.Routes.MapHubs();
             routes.MapRoutes<Routes>();
         }
     }
