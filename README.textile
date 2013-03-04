@@ -66,8 +66,12 @@ Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions f
 * "Troels Thomsen":http://github.com/troethom
 * "Khalid Abuhakmeh":http://github.com/khalidabuhakmeh
 * "Nathan Wood":http://github.com/woodnathan
+* "David Alpert":http://github.com/davidalpert
 
 h2. Latest Release
+
+1.3.5
+* added the ability to ReRoute inside a Resource mapping. Thanks to David Alpert.
 
 1.3.4
 * added the ability to see non Restful Routing (RouteBase) routes in routedebugger, helpful for seeing things like the order of routes. Helped me debug an issue with SignalR.
