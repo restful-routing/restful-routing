@@ -97,8 +97,8 @@ namespace RestfulRouting.Spec.Mappers
             {
                 _mapper = new ResourceMapper<SessionsController>();
                 _mapper.ReRoute(c => c.New = "signup");
-                _mapper.ReRoute(c => c.Show = "{resourceName}/something/else");
-                _mapper.ReRoute(c => c.Edit = "{resourceName}/fancy/{editName}");
+                _mapper.ReRoute(c => c.Show = "{resourcePath}/something/else");
+                _mapper.ReRoute(c => c.Edit = "{resourcePath}/fancy/{editName}");
             };
 
         Because of = () => _mapper.RegisterRoutes(routes);
@@ -115,13 +115,13 @@ namespace RestfulRouting.Spec.Mappers
 
         It should_map_delete_destroy = () => "~/session".WithMethod(HttpVerbs.Delete).ShouldMapTo<SessionsController>(x => x.Destroy());
 
-        It should_generate_show;// TODO - this fails: = () => OutBoundUrl.Of<SessionsController>(x => x.Show()).ShouldMapToUrl("/session/something/else");
+        It should_generate_show = () => OutBoundUrl.Of<SessionsController>(x => x.Show()).ShouldMapToUrl("/session/something/else");
 
         It should_generate_new = () => OutBoundUrl.Of<SessionsController>(x => x.New()).ShouldMapToUrl("/signup");
 
         It should_generate_create = () => OutBoundUrl.Of<SessionsController>(x => x.Create()).ShouldMapToUrl("/session");
 
-        It should_generate_edit;// TODO - this fails: = () => OutBoundUrl.Of<SessionsController>(x => x.Edit()).ShouldMapToUrl("/session/fancy/edit");
+        It should_generate_edit = () => OutBoundUrl.Of<SessionsController>(x => x.Edit()).ShouldMapToUrl("/session/fancy/edit");
 
         It should_generate_update = () => OutBoundUrl.Of<SessionsController>(x => x.Update()).ShouldMapToUrl("/session");
 
