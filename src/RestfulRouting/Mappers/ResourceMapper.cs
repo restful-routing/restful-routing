@@ -117,7 +117,7 @@ namespace RestfulRouting.Mappers
             Create = "{resourcePath}";
             Edit = "{resourcePath}/{editName}";
             Update = "{resourcePath}";
-            Delete = "{resourcePath}/deleteName";
+            Delete = "{resourcePath}/{deleteName}";
             Destroy = "{resourcePath}";
         }
 
