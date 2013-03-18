@@ -82,6 +82,10 @@ namespace RestfulRouting.Documentation
             map.Redirect("this/is/old")
                .To(new { controller = "home", action = "index" })
                .GetOnly();
+
+            map.Redirect("into/area")
+               .To<ExtrasController>(e => e.Show(), "mappings")
+               .GetOnly();
         }
     }
 }

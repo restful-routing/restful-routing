@@ -11,6 +11,7 @@
             <li><a href="#standard">View Engines</a></li>
             <li><a href="#format">Format Result</a></li>
             <li><a href="#quirks">Quirks</a></li>
+            <li><a href="#redirect">Redirect Dead Links</a></li>
         </ul>
     </div>
 </header>
@@ -220,15 +221,52 @@ Want to test it out?
 <p>This is helpful if you are building single page applications Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
 </section> 
 <section id="quirks">
-<h2>Quirks</h2>
-<p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request.</p>
+    <h2>Quirks</h2>
+    <p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request.</p>
 
-<pre class="prettyprint linenums">
+    <pre class="prettyprint linenums">
 /mappings/resources/1       // My request to a resource. { id: 1, area: mappings, controller: resources }
     
 @@Url.Action("index", new { controller = "resources", area = "mappings", id = 1 }  // this is equivalent
 @@Url.Action("index")                                                              // to this route, MVC carries over old values
 </pre>
 
-<p>Understanding this quirk can help you debug lots of issues, not just with Restful Routing, but with ASP.NET MVC in general.</p>
+    <p>Understanding this quirk can help you debug lots of issues, not just with Restful Routing, but with ASP.NET MVC in general.</p>
+</section>
+
+<section id="redirect">
+    <h2>Redirect dead links</h2>
+    <p>There are times when we make better url decisions than others. We want the ability to change the urls, without breaking existing urls. This is only necessary once your application goes live. This mostly applies to public facing sites, but could be useful in an intranet situtation.</p>
+    <p>The first thing to note, is you should register all your redirect routes as the last routes in your list. This is because they are the least important. The will only ever be hit when accessing an old link. Your application should not be generating these urls, and if it is then you have issues.</p>
+    <p>Secondly, the registration looks like RestfulRouting's good old syntax, but it doesn't require you to nest it within any definition. I would recommed, creating a RouteSet called DeadLinks or Redirects and connecting it at the end of your master RouteSet.</p>
+    <p>Lastly, and this is important. <strong>register the RedirectRouteFilterAttribte as a global filter.</strong></p>
+    <p>So let's see how this works, pretty simple really.</p>
+
+<pre class="prettyprint linenums">
+public class RedirectRouteSet : RouteSet
+{
+    public RedirectRouteSet() {
+        // you can register this somewhere else, it is here
+        // for demo purposes
+        GlobalFilters.Filters.Add(new RedirectRouteFilter());
+    }
+
+    public override void Map(IMapper map)
+    {
+        // Redirect an old path, to a new one
+        map.Redirect("this/is/old")
+            .To(new { controller = "home", action = "index" })
+            .GetOnly();
+
+        map.Redirect("into/area")
+            .To&lt;ExtrasController&gt;(e =&gt; e.Show(), "mappings")
+            .GetOnly();
+    }
+}  
+</pre>
+    
+    <p> As you can see above, you just set the old url, and provide values to resolve to the new url. We use the UrlHelper under the covers to find the best matching route.
+        Try this link now to see <a href="/into/area">/into/area (check it by hovering over the link)</a>
+    </p>
+
 </section>

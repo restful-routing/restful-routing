@@ -68,10 +68,9 @@ namespace RestfulRouting.Spec
             public override void Map(IMapper map)
             {
                 map.Redirect("old")
+                   .To<PostsController>(p => p.Index())
                    .WithName("old_to_posts")
-                   .To(new {controller = "posts", action = "index"})
                    .NotPermanent()
-                   .GetOnly()
                    .GetOnly();
             }
 

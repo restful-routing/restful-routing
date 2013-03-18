@@ -16,14 +16,14 @@ namespace RestfulRouting.Filters
             {
                 var helper = new UrlHelper(filterContext.RequestContext);
                 var values = new RouteValueDictionary(filterContext.RequestContext.RouteData.Values);
-                var merged = new RouteValueDictionary(redirect.DataTokens);
+                var merged = new RouteValueDictionary(redirect.DataTokens["new_path"] as RouteValueDictionary);
 
                 // keep the values we specified, and add the other routeValues
                 // that we we didn't have overrides for.
                 foreach (var key in values.Keys.Where(key => !merged.ContainsKey(key)))
                     merged.Add(key, filterContext.RouteData.Values[key]);
 
-                var url = helper.RouteUrl(merged);
+                var url = helper.RouteUrl(filterContext.RouteData.Values);
                 filterContext.Result = new RedirectResult(url, redirect.IsPermanent);
             }
         }

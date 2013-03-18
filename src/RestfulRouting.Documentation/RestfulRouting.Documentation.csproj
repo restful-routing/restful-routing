@@ -181,6 +181,21 @@
   <ItemGroup>
     <Content Include="Views\RouteDebugger\Show.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\bootstrap.min.js.map">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.7.1.min.js.map">
+      <DependentUpon>jquery-1.7.1.js</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery.signalR-1.0.0-rc2.min.js.map">
+      <DependentUpon>jquery.signalR-1.0.0-rc2.js</DependentUpon>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
