@@ -60,4 +60,24 @@ namespace RestfulRouting.Spec
 
         It sets_the_path_correctly = () => routes.ShouldEachConformTo(x => ((Route)x).Url.StartsWith("test/posts"));
     }
+
+    public class redirect_spec : base_context
+    {
+        public class Routes : RouteSet
+        {
+            public override void Map(IMapper map)
+            {
+                map.Redirect("old")
+                   .WithName("old_to_posts")
+                   .To(new {controller = "posts", action = "index"})
+                   .NotPermanent()
+                   .GetOnly()
+                   .GetOnly();
+            }
+
+            Because of = () => new Routes().RegisterRoutes(routes);
+
+            It adds_the_redirect_route_to_the_collection = () => routes.Count.ShouldEqual(1);
+        }
+    }
 }

@@ -5,9 +5,12 @@ using RestfulRouting.Documentation.Controllers.Mappings;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(RestfulRouting.Documentation.Routes), "Start")]
 
-namespace RestfulRouting.Documentation {
-    public class Routes : RouteSet {
-        public override void Map(IMapper map) {
+namespace RestfulRouting.Documentation
+{
+    public class Routes : RouteSet
+    {
+        public override void Map(IMapper map)
+        {
             // register the route debugger
             map.DebugRoute("routedebug");
             // register the root of the site
@@ -18,9 +21,11 @@ namespace RestfulRouting.Documentation {
             map.Connect<OtherRouteSet>();
 
             // Mapping an area: notice, all these controllers are part of the area
-            map.Area<AreasController>("mappings", area => {
+            map.Area<AreasController>("mappings", area =>
+            {
                 area.Resource<ResourceController>();
-                area.Resources<ResourcesController>(resources => {
+                area.Resources<ResourcesController>(resources =>
+                {
                     // we are nesting a resource inside of another resource
                     resources.Resources<OtherResourcesController>(other => other.Only("index"));
                     // using collection
@@ -29,7 +34,8 @@ namespace RestfulRouting.Documentation {
                     resources.Member(r => r.Get("lonely"));
                 });
                 area.Resource<AreasController>();
-                area.Resource<ExtrasController>(extras => {
+                area.Resource<ExtrasController>(extras =>
+                {
                     // renaming the url part
                     extras.As("extras");
                     // using member, notice collection is unavailable
@@ -48,19 +54,34 @@ namespace RestfulRouting.Documentation {
             // Not the route debuger, just a controller
             map.Resource<RouteDebuggerController>(debug => debug.Only("show"));
 
-
+            // redirects should always be last
+            map.Connect<RedirectRouteSet>();
         }
 
-        public static void Start() {
+        public static void Start()
+        {
             var routes = RouteTable.Routes;
             RouteTable.Routes.MapHubs();
             routes.MapRoutes<Routes>();
         }
     }
 
-    public class OtherRouteSet : RouteSet {
-        public override void Map(IMapper map) {
+    public class OtherRouteSet : RouteSet
+    {
+        public override void Map(IMapper map)
+        {
             map.Resource<RouteSetController>(routeSet => routeSet.Only("show"));
+        }
+    }
+
+    public class RedirectRouteSet : RouteSet
+    {
+        public override void Map(IMapper map)
+        {
+            // Redirect an old path, to a new one
+            map.Redirect("this/is/old")
+               .To(new { controller = "home", action = "index" })
+               .GetOnly();
         }
     }
 }

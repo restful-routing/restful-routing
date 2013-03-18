@@ -213,7 +213,7 @@ namespace RestfulRouting
             var resources = new List<string>();
             resources.AddRange(ResourcePaths);
             resources.Add(with);
-            return string.Join("_", resources.Select(r => r.ToLowerInvariant()));
+            return string.Join("_", resources.Distinct().Select(r => r.ToLowerInvariant()));
         }
     }
 }

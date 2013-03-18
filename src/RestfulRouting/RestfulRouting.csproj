@@ -55,6 +55,7 @@
     <Compile Include="Actions.cs" />
     <Compile Include="Exceptions\InvalidRestfulMethodException.cs" />
     <Compile Include="Exceptions\NotRegisteredFormatException.cs" />
+    <Compile Include="Filters\RedirectFilterAttribute.cs" />
     <Compile Include="Format\AcceptList.cs" />
     <Compile Include="AdditionalAction.cs" />
     <Compile Include="Format\FormatCollection.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="MapRoutesExtension.cs" />
     <Compile Include="Format\MimeType.cs" />
     <Compile Include="NamedRoute.cs" />
+    <Compile Include="RedirectRoute.cs" />
     <Compile Include="RestfulHttpMethodConstraint.cs" />
     <Compile Include="RouteDebug\RouteDebugController.cs" />
     <Compile Include="ViewEngines\RestfulRoutingRazorViewEngine.cs" />

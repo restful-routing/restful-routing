@@ -8,5 +8,12 @@ namespace RestfulRouting
         {
             new TRoutes().RegisterRoutes(routes, namespaces);
         }
+
+        public static IRedirectMapper Redirect(this IMapper mapper, string oldPath)
+        {
+            var route = new RedirectRoute(oldPath);
+            mapper.Route(route);
+            return route;
+        }
     }
 }
