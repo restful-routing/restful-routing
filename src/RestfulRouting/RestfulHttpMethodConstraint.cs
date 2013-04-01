@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Routing;
 
 namespace RestfulRouting
@@ -21,10 +22,20 @@ namespace RestfulRouting
                         if (String.Equals(method, httpContext.Request.HttpMethod, StringComparison.OrdinalIgnoreCase))
                             return true;
 
-                        if (httpContext.Request.Form == null)
+                        // fixes issues #62 and #63
+                        NameValueCollection form;
+                        try {
+                            // first try to get the unvalidated form first
+                            form = httpContext.Request.Unvalidated().Form;
+                        }
+                        catch (Exception e) {
+                            form = httpContext.Request.Form;
+                        }
+
+                        if (form == null)
                             continue;
 
-                        var overridden = httpContext.Request.Form["_method"] ?? httpContext.Request.Form["X-HTTP-Method-Override"];
+                        var overridden = form["_method"] ?? form["X-HTTP-Method-Override"];
                         if (String.Equals(method, overridden, StringComparison.OrdinalIgnoreCase))
                         {
                             return true;
