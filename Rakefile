@@ -12,7 +12,7 @@ end
 
 desc 'generates assembly info'
 assemblyinfo :assemblyinfo do |asm|
-	asm.version = "1.4.1"
+	asm.version = "1.4.2"
 	asm.product_name = "RestfulRouting"
 	asm.title = "RestfulRouting"
 	asm.description = "RestfulRouting is a routing library for ASP.NET MVC based on the Rails 3 routing DSL."
