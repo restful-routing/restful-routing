@@ -75,6 +75,7 @@
     <Compile Include="Mappers\ResourcesMapperBase.cs" />
     <Compile Include="Mappers\RootMapper.cs" />
     <Compile Include="Mappers\RouteMapper.cs" />
+    <Compile Include="Mappers\RoutePaths.cs" />
     <Compile Include="Mappers\StandardMapper.cs" />
     <Compile Include="MapRoutesExtension.cs" />
     <Compile Include="Format\MimeType.cs" />

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RestfulRouting.Exceptions;
 
 namespace RestfulRouting.Mappers
 {
@@ -16,6 +15,12 @@ namespace RestfulRouting.Mappers
     {
         Action<ResourceMapper<TController>> _subMapper;
         Dictionary<string, KeyValuePair<string, HttpVerbs[]>> _members = new Dictionary<string, KeyValuePair<string, HttpVerbs[]>>(StringComparer.OrdinalIgnoreCase);
+        readonly ResourceRoutePaths _resourcePath = new ResourceRoutePaths();
+
+        protected override RoutePaths Paths
+        {
+            get { return _resourcePath; }
+        }
 
         public ResourceMapper(Action<ResourceMapper<TController>> subMapper = null)
         {
@@ -31,29 +36,9 @@ namespace RestfulRouting.Mappers
                                   };
             if (RouteSet.MapDelete)
             {
-                IncludedActions.Add(Names.DeleteName, () => GenerateNamedRoute("delete_" + JoinResources(ResourceName),BuildPathFor(Paths.Delete), ControllerName, Names.DeleteName, new[] { "GET" }));
+                IncludedActions.Add(Names.DeleteName, () => GenerateNamedRoute("delete_" + JoinResources(ResourceName), BuildPathFor(Paths.Delete), ControllerName, Names.DeleteName, new[] { "GET" }));
             }
             _subMapper = subMapper;
-        }
-
-        private string BuildPathFor(string path)
-        {
-            return path.Replace("{resourcePath}", ResourcePath)
-                        .Replace("{indexName}", ProperCaseUrl(Names.IndexName))
-                        .Replace("{showName}", ProperCaseUrl(Names.ShowName))
-                        .Replace("{newName}", ProperCaseUrl(Names.NewName))
-                        .Replace("{createName}", ProperCaseUrl(Names.CreateName))
-                        .Replace("{editName}", ProperCaseUrl(Names.EditName))
-                        .Replace("{updateName}", ProperCaseUrl(Names.UpdateName))
-                        .Replace("{deleteName}", ProperCaseUrl(Names.DeleteName))
-                        .Replace("{destroyName}", ProperCaseUrl(Names.DestroyName));
-        }
-
-        private string ProperCaseUrl(string url)
-        {
-            return RouteSet.LowercaseUrls
-                       ? url.ToLowerInvariant()
-                       : url;
         }
 
         public void Member(Action<AdditionalAction> action)
@@ -100,41 +85,5 @@ namespace RestfulRouting.Mappers
                 RegisterNested(routeCollection, mapper => mapper.SetParentResources(ResourcePaths));
             }
         }
-    }
-
-    public class RoutePaths
-    {
-        public RoutePaths()
-        {
-            InitializeDefaults();
-        }
-
-        private void InitializeDefaults()
-        {
-            Index = "{resourcePath}/{indexName}";
-            Show = "{resourcePath}";
-            New = "{resourcePath}/{newName}";
-            Create = "{resourcePath}";
-            Edit = "{resourcePath}/{editName}";
-            Update = "{resourcePath}";
-            Delete = "{resourcePath}/{deleteName}";
-            Destroy = "{resourcePath}";
-        }
-
-        public string Index { get; set; }
-
-        public string Show { get; set; }
-
-        public string New { get; set; }
-
-        public string Create { get; set; }
-
-        public string Edit { get; set; }
-
-        public string Update { get; set; }
-
-        public string Delete { get; set; }
-
-        public string Destroy { get; set; }
     }
 }

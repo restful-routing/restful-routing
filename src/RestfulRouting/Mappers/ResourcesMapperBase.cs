@@ -17,13 +17,13 @@ namespace RestfulRouting.Mappers
         void ReRoute(Action<RoutePaths> action);
     }
 
-    public class ResourcesMapperBase<TController> : Mapper, IResourcesMapperBase where TController : Controller
+    public abstract class ResourcesMapperBase<TController> : Mapper, IResourcesMapperBase where TController : Controller
     {
         protected string ResourceName;
         protected string ResourcePath;
         protected string ControllerName;
         protected RouteNames Names = new RouteNames();
-        protected RoutePaths Paths = new RoutePaths();
+        protected abstract RoutePaths Paths { get; }
         protected Dictionary<string, Func<Route>> IncludedActions;
         protected bool GenerateFormatRoutes;
         protected string SingularResourceName;
@@ -150,6 +150,26 @@ namespace RestfulRouting.Mappers
         public void Constrain(string key, object value)
         {
             Constraints[key] = value;
+        }
+
+        protected virtual string BuildPathFor(string path)
+        {
+            return path.Replace("{resourcePath}", ResourcePath)
+                        .Replace("{indexName}", ProperCaseUrl(Names.IndexName))
+                        .Replace("{showName}", ProperCaseUrl(Names.ShowName))
+                        .Replace("{newName}", ProperCaseUrl(Names.NewName))
+                        .Replace("{createName}", ProperCaseUrl(Names.CreateName))
+                        .Replace("{editName}", ProperCaseUrl(Names.EditName))
+                        .Replace("{updateName}", ProperCaseUrl(Names.UpdateName))
+                        .Replace("{deleteName}", ProperCaseUrl(Names.DeleteName))
+                        .Replace("{destroyName}", ProperCaseUrl(Names.DestroyName));
+        }
+
+        protected string ProperCaseUrl(string url)
+        {
+            return RouteSet.LowercaseUrls
+                       ? url.ToLowerInvariant()
+                       : url;
         }
     }
 }

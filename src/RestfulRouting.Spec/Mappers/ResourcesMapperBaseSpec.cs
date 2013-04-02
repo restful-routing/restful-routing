@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Machine.Specifications;
@@ -84,6 +83,11 @@ namespace RestfulRouting.Spec.Mappers
 
                 RegisterNested(routeCollection);
             }
+        }
+
+        protected override RoutePaths Paths
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 
