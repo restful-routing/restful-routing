@@ -67,8 +67,12 @@ Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions f
 * "Khalid Abuhakmeh":http://github.com/khalidabuhakmeh
 * "Nathan Wood":http://github.com/woodnathan
 * "David Alpert":http://github.com/davidalpert
+* "Adrian Phinney":https://github.com/TheCloudlessSky
 
 h2. Latest Release
+
+1.4.3
+* fix for Area Mapper prefix. Thanks to Adrian Phinney.
 
 1.4.0
 * added new DSL to allow you to redirect dead links, to newer urls. 
