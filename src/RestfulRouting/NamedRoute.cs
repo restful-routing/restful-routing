@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using System.Web.Routing;
 
 namespace RestfulRouting
 {
+    [DebuggerDisplay("Name = {Name}, Url = {Url}")]
     public class NamedRoute : Route
     {
         public string Name { get; set; }

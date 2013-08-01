@@ -14,9 +14,10 @@ namespace RestfulRouting.Mappers
 
         public override void RegisterRoutes(System.Web.Routing.RouteCollection routeCollection)
         {
-            Path("").To(_action).Named("root").WithNamespace<TController>();
+            Path("").To(_action).Named(JoinResources("root")).WithNamespace<TController>();
             
             //Namespaces = new[] {typeof (TController).Namespace};
+            
 
             base.RegisterRoutes(routeCollection);
         }

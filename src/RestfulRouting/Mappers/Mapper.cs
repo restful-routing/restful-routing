@@ -218,6 +218,9 @@ map.Area<PostsController>(""posts"", posts =>
 
         private void InheritNamespaces(string[] namespaces)
         {
+            if (namespaces == null)
+                namespaces = new string[0];
+
             if (this.Namespaces == null)
                 this.Namespaces = namespaces;
             else
@@ -244,7 +247,7 @@ map.Area<PostsController>(""posts"", posts =>
 
         public void SetParentResources(List<string> resources)
         {
-            ResourcePaths = resources;
+            ResourcePaths = resources.ToList();
         }
 
         public string JoinResources(string with)

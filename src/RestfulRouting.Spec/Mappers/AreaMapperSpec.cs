@@ -22,7 +22,7 @@ namespace RestfulRouting.Spec.Mappers
         It sets_the_area = () => routes.ShouldEachConformTo(x => DataTokens(x)["area"].ToString() == "test");
 
         It sets_namespace_fallback = () => routes.ShouldEachConformTo(x => (bool)DataTokens(x)["UseNamespaceFallback"] == false);
-        
+
         It adds_to_the_resource_path = () => areaMapper.JoinResources("posts").ShouldEqual("test_posts");
     }
 
@@ -59,6 +59,39 @@ namespace RestfulRouting.Spec.Mappers
         It sets_the_area_for_the_top_route = () => DataTokens(routes[0])["area"].ShouldEqual("top-area");
         It sets_the_area_for_the_nested_route = () => DataTokens(routes[1])["area"].ShouldEqual("nested-area");
 
-        It adds_to_the_resource_path = () => areaMapper.JoinResources("posts").ShouldEqual("top_nested_posts");
+        It sets_the_avatars_resource_path = () => areaMapper.JoinResources("avatars").ShouldEqual("top_avatars");
+        It adds_to_the_area_root_resource_path = () => routes.Where(x => x is NamedRoute).Cast<NamedRoute>().Any(x => x.Name == "top_root").ShouldBeTrue();
+        It adds_to_the_nested_area_root_resource_path = () => routes.Where(x => x is NamedRoute).Cast<NamedRoute>().Any(x => x.Name == "top_nested_root").ShouldBeTrue();
     }
+
+    public class area_mapper_with_multiple_resources : base_context
+    {
+        class AreaRouteSet : RouteSet
+        {
+            public override void Map(IMapper map)
+            {
+                map.Area<PostsController>("area", a =>
+                {
+                    a.Resources<PostsController>(p =>
+                    {
+                        p.Resources<CommentsController>();
+                    });
+                    a.Resources<AvatarsController>();
+                });
+            }
+        }
+
+        static RouteSet routeSet = new AreaRouteSet();
+
+        Because of = () => routeSet.RegisterRoutes(routes);
+
+        It has_routes = () => routes.Count.ShouldBeGreaterThan(0);
+        It has_a_route_named_area_avatars = () =>
+        {
+            routes.Where(x => x is NamedRoute).Cast<NamedRoute>().Any(x => x.Name == "area_avatars").ShouldBeTrue();
+        };
+        It has_a_route_named_area_posts = () => routes.Where(x => x is NamedRoute).Cast<NamedRoute>().Any(x => x.Name == "area_posts").ShouldBeTrue();
+    }
+
+
 }
