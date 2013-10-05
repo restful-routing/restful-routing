@@ -68,8 +68,12 @@ Written by "Steve Hodgkiss":http://github.com/stevehodgkiss with contributions f
 * "Nathan Wood":http://github.com/woodnathan
 * "David Alpert":http://github.com/davidalpert
 * "Adrian Phinney":https://github.com/TheCloudlessSky
+* "Dan Malcom":https://github.com/danmalcom
 
 h2. Latest Release
+
+1.5.0
+* Add support for customizing the name of the resource id parameter. Thanks Dan Malcolm.
 
 1.4.6
 * Fixed a minor issue with resource names when in an area, not sure if anybody uses resource names but it was bugging me. Also nested Roots now reflect their origin. ex. root, area_root, area_nested_root.
