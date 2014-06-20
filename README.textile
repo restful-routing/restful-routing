@@ -6,7 +6,7 @@ Available via "NuGet":http://nuget.org/List/Packages/RestfulRouting.
 
 <pre><code> PM> Install-Package RestfulRouting </code></pre>
 
-Checkout out the new documentation site included in this project, which can be found hosted at "restfulrouting.com":http://www.restfulrouting.com. If you find any improvements that need to be made, please feel free to contact us or send a pull request.
+Checkout out the new documentation site included in this project, which can be found hosted at "restfulrouting.com":http://restfulrouting.com. If you find any improvements that need to be made, please feel free to contact us or send a pull request.
 
 Basic usage:
 
@@ -47,7 +47,7 @@ public class MvcApplication : System.Web.HttpApplication
 	}
 }</code></pre>
 
-"Read more":http://www.restfulrouting.com
+"Read more":http://restfulrouting.com
 
 h2. Note on Patches/Pull Requests
 
