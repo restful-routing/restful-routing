@@ -1,0 +1,1150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Restful Routing</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/restful-routing/restful-routing'>Fork On GitHub</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p><strong>Restful Routing for ASP.NET MVC, based on the Ruby on Rails routing DSL. It utlizes HTTP verbs to keep unique paths to a minimum, while optimizing your controllers structure.</strong></p>
+
+<blockquote>
+<p>PM &gt; Install-Package RestfulRouting</p>
+</blockquote>
+
+<p>Welcome to Restful Routing for ASP.NET MVC! Routing is arguably at the core of all ASP.Net MVC applications. Managing routes yourself can be cumbersome, frustrating, and unproductive. Some developers utilize a catch-all route, which may lead to unexpected problems as the application grows. <strong>Restful Routing solves the routing management issue by providing an opinionated interface of registering routes</strong>.</p>
+
+<p>We hope you find that this library is so easy to use that you will wonder how you ever developed ASP.Net MVC applications without it.</p>
+
+<h2 id="golden-seven">Golden Seven</h2>
+
+<p>Restful Routing is based around the idea of <code class="prettyprint">Resources</code> and the Golden Seven actions:</p>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>INDEX</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+</tr>
+</tbody></table>
+
+<p>The aim of Restful Routing is to make you concious of your controllers. While you may bend the rules when appropriate, you should really focus on keeping all controllers limited to these seven actions. If you fight the conventions of Restful Routing, you will not be leveraging the strength of our opinionated framework and be miserable doing so.</p>
+
+<h2 id="default-route">Default Route</h2>
+<pre class="highlight csharp"><code><span class="c1">// BAD! DO NOT USE!
+</span><span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+    <span class="s">"Default"</span><span class="p">,</span>                                              <span class="c1">// Route name
+</span>    <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>                           <span class="c1">// URL with parameters
+</span>    <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Home"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="s">""</span> <span class="p">}</span>  <span class="c1">// Parameter defaults
+</span><span class="p">);</span>
+</code></pre>
+
+<aside class="warning">
+DO NOT USE THE DEFAULT ROUTE!
+</aside>
+
+<p>Before diving into Restful Routing, I would like to discuss the default route provided by ASP.NET MVC. Found in many starter templates, it is a helpful tool when getting started, but I do not recommend you use it for any production environment. I will list the reasons below:</p>
+
+<ul>
+<li>Any controller in your project will be accessible even if not registered with a routing framework like Restful Routing.</li>
+<li>It can lead to unexpected outward route resolution and hours of debugging.</li>
+</ul>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<h2 id="step-1-installing-restful-routing">Step 1. Installing Restful Routing</h2>
+
+<p>To get started, we will assume you are starting with an existing ASP.Net MVC project and understand how to get to that point. </p>
+
+<p>Open up the Package Manager Console and type the following:
+<code class="prettyprint">PM&gt; Install-Package RestfulRouting</code>.</p>
+
+<p>If you do not wish to use the Package Manager Console, you can right-click your web project and select the &ldquo;Manage Nuget Packages&rdquo; context menu item. Search for <code class="prettyprint">RestfulRouting</code> install the package.</p>
+
+<h2 id="step-2-configuring-restful-routing">Step 2. Configuring Restful Routing</h2>
+<pre class="highlight csharp"><code><span class="c1">// Routes.cs
+</span><span class="k">using</span> <span class="nn">System.Web.Routing</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">RestfulRouting.Documentation.Controllers</span><span class="p">;</span>
+<span class="na">[assembly: WebActivator.PreApplicationStartMethod(typeof(RestfulRouting.Documentation.Routes), "Start")]</span>
+<span class="k">namespace</span> <span class="nn">RestfulRouting.Documentation</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Routes</span> <span class="p">:</span> <span class="n">RouteSet</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">map</span><span class="p">.</span><span class="nf">DebugRoute</span><span class="p">(</span><span class="s">"routedebug"</span><span class="p">);</span>
+            <span class="cm">/*
+             * TODO: Add your routes here.
+             * 
+            map.Root&lt;HomeController&gt;(x =&gt; x.Index());
+
+            map.Resources&lt;BlogsController&gt;(blogs =&gt;
+            {
+                blogs.As("weblogs");
+                blogs.Only("index", "show");
+                blogs.Collection(x =&gt; x.Get("latest"));
+                blogs.Resources&lt;PostsController&gt;(posts =&gt;
+                {
+                    posts.Except("create", "update", "destroy");
+                    posts.Resources&lt;CommentsController&gt;(c =&gt; c.Except("destroy"));
+                });
+            });
+            map.Area&lt;Controllers.Admin.BlogsController&gt;("admin", admin =&gt;
+            {
+                admin.Resources&lt;Controllers.Admin.BlogsController&gt;();
+                admin.Resources&lt;Controllers.Admin.PostsController&gt;();
+            });
+             */</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">var</span> <span class="n">routes</span> <span class="p">=</span> <span class="n">RouteTable</span><span class="p">.</span><span class="n">Routes</span><span class="p">;</span>
+            <span class="n">routes</span><span class="p">.</span><span class="n">MapRoutes</span><span class="p">&lt;</span><span class="n">Routes</span><span class="p">&gt;();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>A couple of changes should have happened to your project, namely two files were added: <code class="prettyprint">Routes.cs</code> and <code class="prettyprint">ApplicationController</code>.</p>
+
+<p><code class="prettyprint">Routes.cs</code> should look like the section to the right. We have a little help already included for you in this file. Not everyone is writing a blog application, so feel free to erase the commented code after you have looked over it.</p>
+
+<p><strong>Note the dependency on WebActivator, this will ensure the routes are registred when your application starts.</strong> You can choose to remove this dependency if you would rather call the <code class="prettyprint">Start</code> method yourself.</p>
+<pre class="highlight csharp"><code><span class="c1">// setting the root route
+</span><span class="n">map</span><span class="p">.</span><span class="n">Root</span><span class="p">&lt;</span><span class="n">HomeController</span><span class="p">&gt;(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="nf">Index</span><span class="p">());</span>
+</code></pre>
+
+<p>For your configuration, be sure to set the <code class="prettyprint">Root</code>;</p>
+
+<p>In addition to <code class="prettyprint">Routes.cs</code> you will also get <code class="prettyprint">ApplicationController</code>. Using this base controller is <em>optional</em>, but it does have the code necessary to utilize <strong>Format Results</strong></p>
+
+<h2 id="step-3-view-engine-configuration-optional">Step 3. View Engine Configuration (Optional)</h2>
+<pre class="highlight csharp"><code><span class="c1">// Global.asax
+</span><span class="k">using</span> <span class="nn">System.Web.Mvc</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="nn">RestfulRouting.Documentation</span> 
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">MvcApplication</span> <span class="p">:</span> <span class="n">System</span><span class="p">.</span><span class="n">Web</span><span class="p">.</span><span class="n">HttpApplication</span> 
+    <span class="p">{</span>
+        <span class="k">protected</span> <span class="k">void</span> <span class="nf">Application_Start</span><span class="p">()</span> 
+        <span class="p">{</span>
+            <span class="n">ViewEngines</span><span class="p">.</span><span class="n">Engines</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+            <span class="n">ViewEngines</span><span class="p">.</span><span class="n">Engines</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">RestfulRoutingRazorViewEngine</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>ASP.Net MVC depends on view engines to locate your views. While the default view engine is ok, we found that the folder structure to be a bit verbose. If you would like to utilize our view engines, then change your Global.asax file to look like the following. </p>
+
+<p>There You Have It. Code! Code! Code!</p>
+
+<p>If you want to learn more about how and what is happening in the registration of your routes continue reading.</p>
+
+<h1 id="routeset">RouteSet</h1>
+
+<p>In this section, you will learn about <code class="prettyprint">RouteSet</code>. The class is critical to making Restful Routing work.</p>
+
+<h2 id="basics">Basics</h2>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Routes</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">map</span><span class="p">.</span><span class="nf">DebugRoute</span><span class="p">(</span><span class="s">"routedebug"</span><span class="p">);</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Root</span><span class="p">&lt;</span><span class="n">HomeController</span><span class="p">&gt;(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="nf">Index</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><strong>A RouteSet is a collection of route mappings</strong>. It not only defines routes in your application, but it can connect to other RouteSets, creating a rich set of routes with minimal effort.</p>
+
+<p>All routes are defined inside the <code class="prettyprint">Map</code> method of a RouteSet.</p>
+
+<p>The IMapper instance passed into Map presents a way to map your routes to the <code class="prettyprint">RouteTable</code> dictionary at the heart of every ASP.Net MVC application. If you installed Restful Routing through Nuget, you will have noticed a RouteSet already created for you.</p>
+
+<aside class="notice">
+Note: This code just needs to be called at application start. We prefer WebActivator, but you can call it in Global.asax if you would like. MapRoutes is an extension method from RestfulRouting.
+</aside> 
+
+<h2 id="connecting">Connecting</h2>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Routes</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">map</span><span class="p">.</span><span class="nf">DebugRoute</span><span class="p">(</span><span class="s">"routedebug"</span><span class="p">);</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Connect</span><span class="p">&lt;</span><span class="n">One</span><span class="p">&gt;();</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Connect</span><span class="p">&lt;</span><span class="n">Two</span><span class="p">&gt;();</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Connect</span><span class="p">&lt;</span><span class="n">APIRoutes</span><span class="p">&gt;(</span><span class="s">"api"</span><span class="p">,</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"RestfulRouting.Controllers.API"</span> <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">One</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">OneController</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Two</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">TwosController</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">APIRoutes</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">RestfulRouting</span><span class="p">.</span><span class="n">Controllers</span><span class="p">.</span><span class="n">API</span><span class="p">.</span><span class="n">OneController</span><span class="p">&gt;();</span>
+        <span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">RestfulRouting</span><span class="p">.</span><span class="n">Controllers</span><span class="p">.</span><span class="n">API</span><span class="p">.</span><span class="n">TwosController</span><span class="p">&gt;();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Sometimes you want to logically seperate your RouteSets. Instead of grouping all routes in a single RouteSet, we provide the ability to connect RouteSets. You must select one RoutSet to be the root of your RouteSets, after which you may connect other RouteSets any way you would like. RouteSets also support namespaces, similar to areas.</p>
+
+<h2 id="configuration-optional">Configuration (Optional)</h2>
+
+<p>A RouteSet provides settings that can modify the behavior of route registration. These properties can be found within the context of a RouteSet. <em>Most developers will not want to touch these features</em>.</p>
+
+<table><thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>LowercaseUrls</td>
+<td><code class="prettyprint">true</code></td>
+<td>register urls in lowercase invariant culture</td>
+</tr>
+<tr>
+<td>LowercaseDefaults</td>
+<td><code class="prettyprint">true</code></td>
+<td>register your actions when registered normally in lowercase invariant culture</td>
+</tr>
+<tr>
+<td>LowercaseActions</td>
+<td><code class="prettyprint">true</code></td>
+<td>register your actions when registered with Route in lowercase invariant culture</td>
+</tr>
+<tr>
+<td>MapDelete</td>
+<td><code class="prettyprint">false</code></td>
+<td>register an additional action of <strong>Delete [GET]</strong>. Used to display a delete confirmation page before removing a resource.</td>
+</tr>
+</tbody></table>
+
+<h1 id="mapping">Mapping</h1>
+
+<p>Restful Routing is a mapping framework, and to do the mapping we provide a set of concepts and interfaces. Read about each interface below and what functionality each provides in detail.</p>
+
+<h2 id="root">Root</h2>
+<pre class="highlight csharp"><code><span class="n">map</span><span class="p">.</span><span class="n">Root</span><span class="p">&lt;</span><span class="n">HomeController</span><span class="p">&gt;(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="nf">Index</span><span class="p">());</span>
+</code></pre>
+
+<p>Every application needs a default page, and registering a root path has never been easier. If your application was hosted at <code class="prettyprint">http://example.com</code> then that would be considered the root.</p>
+
+<p>Your application may only have <strong>one</strong> root.</p>
+
+<h2 id="resource">Resource</h2>
+<pre class="highlight csharp"><code><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProfileController</span><span class="p">&gt;();</span>
+</code></pre>
+
+<p>A resource is a <em>&ldquo;thing&rdquo;</em> that can be thought of singularly from the perspective of the application user. A profile for an authenticated user is a good example of a resource. Take a look at the following url. When it comes to a profile, you will derive the identifier via a cookie (or other implicit means), and do not need the identifier in the path of the route.</p>
+
+<aside class="note">
+http://localhost/profile
+</aside>
+
+<p>The url assumes that the application knows what a profile is and how to present it. Now how would the registration look in a RouteSet?</p>
+
+<h3 id="actions-and-http-methods">Actions and Http Methods</h3>
+
+<p>When registering a resource, a set of actions and methods are registered automatically. Register your controller and implement the actions.</p>
+
+<aside class="info">
+Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.
+</aside>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+</tr>
+</tbody></table>
+
+<p>For our example with the <code class="prettyprint">ProfileController</code>, you would get the following output:</p>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+<th>Result (controller#action)</th>
+<th>Url</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+<td>profile#show</td>
+<td>/profile</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+<td>profile#new</td>
+<td>/profile/new</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+<td>profile#create</td>
+<td>/profile</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+<td>profile#edit</td>
+<td>/profile/edit</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+<td>profile#update</td>
+<td>/profile</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+<td>profile#destroy</td>
+<td>/profile</td>
+</tr>
+</tbody></table>
+
+<h3 id="naming">Naming</h3>
+<pre class="highlight csharp"><code><span class="c1">// NAMING
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProfileController</span><span class="p">&gt;(</span><span class="n">profile</span> <span class="p">=&gt;</span> <span class="n">profile</span><span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="s">"my-secret-identity"</span><span class="p">));</span>
+
+<span class="c1">// NAMING
+/// in RouteSet
+</span><span class="n">resource</span><span class="p">.</span><span class="nf">PathNames</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">CreateName</span> <span class="p">=</span> <span class="s">"creating"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">DeleteName</span> <span class="p">=</span> <span class="s">"deleting"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">DestroyName</span> <span class="p">=</span> <span class="s">"destroying"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">EditName</span> <span class="p">=</span> <span class="s">"editing"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">NewName</span> <span class="p">=</span> <span class="s">"newing"</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// NAMING
+/// The resource controller    
+</span><span class="k">public</span> <span class="k">class</span> <span class="nc">ResourceController</span><span class="p">:</span> <span class="n">ApplicationController</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Creating</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//...
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Sometimes you name your controller one thing, but wish to have the resource url reflect something entirely else. This is simple to do.</p>
+
+<p>The new url will for <code class="prettyprint">profile#show</code> will be changed to <code class="prettyprint">http://localhost/my-secret-identity</code>.</p>
+
+<p>Additionally, you can change the default action names of a resource by using the <code class="prettyprint">PathNames</code> method. <strong>This isn&rsquo;t recommended, but we like to give you options</strong>.</p>
+
+<h3 id="choosing-actions">Choosing Actions</h3>
+<pre class="highlight csharp"><code><span class="c1">// CHOOSING ACTIONS
+/// register only actions we need
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProfileController</span><span class="p">&gt;(</span><span class="n">profile</span> <span class="p">=&gt;</span> <span class="p">{</span>
+     <span class="n">profile</span><span class="p">.</span><span class="nf">Only</span><span class="p">(</span><span class="s">"show"</span><span class="p">,</span> <span class="s">"edit"</span><span class="p">,</span> <span class="s">"update"</span><span class="p">)</span>
+<span class="p">});</span>
+<span class="c1">/// exclude actions we don't need
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProfileController</span><span class="p">&gt;(</span><span class="n">profile</span> <span class="p">=&gt;{</span>
+     <span class="n">profile</span><span class="p">.</span><span class="nf">Except</span><span class="p">(</span><span class="s">"new"</span><span class="p">,</span> <span class="s">"create"</span><span class="p">,</span> <span class="s">"destroy"</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Sometimes you might not need all the methods we provide for a resource. Imagine the following examples:</p>
+
+<ul>
+<li>As a user, I should not be able to create a profile, because it is created implicitly when we registered.</li>
+<li>As a user, I should be able to edit my current profile.</li>
+<li>As a user, I should not be able to delete my profile.</li>
+<li>As a user, I should be able to see my profile</li>
+</ul>
+
+<p>After review, we only need to register the following actions: <code class="prettyprint">Show</code>, <code class="prettyprint">Edit</code>, <code class="prettyprint">Update</code>. To limit our resource to those actions, we would use the following code in our RouteSet.</p>
+
+<h3 id="nesting-a-resource">Nesting a Resource</h3>
+<pre class="highlight csharp"><code><span class="c1">// NESTING A RESOURCE
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProfileController</span><span class="p">&gt;(</span><span class="n">profile</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">profile</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">CreditCardController</span><span class="p">&gt;()</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>A Resource sometimes depend on another resource. When nesting a resource, you have a one to one relationship between the parent resource to its dependent resource.</p>
+
+<p>If you create a <code class="prettyprint">creditcard</code> resource, and nest it within our <code class="prettyprint">profile</code> resource (as noted on the right) you would get the resulting routes, excluding the profile routes:</p>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+<th>Result (controller#action)</th>
+<th>Url Template</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+<td>creditcard#show</td>
+<td>/profile/creditcard</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+<td>creditcard#new</td>
+<td>/profile/creditcard/new</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+<td>creditcard#create</td>
+<td>/profile/creditcard</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+<td>creditcard#edit</td>
+<td>/profile/creditcard/edit</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+<td>creditcard#update</td>
+<td>/profile/creditcard</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+<td>creditcard#destroy</td>
+<td>/profile/creditcard</td>
+</tr>
+</tbody></table>
+
+<aside class="info">
+Note: You may also nest a resource within resources and vice versa.
+</aside>
+
+<h2 id="resources">Resources</h2>
+<pre class="highlight csharp"><code><span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ProductsController</span><span class="p">&gt;();</span>
+</code></pre>
+
+<p>Resources represent collections withing your domain. Imagine building a store application, you might want to expose your catalog so that customers may search and purchase products. Products would be considered resources. The url that is generated would also reflect that there are many products to be offered.</p>
+
+<aside>http://localhost/products</aside>
+
+<p>Notice the <strong>pluralization</strong> of products. If you are starting an e-commerce site, you would most likely sell more than one product at a time.</p>
+
+<h3 id="actions">Actions</h3>
+
+<p>When registering resources, a set of actions and methods are registered automatically. Register your controller and implement the actions.</p>
+
+<aside class="info">    
+Note: All routes are registred with an HttpVerb method constraint, so you will need to use HttpMethodOverride when posting from a form.
+</aside>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>INDEX</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+</tr>
+</tbody></table>
+
+<p>For our example with the <code class="prettyprint">ProductsController</code>, you would get the following output:</p>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+<th>Result (controller#action)</th>
+<th>Url Template</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>INDEX</td>
+<td>GET</td>
+<td>products#index</td>
+<td>/products</td>
+</tr>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+<td>products#show</td>
+<td>/products/{id}</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+<td>products#new</td>
+<td>/products/new</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+<td>products#create</td>
+<td>/products</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+<td>products#edit</td>
+<td>/products/{id}/edit</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+<td>products#update</td>
+<td>/products/{id}</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+<td>products#destroy</td>
+<td>/products/{id}</td>
+</tr>
+</tbody></table>
+
+<aside class="info">
+<strong>id</strong> is a <strong>required</strong> parameter. The route will not resolve unless specified.
+</aside>
+
+<h3 id="naming">Naming</h3>
+<pre class="highlight csharp"><code><span class="c1">// NAMING
+/// in RouteSet
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ProductsController</span><span class="p">&gt;(</span><span class="n">products</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">products</span><span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="s">"amazing-items"</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="c1">// NAMING
+/// in RouteSet
+</span><span class="n">resources</span><span class="p">.</span><span class="nf">PathNames</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">CreateName</span> <span class="p">=</span> <span class="s">"creating"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">DeleteName</span> <span class="p">=</span> <span class="s">"deleting"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">DestroyName</span> <span class="p">=</span> <span class="s">"destroying"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">EditName</span> <span class="p">=</span> <span class="s">"editing"</span><span class="p">;</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">NewName</span> <span class="p">=</span> <span class="s">"newing"</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">/// controller
+</span><span class="k">public</span> <span class="k">class</span> <span class="nc">ResourcesController</span><span class="p">:</span> <span class="n">ApplicationController</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Creating</span><span class="p">()</span> <span class="p">{</span>
+       <span class="c1">//...
+</span>    <span class="p">}</span>
+    <span class="c1">//...
+</span><span class="p">}</span>
+</code></pre>
+
+<p>Sometimes you name your controller one thing, but wish to have the resources url reflect something entirely else. This is simple to do.</p>
+
+<p>The new url will for products#index will be changed.</p>
+
+<aside>
+http://localhost/amazing-items
+</aside>
+
+<p>Additionally, you can change the default <strong>action</strong> names of a resource by using the <code class="prettyprint">PathNames</code> method. This isn&rsquo;t recommended, but we like to give you options.</p>
+
+<h3 id="customizing-the-id-parameter">Customizing The <code class="prettyprint">{id}</code> Parameter</h3>
+<pre class="highlight csharp"><code><span class="c1">// CUSTOMIZING THE ID PARAMETER
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">UsersController</span><span class="p">&gt;(</span><span class="n">users</span> <span class="p">=&gt;</span> <span class="n">users</span><span class="p">.</span><span class="nf">IdParameter</span><span class="p">(</span><span class="s">"username"</span><span class="p">));</span>
+
+<span class="c1">// CUSTOMIZING THE ID PARAMETER
+</span><span class="k">public</span> <span class="k">class</span> <span class="nc">UsersController</span><span class="p">:</span> <span class="n">Controller</span> <span class="p">{</span>
+    <span class="c1">// not id, but username
+</span>    <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Show</span><span class="p">(</span><span class="kt">string</span> <span class="n">username</span><span class="p">)</span> <span class="p">{</span>
+       <span class="c1">//...
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>By default, the name <code class="prettyprint">id</code> is used for the resource id parameter in route URL patterns. For example, the URL pattern for the products#show action in Actions and HTTP Methods above is <code class="prettyprint">/products/{id}</code>.</p>
+
+<p>In some scenarios, you might want to use a different name for the parameter. Maybe you want the parameter name to match the name of the property used to identify the resource:</p>
+
+<p>The route added for the users#show action would then have the URL pattern <code class="prettyprint">/users/{username}</code>.</p>
+
+<h3 id="choosing-actions">Choosing Actions</h3>
+<pre class="highlight csharp"><code><span class="c1">// CHOOSING ACTIONS
+/// register only actions we need
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProductsController</span><span class="p">&gt;(</span><span class="n">products</span> <span class="p">=&gt;</span> <span class="p">{</span>
+     <span class="n">products</span><span class="p">.</span><span class="nf">Only</span><span class="p">(</span><span class="s">"show"</span><span class="p">,</span> <span class="s">"edit"</span><span class="p">,</span> <span class="s">"update"</span><span class="p">)</span>
+<span class="p">});</span>
+<span class="c1">/// exclude actions we don't need
+</span><span class="n">map</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ProductsController</span><span class="p">&gt;(</span><span class="n">profile</span> <span class="p">=&gt;{</span>
+     <span class="n">products</span><span class="p">.</span><span class="nf">Except</span><span class="p">(</span><span class="s">"new"</span><span class="p">,</span> <span class="s">"create"</span><span class="p">,</span> <span class="s">"destroy"</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Sometimes you might not need all the methods we provide. You may remove actions using the follwing methods on the right.</p>
+
+<h3 id="nesting-resources">Nesting Resources</h3>
+<pre class="highlight csharp"><code><span class="n">map</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ProductsController</span><span class="p">&gt;(</span><span class="n">products</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">products</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ReviewsController</span><span class="p">&gt;()</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Resources sometimes depend on other resources. When nesting resources, you have a one to many relationship between the parent resource to its dependent resources. Think about a product that has reviews.To accomplish this you would register the two resources like so.</p>
+
+<table><thead>
+<tr>
+<th>Action</th>
+<th>HTTP Method</th>
+<th>Result (controller#action)</th>
+<th>Url Template</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>INDEX</td>
+<td>GET</td>
+<td>reviews#index</td>
+<td>/products/{productId}/reviews</td>
+</tr>
+<tr>
+<td>SHOW</td>
+<td>GET</td>
+<td>reviews#show</td>
+<td>/products/{productId}/reviews/{id}</td>
+</tr>
+<tr>
+<td>NEW</td>
+<td>GET</td>
+<td>reviews#new</td>
+<td>/products/{productId}/reviews/new</td>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>POST</td>
+<td>reviews#create</td>
+<td>/products/{productId}/reviews</td>
+</tr>
+<tr>
+<td>EDIT</td>
+<td>GET</td>
+<td>reviews#edit</td>
+<td>/products/{productId}/reviews/{id}/edit</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>PUT</td>
+<td>reviews#update</td>
+<td>/products/{productId}/reviews/{id}</td>
+</tr>
+<tr>
+<td>DESTROY</td>
+<td>DELETE</td>
+<td>reviews#destroy</td>
+<td>/products/{productId}/reviews/{id}</td>
+</tr>
+</tbody></table>
+
+<aside class="info">
+<strong>id</strong> and <strong>productId</strong> are <strong>required</strong> parameter. The route will not resolve unless <strong>both</strong> are specified.
+</aside>
+
+<h2 id="member-and-collection-routes">Member And Collection Routes</h2>
+<pre class="highlight csharp"><code><span class="c1">// MEMBER AND COLLECTION ROUTES
+/// IN ROUTESET
+</span><span class="n">area</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ResourcesController</span><span class="p">&gt;(</span><span class="n">resources</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">resources</span><span class="p">.</span><span class="nf">Collection</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">"many"</span><span class="p">));</span>
+    <span class="n">resources</span><span class="p">.</span><span class="nf">Member</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">"lonely"</span><span class="p">));</span>
+<span class="p">});</span>
+<span class="n">area</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ExtrasController</span><span class="p">&gt;(</span><span class="n">extras</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// using member, notice collection is unavailable
+</span>    <span class="n">extras</span><span class="p">.</span><span class="nf">Member</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">"member"</span><span class="p">));</span>
+<span class="p">});</span>
+</code></pre>
+<pre class="highlight plaintext"><code>&lt;!-- IN RAZOR --&gt;
+&lt;a class="btn" href="@Url.Action("member", "extras")"&gt;Member on a Resource&lt;/a&gt;
+&lt;a class="btn" href="@Url.Action("lonely", "resources", new { id = 1 })"&gt;Member on Resources&lt;/a&gt;
+&lt;a class="btn" href="@Url.Action("many", "resources")"&gt;Collection on Resources&lt;/a&gt;
+</code></pre>
+
+<p>Use the <code class="prettyprint">Member</code> and <code class="prettyprint">Collection</code> methods inside of resources to add routes to the collection (without an id route parameter) or the member (with an id route parameter). Methods available to map are Get, Post, Put, Delete and Head. When within the context of a resource (singular), you will only have access to the <code class="prettyprint">Member</code> method.</p>
+
+<h2 id="standard-mapping">Standard Mapping</h2>
+<pre class="highlight csharp"><code><span class="c1">// STANDARD MAPPING
+// IN ROUTE SET
+</span><span class="n">area</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ExtrasController</span><span class="p">&gt;(</span><span class="n">extras</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Use path
+</span>    <span class="n">extras</span><span class="p">.</span><span class="nf">Path</span><span class="p">(</span><span class="s">"using_path"</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">ExtrasController</span><span class="p">&gt;(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="p">{</span>
+             <span class="n">e</span><span class="p">.</span><span class="nf">UsingPath</span><span class="p">()</span>
+        <span class="p">}).</span><span class="nf">GetOnly</span><span class="p">();</span>
+    <span class="c1">// Using route
+</span>    <span class="n">extras</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nf">Route</span><span class="p">(</span><span class="s">"mappings/extras/with_route"</span><span class="p">,</span>
+            <span class="k">new</span> <span class="nf">RouteValueDictionary</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span>
+                <span class="n">controller</span> <span class="p">=</span> <span class="s">"extras"</span><span class="p">,</span> 
+                <span class="n">action</span> <span class="p">=</span> <span class="s">"usingroute"</span><span class="p">,</span>
+                <span class="n">area</span><span class="p">=</span><span class="s">"mappings"</span> 
+            <span class="p">}),</span>
+            <span class="k">new</span> <span class="nf">MvcRouteHandler</span><span class="p">()</span>
+        <span class="p">)</span> 
+    <span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<pre class="highlight plaintext"><code>&lt;!-- IN RAZOR VIEW --&gt;
+&lt;a class="btn" href="@Url.Action("usingpath", "extras")"&gt;Path&lt;/a&gt;
+&lt;a class="btn" href="@Url.Action("usingroute", "extras")"&gt;Route&lt;/a&gt;
+</code></pre>
+
+<p>Sometimes our conventions just don&rsquo;t work for you. We may be opinionated, but we do not rule with an iron fist.</p>
+
+<p>Two additional methods are provided so you may add custom routes: Path is a mix of traditional ASP.Net MVC routing syntax with our interface wrapper. Route is a very traditional way of adding a custom route.</p>
+
+<h2 id="areas">Areas</h2>
+<pre class="highlight csharp"><code><span class="c1">// IN ROUTESET
+</span><span class="n">map</span><span class="p">.</span><span class="n">Area</span><span class="p">&lt;</span><span class="n">AreasController</span><span class="p">&gt;(</span><span class="s">"mappings"</span><span class="p">,</span> <span class="n">area</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">area</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ResourceController</span><span class="p">&gt;();</span>
+    <span class="n">area</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">ResourcesController</span><span class="p">&gt;(</span><span class="n">resources</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// we are nesting a resource inside of another resource
+</span>        <span class="n">resources</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">OtherResourcesController</span><span class="p">&gt;(</span><span class="n">other</span> <span class="p">=&gt;</span> <span class="p">{</span>
+             <span class="n">other</span><span class="p">.</span><span class="nf">Only</span><span class="p">(</span><span class="s">"index"</span><span class="p">)</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+    <span class="n">area</span><span class="p">.</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">ExtrasController</span><span class="p">&gt;();</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Areas are handled by namespace in Restful Routing. Usually there is a correlation between folders and namespaces, so for most developers this isn&rsquo;t a big difference from what they already do.</p>
+
+<p>The controller provided to the Area method is used to determine the namespace for the grouped controllers. The &ldquo;mappings&rdquo; string is used to determine the name of the area, along with the url part.</p>
+<pre class="highlight plaintext"><code>&lt;!-- IN RAZOR VIEW --&gt;
+&lt;!-- GENERATE URL IN AN AREA --&gt;
+@Url.Action("index", "resources", new { area = "mappings" })
+&lt;!-- GENERATE URL OUTSIDE OF AREA --&gt;
+@Url.Action("show", "quickstart", new { area = "" })
+</code></pre>
+
+<p>Remember you will need to provide the area when generating urls. To exit out of an area, you can set the area to an empty string. All rules with a Resource and Resources still apply when dealing with Areas.</p>
+
+<h1 id="extras">Extras</h1>
+
+<h2 id="view-engines">View Engines</h2>
+<pre class="highlight csharp"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">RestfulRoutingRazorViewEngine</span> <span class="p">:</span> <span class="n">RazorViewEngine</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">RestfulRoutingRazorViewEngine</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">AreaMasterLocationFormats</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span>
+                <span class="s">"~/Views/{2}/{1}/{0}.cshtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/{1}/{0}.vbhtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/Shared/{0}.vbhtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/Shared/{0}.cshtml"</span><span class="p">,</span>
+            <span class="p">};</span>
+
+            <span class="n">AreaViewLocationFormats</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span>
+                <span class="s">"~/Views/{2}/{1}/{0}.cshtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/{1}/{0}.vbhtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/Shared/{0}.cshtml"</span><span class="p">,</span>
+                <span class="s">"~/Views/{2}/Shared/{0}.vbhtml"</span><span class="p">,</span>
+            <span class="p">};</span>
+
+            <span class="n">AreaPartialViewLocationFormats</span> <span class="p">=</span> <span class="n">AreaViewLocationFormats</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre>
+
+<p>Restful Routing comes with two view engines: <code class="prettyprint">RestfulRoutingRazorViewEngine</code> and <code class="prettyprint">RestfulRoutingWebFormViewEngine</code>. Let&rsquo;s look at the one of these view engines.</p>
+
+<p>These view engines change the way that ASP.Net MVC will look for views.</p>
+
+<aside class="info">
+Using our view engines is completely optional, but can help reduce the folders necessary to create areas in your code.
+</aside>
+<pre class="highlight plaintext"><code># DEFAULT VIEWENGINE BEHAVIOR
+
+Views
+    |-  Home            // home controller
+    |-  Profiles        // profiles controller
+Areas
+    |- Administration  // administration area
+        |-Controllers  // area controllers
+        |-Models       // models for areas
+        |-Views
+            |-Users        // users views in adminstration area
+            |-Products     // products views in administration area
+            |-Shared       // area shared views
+etc...
+</code></pre>
+<pre class="highlight plaintext"><code># RESTFUL ROUTING VIEWENGINE BEHAVIOR
+
+Controllers
+    |- Administration   // controllers for administration
+Models
+    |-Administration    // models for administration
+Views
+    |-  Home            // home controller
+    |-  Profiles        // profiles controller
+    |-  Administration  // administration area
+        |- Users        // users controller in adminstration area
+        |- Products     // products controller in administration area
+etc...
+</code></pre>
+
+<h2 id="format-result">Format Result</h2>
+
+<p>This is a feature that allows you to use implicit format extensions on a resource and resources. There are two core methods to this feature: RespondTo, WithFormatRoutes.</p>
+
+<aside class="warning">
+If you are building a full blown API, we recommend you use <a href="http://www.asp.net/web-api">WebAPI</a> instead of ASP.NET MVC as it has more powerful capabilities.
+</aside>
+<pre class="highlight csharp"><code><span class="k">namespace</span> <span class="nn">RestfulRouting.Documentation.Controllers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="p">:</span> <span class="n">Controller</span> <span class="p">{</span>
+        <span class="k">protected</span> <span class="n">ActionResult</span> <span class="nf">RespondTo</span><span class="p">(</span><span class="n">Action</span><span class="p">&lt;</span><span class="n">FormatCollection</span><span class="p">&gt;</span> <span class="n">format</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">FormatResult</span><span class="p">(</span><span class="n">format</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<pre class="highlight csharp"><code><span class="c1">// IN ROUTESET
+// enable format routes
+</span><span class="n">extras</span><span class="p">.</span><span class="nf">WithFormatRoutes</span><span class="p">();</span>
+</code></pre>
+
+<p>We provide a set of known types out of the box to make using our fluent interface a little nicer, but we support any file extension you can think of. To generate these format routes just specify the format as follows.</p>
+<pre class="highlight csharp"><code><span class="c1">// IN CONTROLLER
+</span><span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Awesome</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">model</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Awesome</span> <span class="p">{</span>
+        <span class="n">date</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">.</span><span class="nf">ToShortDateString</span><span class="p">(),</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="s">"awesomwe_id"</span><span class="p">,</span>
+        <span class="n">message</span> <span class="p">=</span> <span class="s">"hey you are seeing this in message"</span>
+    <span class="p">};</span>
+
+    <span class="c1">// contrived example
+</span>    <span class="k">return</span> <span class="nf">RespondTo</span><span class="p">(</span><span class="n">format</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="n">format</span><span class="p">.</span><span class="n">Default</span> <span class="p">=</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"show"</span><span class="p">);</span>
+        <span class="n">format</span><span class="p">.</span><span class="n">Json</span> <span class="p">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="n">model</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="s">"awesome_json"</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nf">Json</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">JsonRequestBehavior</span><span class="p">.</span><span class="n">AllowGet</span><span class="p">);</span>
+        <span class="p">};</span>
+        <span class="n">format</span><span class="p">.</span><span class="n">Xml</span> <span class="p">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="n">model</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="s">"awesome_xml"</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nf">Xml</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+        <span class="p">};</span>
+        <span class="n">format</span><span class="p">[</span><span class="s">"yml"</span><span class="p">]</span> <span class="p">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="n">model</span><span class="p">.</span><span class="n">id</span> <span class="p">=</span> <span class="s">"awesome_yml"</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="s">"awesome.yml"</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+        <span class="p">};</span>
+        <span class="n">format</span><span class="p">.</span><span class="n">Html</span> <span class="p">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="n">Flash</span><span class="p">.</span><span class="nf">Success</span><span class="p">(</span><span class="s">"Nothing to see here"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"show"</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre>
+<pre class="highlight plaintext"><code>&lt;!-- IN RAZOR VIEW --&gt;
+@@Url.Action("usingpath", "extras", new { format = "json" })   // generate json url
+@@Url.Action("usingroute", "extras", new { format = "xml" }})  // generate xml url
+</code></pre>
+
+<p>Awesome right?! We recommend you read the following section of <strong>Quirks / Gotchas</strong> if you plan on using format routes.
+his is helpful if you are building single page applications Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
+
+<h2 id="redirect-dead-links">Redirect Dead Links</h2>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RedirectRouteSet</span> <span class="p">:</span> <span class="n">RouteSet</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">RedirectRouteSet</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// you can register the 
+</span>        <span class="c1">// attribute somewhere else, 
+</span>        <span class="c1">// it is here
+</span>        <span class="c1">// for demo purposes
+</span>        <span class="n">GlobalFilters</span><span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">RedirectRouteFilter</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Map</span><span class="p">(</span><span class="n">IMapper</span> <span class="n">map</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Redirect an old path, to a new one
+</span>        <span class="n">map</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"this/is/old"</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"home"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"index"</span> <span class="p">})</span>
+            <span class="p">.</span><span class="nf">GetOnly</span><span class="p">();</span>
+        <span class="n">map</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"into/area"</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">ExtrasController</span><span class="p">&gt;(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="nf">Show</span><span class="p">(),</span> <span class="s">"mappings"</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">GetOnly</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>  
+</code></pre>
+
+<p>There are times when we make better url decisions than others. We want the ability to change the urls, without breaking existing urls. This is only necessary once your application goes live. This mostly applies to public facing sites, but could be useful in an intranet situtation.</p>
+
+<p>The first thing to note, is you should register all your redirect routes as the last routes in your list. This is because they are the least important. The will only ever be hit when accessing an old link. Your application should not be generating these urls, and if it is then you have issues.</p>
+
+<p>Secondly, the registration looks like RestfulRouting&rsquo;s good old syntax, but it doesn&rsquo;t require you to nest it within any definition. I would recommed, creating a RouteSet called DeadLinks or Redirects and connecting it at the end of your master RouteSet.</p>
+
+<p>Lastly, and this is important, <strong>register the RedirectRouteFilterAttribte as a global filter.</strong></p>
+
+<p>As you can see to the right, you just set the old url, and provide values to resolve to the new url. We use the UrlHelper under the covers to find the best matching route.</p>
+
+<h1 id="route-debugger">Route Debugger</h1>
+<pre class="highlight csharp"><code><span class="c1">// IN ROUTESET
+</span><span class="n">map</span><span class="p">.</span><span class="nf">DebugRoute</span><span class="p">(</span><span class="s">"routedebug"</span><span class="p">);</span>
+</code></pre>
+
+<p>Restful Routing comes with a powerful route debugger aimed at helping you understand your route mappings. You can enable and disable the route debugger purely by adding the following line to your RouteSet.</p>
+
+<aside class="warning">
+Make sure to unregister the route debugger when deploying to your production environment. There is no performance hit, but you might not want to expose sensitive routes. </strong></p>
+</aside>
+
+<h1 id="quirks-gotchas">Quirks / Gotchas</h1>
+
+<p>This section attempts to detail some quirks with ASP.NET MVC and Restful Routing. These can cause issues sometimes and it is good to understand why and when they can impact your application.</p>
+
+<h2 id="persistant-route-values">Persistant Route Values</h2>
+<pre class="highlight plaintext"><code>// MAKE REQUEST TO THIS URL
+
+/mappings/resources/1
+
+// ROUTE values
+{ 
+    id: 1,
+    area: mappings,
+    controller: resources 
+}  
+
+&lt;!-- IN RAZOR VIEW --&gt;
+@Url.Action("index")
+
+&lt;!-- IS EQUIVALENT TO --&gt;    
+@Url.Action("index", new {
+     controller = "resources",
+     area = "mappings",
+     id = 1 })
+&lt;!-- 
+    BECAUSE MVC carries 
+    over current route values
+--&gt;
+</code></pre>
+
+<p>ASP.Net MVC always tries to be helpful. Helpful, although well intentioned, can lead to some strange behavior sometimes. The biggest problem can be saved route values from your existing request.</p>
+
+<p>Understanding this quirk can help you debug lots of issues, not just with Restful Routing, but with ASP.NET MVC in general. You can see the example to the right.</p>
+
+<h2 id="mixing-mapping-levels">Mixing Mapping Levels</h2>
+<pre class="highlight plaintext"><code>map.Resource&lt;ProfileController&gt;(profile =&gt; {
+    // DOH! should be profile
+    // not map!
+    // EXCEPTION!!!!
+    map.Resource&lt;CreditCardController&gt;()
+});
+</code></pre>
+
+<p>Restful Routing is designed to be fluent and nested. During the creation of your <code class="prettyprint">RouteSet</code> you may accidently call the wrong parameter, leading to an error that may be difficult to diagnose. Our exception is helpful, but this is a common enough mistake that we decided to document it.</p>
+
+<h2 id="namespaces-and-name-conflicts">Namespaces and Name Conflicts</h2>
+
+<p>Sometimes we want to name controllers the same, but have them in different namespaces. This is appropriate when building an administrative and front facing section of your site. Just remember to set the namespaces appropriately so that Routing can instantiate the correct controller.</p>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
