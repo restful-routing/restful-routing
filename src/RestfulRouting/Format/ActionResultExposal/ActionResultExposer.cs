@@ -40,6 +40,11 @@ namespace RestfulRouting.Format.ActionResultExposal
             return ExecuteAction(FormatCollection.CsvKey);
         }
 
+        public ActionResult Execute(string format)
+        {
+            return ExecuteAction(format);
+        }
+
         private ActionResult ExecuteAction(string key)
         {
             if (!this.formatCollection.ContainsKey(key))
