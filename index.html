@@ -1047,6 +1047,12 @@ If you are building a full blown API, we recommend you use <a href="http://www.a
 <p>Awesome right?! We recommend you read the following section of <strong>Quirks / Gotchas</strong> if you plan on using format routes.
 his is helpful if you are building single page applications Use sparingly and understand when it is appropriate to seperate functionality in your actions.</p>
 
+<p>Note: You need to <code class="prettyprint">runAllManagedModulesForAllRequests</code> through the ASP.NET pipeline, so remember to set the setting to <code class="prettyprint">true</code>.</p>
+<pre class="highlight xml"><code>  <span class="nt">&lt;system.webServer&gt;</span>
+    <span class="nt">&lt;modules</span> <span class="na">runAllManagedModulesForAllRequests=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/system.webServer&gt;</span>
+</code></pre>
+
 <h2 id="redirect-dead-links">Redirect Dead Links</h2>
 <pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RedirectRouteSet</span> <span class="p">:</span> <span class="n">RouteSet</span>
 <span class="p">{</span>
