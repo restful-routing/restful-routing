@@ -740,6 +740,14 @@ public ActionResult Awesome() {
 Awesome right?! We recommend you read the following section of **Quirks / Gotchas** if you plan on using format routes.
 his is helpful if you are building single page applications Use sparingly and understand when it is appropriate to seperate functionality in your actions.
 
+Note: You need to `runAllManagedModulesForAllRequests` through the ASP.NET pipeline, so remember to set the setting to `true`.
+
+```xml
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+  </system.webServer>
+```
+
 ## Redirect Dead Links
 
 ```csharp
